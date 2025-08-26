@@ -1,0 +1,68 @@
+name: Dev Version Bump
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch bot/dev branch
+        run: |
+          git fetch origin bot/dev:bot/dev || git checkout -b bot/dev
+
+      - name: Compare and update version
+        id: version
+        run: |
+          LAST_COMMIT_MSG=$(echo "${{ github.event.head_commit.message }}" | tail -n 1)
+          if [[ "$LAST_COMMIT_MSG" == "Bot: Update VERSION file" ]]; then
+            echo "Skipping version bump: automated PR commit detected"
+            exit 0
+          fi
+          DEV_VERSION=$(cat VERSION)
+          BOT_VERSION=$(git show bot/dev:VERSION 2>/dev/null || echo "$DEV_VERSION")
+          
+          IFS='.' read -r dev_major dev_minor dev_patch dev_build <<< "$DEV_VERSION"
+          IFS='.' read -r bot_major bot_minor bot_patch bot_build <<< "$BOT_VERSION"
+          
+          if [ "$dev_major" -gt "$bot_major" ] || [ "$dev_minor" -gt "$bot_minor" ] || [ "$dev_patch" -gt "$bot_patch" ]; then
+              echo "Dev version is higher, using it as source of truth"
+              echo "$DEV_VERSION" > VERSION
+          else
+              echo "Incrementing bot/dev build number"
+              bot_build=$((bot_build + 1))
+              NEW_VERSION="$bot_major.$bot_minor.$bot_patch.$bot_build"
+              echo $NEW_VERSION > VERSION
+          fi
+          
+          git add VERSION
+          git commit -m "Update bot/dev VERSION to $(cat VERSION)" || echo "No changes to commit"
+      - name: Push bot/dev
+        env:
+          DEV_PUSH_TOKEN: ${{ secrets.DEV_PUSH_TOKEN }}
+        run: |
+          git push --force origin HEAD:bot/dev
+
+      - name: Create or update PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.DEV_PUSH_TOKEN }}
+          commit-message: "Sync bot/dev VERSION"
+          branch: bot/dev
+          base: dev
+          title: "Bot: Update VERSION file"
+          body: "Automated update of the VERSION file from bot/dev"
