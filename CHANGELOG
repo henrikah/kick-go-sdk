@@ -1,0 +1,21 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## \[1.0.1] - 2025-09-04
+
+### Added
+
+* Webhook passthrough handler with signature verification for webhooks.
+
+### Fixed
+
+* N/A
+
+### Changed
+
+* N/A
+
+## \[1.0.0] - 2025-08-26
+
+* Initial release
