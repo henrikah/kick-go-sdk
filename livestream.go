@@ -37,6 +37,23 @@ type livestream interface {
 	//	    return nil, err
 	//	}
 	SearchLivestreams(ctx context.Context, accessToken string, filters kickfilters.LivestreamFilterBuilder) (*kickapitypes.LivestreamResponse, error)
+
+	// GetCurrentUserLivestream retrieves the livestream for the user's access token. If the user is not live it will return and empty slice.
+	//
+	// Example:
+	//
+	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{...})
+	//	if err != nil {
+	//	    log.Printf("could not create APIClient: %v", err)
+	//	    return nil, err
+	//	}
+	//
+	//	livestream, err := client.Livestream.GetCurrentUserLivestream(context.TODO(), accessToken)
+	//	if err != nil {
+	//	    log.Printf("could not current users livestream: %v", err)
+	//	    return nil, err
+	//	}
+	GetCurrentUserLivestream(ctx context.Context, accessToken string) (*kickapitypes.LivestreamResponse, error)
 }
 
 type livestreamClient struct {
@@ -48,6 +65,7 @@ func newLivestreamClient(client *apiClient) livestream {
 		client: client,
 	}
 }
+
 func (c *livestreamClient) SearchLivestreams(ctx context.Context, accessToken string, filters kickfilters.LivestreamFilterBuilder) (*kickapitypes.LivestreamResponse, error) {
 	if err := kickerrors.ValidateAccessToken(accessToken); err != nil {
 		return nil, err
@@ -70,6 +88,19 @@ func (c *livestreamClient) SearchLivestreams(ctx context.Context, accessToken st
 	var livestreamResponse kickapitypes.LivestreamResponse
 
 	if err = c.client.makeJSONRequest(ctx, http.MethodGet, livestreamURL.String(), nil, &accessToken, &livestreamResponse); err != nil {
+		return nil, err
+	}
+
+	return &livestreamResponse, nil
+}
+func (c *livestreamClient) GetCurrentUserLivestream(ctx context.Context, accessToken string) (*kickapitypes.LivestreamResponse, error) {
+	if err := kickerrors.ValidateAccessToken(accessToken); err != nil {
+		return nil, err
+	}
+
+	var livestreamResponse kickapitypes.LivestreamResponse
+
+	if err := c.client.makeJSONRequest(ctx, http.MethodGet, endpoints.ViewCurrentUserLivestreamDetailsURL(), nil, &accessToken, &livestreamResponse); err != nil {
 		return nil, err
 	}
 
