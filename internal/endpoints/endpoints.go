@@ -18,23 +18,24 @@ const (
 	userAuthorizationPath = "oauth/authorize"
 
 	/** API Paths **/
-	codeExchangePath                   = "oauth/token"
-	generateAppAccessTokenPath         = "oauth/token"
-	revokeTokenPath                    = "oauth/revoke"
-	searchCategoriesPath               = "public/v1/categories"
-	viewCategoryDetailsPath            = "public/v1/categories"
-	viewTokenIntrospectPath            = "public/v1/token/introspect"
-	viewUsersDetailsPath               = "public/v1/users"
-	viewChannelsDetailsPath            = "public/v1/channels"
-	updateChannelDetailsPath           = "public/v1/channels"
-	sendChatMessagePath                = "public/v1/chat"
-	banUserPath                        = "public/v1/moderation/bans"
-	liftBanPath                        = "public/v1/moderation/bans"
-	viewLivestreamsDetailsPath         = "public/v1/livestreams"
-	viewWebhookPublicKeyPath           = "public/v1/public-key"
-	viewEventsSubscriptionsDetailsPath = "public/v1/events/subscriptions"
-	registerEventsSubscriptionsPath    = "public/v1/events/subscriptions"
-	removeEventsSubscriptionsPath      = "public/v1/events/subscriptions"
+	codeExchangePath                     = "oauth/token"
+	generateAppAccessTokenPath           = "oauth/token"
+	revokeTokenPath                      = "oauth/revoke"
+	searchCategoriesPath                 = "public/v1/categories"
+	viewCategoryDetailsPath              = "public/v1/categories"
+	viewTokenIntrospectPath              = "public/v1/token/introspect"
+	viewUsersDetailsPath                 = "public/v1/users"
+	viewChannelsDetailsPath              = "public/v1/channels"
+	updateChannelDetailsPath             = "public/v1/channels"
+	sendChatMessagePath                  = "public/v1/chat"
+	banUserPath                          = "public/v1/moderation/bans"
+	liftBanPath                          = "public/v1/moderation/bans"
+	viewLivestreamsDetailsPath           = "public/v1/livestreams"
+	viewCurrentUserLivestreamDetailsPath = "public/v1/livestreams"
+	viewWebhookPublicKeyPath             = "public/v1/public-key"
+	viewEventsSubscriptionsDetailsPath   = "public/v1/events/subscriptions"
+	registerEventsSubscriptionsPath      = "public/v1/events/subscriptions"
+	removeEventsSubscriptionsPath        = "public/v1/events/subscriptions"
 )
 
 // UserAuthorizationURL is where the user can log in and approve the application's access request.
@@ -105,6 +106,11 @@ func LiftBanURL() string {
 // ViewLivestreamsDetailsURL is the url to retrieve details of one or more livestreams
 func ViewLivestreamsDetailsURL() string {
 	return helpers.ConcatURL(apiHostname, viewLivestreamsDetailsPath)
+}
+
+// ViewCurrentUserLivestreamDetailsURL is the url to retrieve details of the current users livestream
+func ViewCurrentUserLivestreamDetailsURL() string {
+	return helpers.ConcatURL(apiHostname, viewCurrentUserLivestreamDetailsPath)
 }
 
 // ViewWebhookPublicKeyURL is the url to retrieve the public key for the webhook signature
