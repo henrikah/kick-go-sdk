@@ -67,6 +67,16 @@ type webhook interface {
 	//
 	//	http.HandleFunc("/webhook", webhookClient.WebhookHandler)
 	WebhookHandler(writer http.ResponseWriter, request *http.Request)
+
+	// WebhookPassthroughHandler verifies the signature of the webhook without unmarshaling the body.
+	// Ideal for webhook to message queue transports
+	//
+	// Example:
+	//
+	//	http.HandleFunc("/webhook", webhookClient.WebhookPassthroughHandler(func (w http.ResponseWriter, r *http.Request, h kickwebhooktypes.KickWebhookHeaders) {
+	// 		// Pass into message queue like redis, rabbitMQ, Kafka, etc
+	//	}))
+	WebhookPassthroughHandler(handler func(http.ResponseWriter, *http.Request, kickwebhooktypes.KickWebhookHeaders)) func(http.ResponseWriter, *http.Request)
 }
 
 type webhookClient struct {
@@ -291,6 +301,35 @@ func (c *webhookClient) WebhookHandler(writer http.ResponseWriter, request *http
 	}
 
 	handler(writer, request, kickHeaders)
+}
+
+func (c *webhookClient) WebhookPassthroughHandler(handler func(http.ResponseWriter, *http.Request, kickwebhooktypes.KickWebhookHeaders)) func(http.ResponseWriter, *http.Request) {
+	return func(writer http.ResponseWriter, request *http.Request) {
+		if request.Method != http.MethodPost {
+			writer.WriteHeader(http.StatusMethodNotAllowed)
+			return
+		}
+
+		kickHeaders := processKickHeaders(request)
+
+		var err error
+
+		body, err := io.ReadAll(request.Body)
+		if err != nil {
+			c.onError(kickerrors.SetInternalWebhookError(kickHeaders.MessageID, err))
+			writer.WriteHeader(http.StatusBadRequest)
+		}
+		request.Body = io.NopCloser(bytes.NewReader(body))
+
+		err = c.verifySignature(kickHeaders.MessageID, kickHeaders.MessageTimestamp, body, []byte(kickHeaders.Signature))
+		if err != nil {
+			c.onError(kickerrors.SetInternalWebhookError(kickHeaders.MessageID, err))
+			writer.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		handler(writer, request, kickHeaders)
+	}
 }
 
 func processKickHeaders(request *http.Request) kickwebhooktypes.KickWebhookHeaders {
