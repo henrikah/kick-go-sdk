@@ -74,7 +74,7 @@ type webhook interface {
 	// Example:
 	//
 	//	http.HandleFunc("/webhook", webhookClient.WebhookPassthroughHandler(func (w http.ResponseWriter, r *http.Request, h kickwebhooktypes.KickWebhookHeaders) {
-	// 		// Pass into message queue like redis, rabbitMQ, Kafka, etc
+	// 		// Pass into message queue like Redis, RabbitMQ, Kafka, etc
 	//	}))
 	WebhookPassthroughHandler(handler func(http.ResponseWriter, *http.Request, kickwebhooktypes.KickWebhookHeaders)) func(http.ResponseWriter, *http.Request)
 }
