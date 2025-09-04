@@ -31,7 +31,7 @@ const (
 	banUserPath                          = "public/v1/moderation/bans"
 	liftBanPath                          = "public/v1/moderation/bans"
 	viewLivestreamsDetailsPath           = "public/v1/livestreams"
-	viewCurrentUserLivestreamDetailsPath = "public/v1/livestreams"
+	viewCurrentUserLivestreamDetailsPath = "public/v1/livestreams/stats"
 	viewWebhookPublicKeyPath             = "public/v1/public-key"
 	viewEventsSubscriptionsDetailsPath   = "public/v1/events/subscriptions"
 	registerEventsSubscriptionsPath      = "public/v1/events/subscriptions"

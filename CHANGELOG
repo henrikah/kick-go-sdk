@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## \[1.1.1] - 2025-09-04
+
+### Fixed
+
+* Get livestream data for current user URL change
+
 ## \[1.1.0] - 2025-09-04
 
 ### Added
