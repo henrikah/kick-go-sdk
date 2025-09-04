@@ -117,7 +117,7 @@ func Test_GetCurrentUserLivestream_Success(t *testing.T) {
 
 	httpClient := &mocks.MockHTTPClient{
 		DoFunc: func(req *http.Request) (*http.Response, error) {
-			if req.URL.String() != "https://api.kick.com/public/v1/livestreams" {
+			if req.URL.String() != "https://api.kick.com/public/v1/livestreams/stats" {
 				t.Fatalf("Unexpected request URL: %s", req.URL.String())
 			}
 
