@@ -36,7 +36,7 @@ func Test_UpdateChannelMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.Channel.UpdateChannel(ctx, accessToken, channelData)
+	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
 
 	// Assert
 	if err == nil {
@@ -76,7 +76,7 @@ func Test_UpdateChannelNegativeCategoryID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.Channel.UpdateChannel(ctx, accessToken, channelData)
+	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
 
 	// Assert
 	if err == nil {
@@ -121,7 +121,7 @@ func Test_UpdateChannelUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	err := client.Channel.UpdateChannel(ctx, accessToken, channelData)
+	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
 
 	// Assert
 	if err == nil {
@@ -207,7 +207,7 @@ func Test_UpdateChannelWithMissingFields_Success(t *testing.T) {
 
 	// Act
 
-	err := client.Channel.UpdateChannel(ctx, accessToken, channelData)
+	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
 
 	// Assert
 
@@ -283,7 +283,7 @@ func Test_UpdateChannel_Success(t *testing.T) {
 
 	// Act
 
-	err := client.Channel.UpdateChannel(ctx, accessToken, channelData)
+	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
 
 	// Assert
 

@@ -31,7 +31,7 @@ func Test_UnbanUserMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	unbanUserData, err := client.Moderation.UnbanUser(ctx, accessToken, broadcasterUserID, userID)
+	unbanUserData, err := client.Moderation().UnbanUser(ctx, accessToken, broadcasterUserID, userID)
 
 	// Assert
 	if unbanUserData != nil {
@@ -70,7 +70,7 @@ func Test_UnbanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	unbanUserData, err := client.Moderation.UnbanUser(ctx, accessToken, broadcasterUserID, userID)
+	unbanUserData, err := client.Moderation().UnbanUser(ctx, accessToken, broadcasterUserID, userID)
 
 	// Assert
 	if unbanUserData != nil {
@@ -109,7 +109,7 @@ func Test_UnbanUserInvalidUserID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	unbanUserData, err := client.Moderation.UnbanUser(ctx, accessToken, broadcasterUserID, userID)
+	unbanUserData, err := client.Moderation().UnbanUser(ctx, accessToken, broadcasterUserID, userID)
 
 	// Assert
 	if unbanUserData != nil {
@@ -154,7 +154,7 @@ func Test_UnbanUserUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	unbanUserData, err := client.Moderation.UnbanUser(ctx, accessToken, broadcasterUserID, userID)
+	unbanUserData, err := client.Moderation().UnbanUser(ctx, accessToken, broadcasterUserID, userID)
 
 	// Assert
 	if err == nil {
@@ -234,7 +234,7 @@ func Test_UnbanUser_Success(t *testing.T) {
 
 	// Act
 
-	unbanUserData, err := client.Moderation.UnbanUser(ctx, accessToken, broadcasterUserID, userID)
+	unbanUserData, err := client.Moderation().UnbanUser(ctx, accessToken, broadcasterUserID, userID)
 
 	// Assert
 	if unbanUserData == nil {

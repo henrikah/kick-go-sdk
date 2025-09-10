@@ -32,7 +32,7 @@ func Test_BanUserMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	banUserData, err := client.Moderation.BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
+	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
 
 	// Assert
 	if banUserData != nil {
@@ -72,7 +72,7 @@ func Test_BanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	banUserData, err := client.Moderation.BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
+	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
 
 	// Assert
 	if banUserData != nil {
@@ -112,7 +112,7 @@ func Test_BanUserInvalidUserID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	banUserData, err := client.Moderation.BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
+	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
 
 	// Assert
 	if banUserData != nil {
@@ -158,7 +158,7 @@ func Test_BanUserUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	banUserData, err := client.Moderation.BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
+	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
 
 	// Assert
 	if err == nil {
@@ -247,7 +247,7 @@ func Test_BanUser_Success(t *testing.T) {
 
 	// Act
 
-	banUserData, err := client.Moderation.BanUser(ctx, accessToken, broadcasterUserID, userID, reason)
+	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, reason)
 
 	// Assert
 	if banUserData == nil {
@@ -311,7 +311,7 @@ func Test_BanUserWithReason_Success(t *testing.T) {
 
 	// Act
 
-	banUserData, err := client.Moderation.BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
+	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
 
 	// Assert
 	if banUserData == nil {

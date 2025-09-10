@@ -26,7 +26,7 @@ type user interface {
 	//	    log.Fatal(err)
 	//	}
 	//
-	//	introspection, err := client.User.TokenIntrospect(context.TODO(), accessToken)
+	//	introspection, err := client.User().TokenIntrospect(context.TODO(), accessToken)
 	//	if err != nil {
 	//  	log.Printf("could not introspect token: %v", err)
 	//  	return nil, err
@@ -37,7 +37,7 @@ type user interface {
 	//
 	// Example:
 	//
-	//	users, err := client.User.GetUsersByID(context.TODO(), accessToken, []int64{123, 456})
+	//	users, err := client.User().GetUsersByID(context.TODO(), accessToken, []int64{123, 456})
 	//	if err != nil {
 	//  	log.Printf("could not get users by id: %v", err)
 	//  	return nil, err
@@ -48,7 +48,7 @@ type user interface {
 	//
 	// Example:
 	//
-	//	user, err := client.User.GetUserByID(context.TODO(), accessToken, 123)
+	//	user, err := client.User().GetUserByID(context.TODO(), accessToken, 123)
 	//	if err != nil {
 	//  	log.Printf("could not get user by id: %v", err)
 	//  	return nil, err
@@ -59,7 +59,7 @@ type user interface {
 	//
 	// Example:
 	//
-	//	currentUser, err := client.User.GetCurrentUser(context.TODO(), accessToken)
+	//	currentUser, err := client.User().GetCurrentUser(context.TODO(), accessToken)
 	//	if err != nil {
 	//  	log.Printf("could not get the current user: %v", err)
 	//  	return nil, err

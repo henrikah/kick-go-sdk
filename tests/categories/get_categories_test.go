@@ -31,7 +31,7 @@ func Test_GetCategoriesMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	categoriesData, err := client.Category.SearchCategories(ctx, accessToken, searchQuery, page)
+	categoriesData, err := client.Category().SearchCategories(ctx, accessToken, searchQuery, page)
 
 	// Assert
 	if categoriesData != nil {
@@ -70,7 +70,7 @@ func Test_GetCategoriesInvalidPage_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	categoriesData, err := client.Category.SearchCategories(ctx, accessToken, searchQuery, page)
+	categoriesData, err := client.Category().SearchCategories(ctx, accessToken, searchQuery, page)
 
 	// Assert
 	if categoriesData != nil {
@@ -115,7 +115,7 @@ func Test_GetCategoriesUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	categoriesData, err := client.Category.SearchCategories(ctx, accessToken, searchQuery, page)
+	categoriesData, err := client.Category().SearchCategories(ctx, accessToken, searchQuery, page)
 
 	// Assert
 	if err == nil {
@@ -181,7 +181,7 @@ func Test_GetCategories_Success(t *testing.T) {
 
 	// Act
 
-	categoriesData, err := client.Category.SearchCategories(ctx, accessToken, searchQuery, page)
+	categoriesData, err := client.Category().SearchCategories(ctx, accessToken, searchQuery, page)
 
 	// Assert
 	if categoriesData == nil {

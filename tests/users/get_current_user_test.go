@@ -59,7 +59,7 @@ func Test_GetCurrentUser_Success(t *testing.T) {
 
 	// Act
 
-	userData, err := client.User.GetCurrentUser(ctx, accessToken)
+	userData, err := client.User().GetCurrentUser(ctx, accessToken)
 
 	// Assert
 	if userData == nil {

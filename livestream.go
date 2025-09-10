@@ -31,7 +31,7 @@ type livestream interface {
 	//	    WithLanguage("en").
 	//	    WithLimit(20)
 	//
-	//	livestreams, err := client.Livestream.SearchLivestreams(context.TODO(), accessToken, filters)
+	//	livestreams, err := client.Livestream().SearchLivestreams(context.TODO(), accessToken, filters)
 	//	if err != nil {
 	//	    log.Printf("could not search livestreams: %v", err)
 	//	    return nil, err
@@ -48,7 +48,7 @@ type livestream interface {
 	//	    return nil, err
 	//	}
 	//
-	//	livestream, err := client.Livestream.GetCurrentUserLivestream(context.TODO(), accessToken)
+	//	livestream, err := client.Livestream().GetCurrentUserLivestream(context.TODO(), accessToken)
 	//	if err != nil {
 	//	    log.Printf("could not current users livestream: %v", err)
 	//	    return nil, err

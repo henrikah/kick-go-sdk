@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## \[1.2.0] - 2025-09-11
+
+### Added
+
+* Proper interface for APIClient
+
+### Changed
+
+* APIClient field names are private and now requires a function call to be retrieved
+
 ## \[1.1.1] - 2025-09-04
 
 ### Fixed

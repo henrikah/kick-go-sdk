@@ -6,16 +6,28 @@ import (
 	"github.com/henrikah/kick-go-sdk/kickerrors"
 )
 
+type APIClient interface {
+	Category() category
+	Channel() channel
+	Chat() chat
+	EventsSubscription() eventsSubscription
+	Livestream() livestream
+	Moderation() moderation
+	OAuth() oAuth
+	PublicKey() publicKey
+	User() user
+}
+
 type apiClient struct {
-	Category           category
-	Channel            channel
-	Chat               chat
-	EventsSubscription eventsSubscription
-	Livestream         livestream
-	Moderation         moderation
-	OAuth              oAuth
-	PublicKey          publicKey
-	User               user
+	category           category
+	channel            channel
+	chat               chat
+	eventsSubscription eventsSubscription
+	livestream         livestream
+	moderation         moderation
+	oAuth              oAuth
+	publicKey          publicKey
+	user               user
 	clientID           string
 	clientSecret       string
 	httpClient         httpclient.ClientInterface
@@ -51,15 +63,43 @@ func NewAPIClient(clientConfig kickapitypes.APIClientConfig) (*apiClient, error)
 		httpClient:   clientConfig.HTTPClient,
 	}
 
-	client.Category = newCategoryClient(client)
-	client.Channel = newChannelClient(client)
-	client.Chat = newChatClient(client)
-	client.EventsSubscription = newEventsSubscriptionClient(client)
-	client.Livestream = newLivestreamClient(client)
-	client.Moderation = newModerationClient(client)
-	client.OAuth = newOAuthClient(client)
-	client.PublicKey = newPublicKeyClient(client)
-	client.User = newUserClient(client)
+	client.category = newCategoryClient(client)
+	client.channel = newChannelClient(client)
+	client.chat = newChatClient(client)
+	client.eventsSubscription = newEventsSubscriptionClient(client)
+	client.livestream = newLivestreamClient(client)
+	client.moderation = newModerationClient(client)
+	client.oAuth = newOAuthClient(client)
+	client.publicKey = newPublicKeyClient(client)
+	client.user = newUserClient(client)
 
 	return client, nil
+}
+
+func (c *apiClient) Category() category {
+	return c.category
+}
+func (c *apiClient) Channel() channel {
+	return c.channel
+}
+func (c *apiClient) Chat() chat {
+	return c.chat
+}
+func (c *apiClient) EventsSubscription() eventsSubscription {
+	return c.eventsSubscription
+}
+func (c *apiClient) Livestream() livestream {
+	return c.livestream
+}
+func (c *apiClient) Moderation() moderation {
+	return c.moderation
+}
+func (c *apiClient) OAuth() oAuth {
+	return c.oAuth
+}
+func (c *apiClient) PublicKey() publicKey {
+	return c.publicKey
+}
+func (c *apiClient) User() user {
+	return c.user
 }

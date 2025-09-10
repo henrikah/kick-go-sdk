@@ -29,7 +29,7 @@ func Test_GetChannelsByBroadcasterSlugMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	channelsData, err := client.Channel.GetChannelsByBroadcasterSlug(ctx, accessToken, slugs)
+	channelsData, err := client.Channel().GetChannelsByBroadcasterSlug(ctx, accessToken, slugs)
 
 	// Assert
 	if channelsData != nil {
@@ -73,7 +73,7 @@ func Test_GetChannelsByBroadcasterSlugUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	channelsData, err := client.Channel.GetChannelsByBroadcasterSlug(ctx, accessToken, slugs)
+	channelsData, err := client.Channel().GetChannelsByBroadcasterSlug(ctx, accessToken, slugs)
 
 	// Assert
 	if err == nil {
@@ -178,7 +178,7 @@ func Test_GetChannelsByBroadcasterSlug_Success(t *testing.T) {
 
 	// Act
 
-	channelsData, err := client.Channel.GetChannelsByBroadcasterSlug(ctx, accessToken, slugs)
+	channelsData, err := client.Channel().GetChannelsByBroadcasterSlug(ctx, accessToken, slugs)
 
 	// Assert
 	if channelsData == nil {
