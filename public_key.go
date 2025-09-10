@@ -21,7 +21,7 @@ type publicKey interface {
 	//	    log.Fatal(err)
 	//	}
 	//
-	//	publicKeyResp, err := client.PublicKey.GetWebhookPublicKey(context.TODO())
+	//	publicKeyResp, err := client.PublicKey().GetWebhookPublicKey(context.TODO())
 	//	if err != nil {
 	//  	log.Printf("could not get webhook public key: %v", err)
 	//  	return nil, err

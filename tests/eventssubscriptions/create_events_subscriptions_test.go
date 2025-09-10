@@ -31,7 +31,7 @@ func Test_CreateEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription.CreateEventSubscriptions(ctx, accessToken, events)
+	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(ctx, accessToken, events)
 
 	// Assert
 	if eventsSubscriptionsData != nil {
@@ -69,7 +69,7 @@ func Test_CreateEventsSubscriptionsMissingEvents_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription.CreateEventSubscriptions(ctx, accessToken, events)
+	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(ctx, accessToken, events)
 
 	// Assert
 	if eventsSubscriptionsData != nil {
@@ -113,7 +113,7 @@ func Test_CreateEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription.CreateEventSubscriptions(ctx, accessToken, events)
+	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(ctx, accessToken, events)
 
 	// Assert
 	if err == nil {
@@ -201,7 +201,7 @@ func Test_CreateEventsSubscriptions_Success(t *testing.T) {
 
 	// Act
 
-	eventsSubscriptionsData, err := client.EventsSubscription.CreateEventSubscriptions(ctx, accessToken, events)
+	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(ctx, accessToken, events)
 
 	// Assert
 	if eventsSubscriptionsData == nil {
@@ -277,7 +277,7 @@ func Test_CreateEventsSubscriptionsAsApp_Success(t *testing.T) {
 
 	// Act
 
-	eventsSubscriptionsData, err := client.EventsSubscription.CreateEventSubscriptionsAsApp(ctx, accessToken, broadcasterUserID, events)
+	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptionsAsApp(ctx, accessToken, broadcasterUserID, events)
 
 	// Assert
 	if eventsSubscriptionsData == nil {

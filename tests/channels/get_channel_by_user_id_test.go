@@ -76,7 +76,7 @@ func Test_GetChannelByBroadcasterUserID_Success(t *testing.T) {
 
 	// Act
 
-	channelData, err := client.Channel.GetChannelByBroadcasterUserID(ctx, accessToken, broadcaster)
+	channelData, err := client.Channel().GetChannelByBroadcasterUserID(ctx, accessToken, broadcaster)
 
 	// Assert
 	if channelData == nil {

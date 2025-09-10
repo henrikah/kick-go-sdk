@@ -29,7 +29,7 @@ func Test_GetChannelsByBroadcasterUserIDMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	channelsData, err := client.Channel.GetChannelsByBroadcasterUserID(ctx, accessToken, broadcasters)
+	channelsData, err := client.Channel().GetChannelsByBroadcasterUserID(ctx, accessToken, broadcasters)
 
 	// Assert
 	if channelsData != nil {
@@ -73,7 +73,7 @@ func Test_GetChannelsByIDUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	channelsData, err := client.Channel.GetChannelsByBroadcasterUserID(ctx, accessToken, broadcasters)
+	channelsData, err := client.Channel().GetChannelsByBroadcasterUserID(ctx, accessToken, broadcasters)
 
 	// Assert
 	if err == nil {
@@ -178,7 +178,7 @@ func Test_GetChannelsByBroadcasterUserID_Success(t *testing.T) {
 
 	// Act
 
-	channelsData, err := client.Channel.GetChannelsByBroadcasterUserID(ctx, accessToken, broadcasters)
+	channelsData, err := client.Channel().GetChannelsByBroadcasterUserID(ctx, accessToken, broadcasters)
 
 	// Assert
 	if channelsData == nil {

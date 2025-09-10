@@ -29,7 +29,7 @@ type oAuth interface {
 	//	    return nil, err
 	//	}
 	//
-	//	authData, err := client.OAuth.InitiateAuthorization("http://localhost", "random-state", kickscopes.Scopes{kickscope.UserRead})
+	//	authData, err := client.OAuth().InitiateAuthorization("http://localhost", "random-state", kickscopes.Scopes{kickscope.UserRead})
 	//	if err != nil {
 	//	    log.Printf("could not initiate authorization: %v", err)
 	//	    return nil, err
@@ -46,7 +46,7 @@ type oAuth interface {
 	//	    return nil, err
 	//	}
 	//
-	//	tokenData, err := client.OAuth.ExchangeAuthorizationCode(context.TODO(), "http://localhost", "auth-code", "pkce-verifier")
+	//	tokenData, err := client.OAuth().ExchangeAuthorizationCode(context.TODO(), "http://localhost", "auth-code", "pkce-verifier")
 	//	if err != nil {
 	//	    log.Printf("could not exchange authorization code: %v", err)
 	//	    return nil, err
@@ -57,7 +57,7 @@ type oAuth interface {
 	//
 	// Example:
 	//
-	//	tokenData, err := client.OAuth.GetAppAccessToken(context.TODO())
+	//	tokenData, err := client.OAuth().GetAppAccessToken(context.TODO())
 	//	if err != nil {
 	//	    log.Printf("could not get app access token: %v", err)
 	//	    return nil, err
@@ -68,7 +68,7 @@ type oAuth interface {
 	//
 	// Example:
 	//
-	//	err := client.OAuth.RevokeAccessToken(context.TODO(), accessToken)
+	//	err := client.OAuth().RevokeAccessToken(context.TODO(), accessToken)
 	//	if err != nil {
 	//	    log.Printf("could not revoke access token: %v", err)
 	//	}
@@ -78,7 +78,7 @@ type oAuth interface {
 	//
 	// Example:
 	//
-	//	err := client.OAuth.RevokeRefreshToken(context.TODO(), refreshToken)
+	//	err := client.OAuth().RevokeRefreshToken(context.TODO(), refreshToken)
 	//	if err != nil {
 	//	    log.Printf("could not revoke refresh token: %v", err)
 	//	}

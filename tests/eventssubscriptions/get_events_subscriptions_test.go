@@ -28,7 +28,7 @@ func Test_GetEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription.GetEventSubscriptions(ctx, accessToken)
+	eventsSubscriptionsData, err := client.EventsSubscription().GetEventSubscriptions(ctx, accessToken)
 
 	// Assert
 	if eventsSubscriptionsData != nil {
@@ -71,7 +71,7 @@ func Test_GetEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription.GetEventSubscriptions(ctx, accessToken)
+	eventsSubscriptionsData, err := client.EventsSubscription().GetEventSubscriptions(ctx, accessToken)
 
 	// Assert
 	if err == nil {
@@ -150,7 +150,7 @@ func Test_GetEventsSubscriptions_Success(t *testing.T) {
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription.GetEventSubscriptions(ctx, accessToken)
+	eventsSubscriptionsData, err := client.EventsSubscription().GetEventSubscriptions(ctx, accessToken)
 
 	// Assert
 	if eventsSubscriptionsData == nil {

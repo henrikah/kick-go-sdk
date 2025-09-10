@@ -60,7 +60,7 @@ func Test_GetUserByID_Success(t *testing.T) {
 
 	// Act
 
-	userData, err := client.User.GetUserByID(ctx, accessToken, user)
+	userData, err := client.User().GetUserByID(ctx, accessToken, user)
 
 	// Assert
 	if userData == nil {

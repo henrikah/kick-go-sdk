@@ -50,7 +50,7 @@ func Test_GetPublicKey_Success(t *testing.T) {
 
 	// Act
 
-	publicKeyData, err := client.PublicKey.GetWebhookPublicKey(ctx)
+	publicKeyData, err := client.PublicKey().GetWebhookPublicKey(ctx)
 
 	// Assert
 	if publicKeyData == nil {

@@ -31,7 +31,7 @@ func Test_SendChatMessageAsBotMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	sendChatMessageData, err := client.Chat.SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData != nil {
@@ -70,7 +70,7 @@ func Test_SendChatMessageAsBotEmptyMessage_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	sendChatMessageData, err := client.Chat.SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData != nil {
@@ -115,7 +115,7 @@ func Test_SendChatMessageAsBotUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	sendChatMessageData, err := client.Chat.SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
 
 	// Assert
 	if err == nil {
@@ -202,7 +202,7 @@ func Test_SendChatMessageAsBot_Success(t *testing.T) {
 
 	// Act
 
-	sendChatMessageData, err := client.Chat.SendChatMessageAsBot(ctx, accessToken, replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(ctx, accessToken, replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData == nil {
@@ -272,7 +272,7 @@ func Test_SendChatMessageAsBotWithReplyToMessageID_Success(t *testing.T) {
 
 	// Act
 
-	sendChatMessageData, err := client.Chat.SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData == nil {

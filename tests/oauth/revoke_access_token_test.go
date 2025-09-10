@@ -28,7 +28,7 @@ func Test_RevokeAccessAccessTokenMissingToken_Error(t *testing.T) {
 
 	var validationError *kickerrors.ValidationError
 	// Act
-	err := client.OAuth.RevokeAccessToken(ctx, accessToken)
+	err := client.OAuth().RevokeAccessToken(ctx, accessToken)
 
 	// Assert
 	if err == nil {
@@ -66,7 +66,7 @@ func Test_RevokeAccessToken_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	err := client.OAuth.RevokeAccessToken(ctx, accessToken)
+	err := client.OAuth().RevokeAccessToken(ctx, accessToken)
 
 	// Assert
 	if err == nil {
@@ -144,7 +144,7 @@ func Test_RevokeAccessToken_Success(t *testing.T) {
 
 	// Act
 
-	err := client.OAuth.RevokeAccessToken(ctx, accessToken)
+	err := client.OAuth().RevokeAccessToken(ctx, accessToken)
 
 	// Assert
 	if err != nil {

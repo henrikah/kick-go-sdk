@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-// MockHTTPClient is a test double that implements httpclient.Interface.
+// MockHTTPClient is a test double that implements httpclient.Interface().
 // It allows tests to precisely control the HTTP response for a given request.
 type MockHTTPClient struct {
 	// DoFunc is the function that will be called when Do is invoked.
