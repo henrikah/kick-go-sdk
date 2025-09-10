@@ -20,7 +20,7 @@ type category interface {
 	//
 	// Example:
 	//
-	//	categories, err := client.Category.SearchCategories(context.TODO(), accessToken, searchQuery, pageNumber)
+	//	categories, err := client.Category().SearchCategories(context.TODO(), accessToken, searchQuery, pageNumber)
 	//	if err != nil {
 	//	    log.Printf("could not search categories: %v", err)
 	//	    return nil, err
@@ -31,7 +31,7 @@ type category interface {
 	//
 	// Example:
 	//
-	//	category, err := client.Category.GetCategoryByCategoryID(context.TODO(), accessToken, categoryID)
+	//	category, err := client.Category().GetCategoryByCategoryID(context.TODO(), accessToken, categoryID)
 	//	if err != nil {
 	//	    log.Printf("could not get category by ID: %v", err)
 	//	    return nil, err

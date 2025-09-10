@@ -28,7 +28,7 @@ func Test_GetCurrentUserLivestreamMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	livestreamData, err := client.Livestream.GetCurrentUserLivestream(ctx, accessToken)
+	livestreamData, err := client.Livestream().GetCurrentUserLivestream(ctx, accessToken)
 
 	// Assert
 	if livestreamData != nil {
@@ -71,7 +71,7 @@ func Test_GetCurrentUserLivestreamUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	livestreamData, err := client.Livestream.GetCurrentUserLivestream(ctx, accessToken)
+	livestreamData, err := client.Livestream().GetCurrentUserLivestream(ctx, accessToken)
 
 	// Assert
 	if err == nil {
@@ -146,7 +146,7 @@ func Test_GetCurrentUserLivestream_Success(t *testing.T) {
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
-	livestreamData, err := client.Livestream.GetCurrentUserLivestream(ctx, accessToken)
+	livestreamData, err := client.Livestream().GetCurrentUserLivestream(ctx, accessToken)
 
 	// Assert
 	if livestreamData == nil {

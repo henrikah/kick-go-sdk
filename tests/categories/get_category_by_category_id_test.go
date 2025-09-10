@@ -30,7 +30,7 @@ func Test_GetCategoryByCategoryIDMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	categoryData, err := client.Category.GetCategoryByCategoryID(ctx, accessToken, categoryID)
+	categoryData, err := client.Category().GetCategoryByCategoryID(ctx, accessToken, categoryID)
 
 	// Assert
 	if categoryData != nil {
@@ -68,7 +68,7 @@ func Test_GetCategoryByCategoryIDInvalidCategoryID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	categoryData, err := client.Category.GetCategoryByCategoryID(ctx, accessToken, categoryID)
+	categoryData, err := client.Category().GetCategoryByCategoryID(ctx, accessToken, categoryID)
 
 	// Assert
 	if categoryData != nil {
@@ -112,7 +112,7 @@ func Test_GetCategoryByCategoryIDUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	categoryData, err := client.Category.GetCategoryByCategoryID(ctx, accessToken, categoriyID)
+	categoryData, err := client.Category().GetCategoryByCategoryID(ctx, accessToken, categoriyID)
 
 	// Assert
 	if err == nil {
@@ -177,7 +177,7 @@ func Test_GetCategoryByCategoryID_Success(t *testing.T) {
 
 	// Act
 
-	categoryData, err := client.Category.GetCategoryByCategoryID(ctx, accessToken, categoryID)
+	categoryData, err := client.Category().GetCategoryByCategoryID(ctx, accessToken, categoryID)
 
 	// Assert
 	if categoryData == nil {

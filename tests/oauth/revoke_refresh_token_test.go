@@ -28,7 +28,7 @@ func Test_RevokeRefreshTokenMissingToken_Error(t *testing.T) {
 
 	var validationError *kickerrors.ValidationError
 	// Act
-	err := client.OAuth.RevokeRefreshToken(ctx, refreshToken)
+	err := client.OAuth().RevokeRefreshToken(ctx, refreshToken)
 
 	// Assert
 	if err == nil {
@@ -66,7 +66,7 @@ func Test_RevokeRefreshToken_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	err := client.OAuth.RevokeRefreshToken(ctx, refreshToken)
+	err := client.OAuth().RevokeRefreshToken(ctx, refreshToken)
 
 	// Assert
 	if err == nil {
@@ -144,7 +144,7 @@ func Test_RevokeRefreshToken_Success(t *testing.T) {
 
 	// Act
 
-	err := client.OAuth.RevokeRefreshToken(ctx, refreshToken)
+	err := client.OAuth().RevokeRefreshToken(ctx, refreshToken)
 
 	// Assert
 	if err != nil {

@@ -26,7 +26,7 @@ type eventsSubscription interface {
 	//	    return nil, err
 	//	}
 	//
-	//	subscriptions, err := client.EventsSubscription.GetEventSubscriptions(context.TODO(), accessToken)
+	//	subscriptions, err := client.EventsSubscription().GetEventSubscriptions(context.TODO(), accessToken)
 	//	if err != nil {
 	//	    log.Printf("could not get event subscriptions: %v", err)
 	//	    return nil, err
@@ -38,7 +38,7 @@ type eventsSubscription interface {
 	// Example:
 	//
 	//	events := []kickwebhookenum.WebhookType{kickwebhookenum.ChatMessageSent}
-	//	createEventSubscriptionsResponse, err := client.EventsSubscription.CreateEventSubscriptions(context.TODO(), accessToken, events)
+	//	createEventSubscriptionsResponse, err := client.EventsSubscription().CreateEventSubscriptions(context.TODO(), accessToken, events)
 	//	if err != nil {
 	//	    log.Printf("could not create event subscriptions: %v", err)
 	//	    return nil, err
@@ -51,7 +51,7 @@ type eventsSubscription interface {
 	//
 	// Example:
 	//
-	//	createEventSubscriptionsResponse, err := client.EventsSubscription.CreateEventSubscriptionsAsApp(context.TODO(), accessToken, 12345, []kickwebhookenum.WebhookType{kickwebhookenum.ChatMessageSent})
+	//	createEventSubscriptionsResponse, err := client.EventsSubscription().CreateEventSubscriptionsAsApp(context.TODO(), accessToken, 12345, []kickwebhookenum.WebhookType{kickwebhookenum.ChatMessageSent})
 	//	if err != nil {
 	//	    log.Printf("could not create app event subscriptions: %v", err)
 	//	    return nil, err
@@ -62,7 +62,7 @@ type eventsSubscription interface {
 	//
 	// Example:
 	//
-	//	err := client.EventsSubscription.DeleteEventSubscriptions(context.TODO(), accessToken, []string{"subscription-id-1", "subscription-id-2"})
+	//	err := client.EventsSubscription().DeleteEventSubscriptions(context.TODO(), accessToken, []string{"subscription-id-1", "subscription-id-2"})
 	//	if err != nil {
 	//	    log.Printf("could not delete event subscriptions: %v", err)
 	//	    return err

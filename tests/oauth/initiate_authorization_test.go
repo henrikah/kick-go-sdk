@@ -31,7 +31,7 @@ func Test_InitiateAuthorizationMissingRedirectURI_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	authorizationData, err := client.OAuth.InitiateAuthorization(redirectURI, state, scopes)
+	authorizationData, err := client.OAuth().InitiateAuthorization(redirectURI, state, scopes)
 
 	// Assert
 	if authorizationData != nil {
@@ -70,7 +70,7 @@ func Test_InitiateAuthorizationMissingState_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	authorizationData, err := client.OAuth.InitiateAuthorization(redirectURI, state, scopes)
+	authorizationData, err := client.OAuth().InitiateAuthorization(redirectURI, state, scopes)
 
 	// Assert
 	if authorizationData != nil {
@@ -109,7 +109,7 @@ func Test_InitiateAuthorizationMissingScopes_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	authorizationData, err := client.OAuth.InitiateAuthorization(redirectURI, state, scopes)
+	authorizationData, err := client.OAuth().InitiateAuthorization(redirectURI, state, scopes)
 
 	// Assert
 	if authorizationData != nil {
@@ -147,7 +147,7 @@ func Test_InitiateAuthorization_Success(t *testing.T) {
 
 	// Act
 
-	authorizationData, err := client.OAuth.InitiateAuthorization(redirectURI, state, scopes)
+	authorizationData, err := client.OAuth().InitiateAuthorization(redirectURI, state, scopes)
 
 	// Assert
 	if authorizationData == nil {

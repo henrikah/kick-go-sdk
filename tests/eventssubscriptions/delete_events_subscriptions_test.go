@@ -29,7 +29,7 @@ func Test_DeleteEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.EventsSubscription.DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
+	err := client.EventsSubscription().DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
 
 	// Assert
 	if err == nil {
@@ -63,7 +63,7 @@ func Test_DeleteEventsSubscriptionsMissingSubscriptionIDs_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.EventsSubscription.DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
+	err := client.EventsSubscription().DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
 
 	// Assert
 	if err == nil {
@@ -103,7 +103,7 @@ func Test_DeleteEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	err := client.EventsSubscription.DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
+	err := client.EventsSubscription().DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
 
 	// Assert
 	if err == nil {
@@ -155,7 +155,7 @@ func Test_DeleteEventsSubscriptions_Success(t *testing.T) {
 
 	// Act
 
-	err := client.EventsSubscription.DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
+	err := client.EventsSubscription().DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
 
 	// Assert
 	if err != nil {

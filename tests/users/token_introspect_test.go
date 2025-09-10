@@ -30,7 +30,7 @@ func Test_TokenIntrospectMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	tokenIntrospectData, err := client.User.TokenIntrospect(ctx, accessToken)
+	tokenIntrospectData, err := client.User().TokenIntrospect(ctx, accessToken)
 
 	// Assert
 	if tokenIntrospectData != nil {
@@ -73,7 +73,7 @@ func Test_TokenIntrospectUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	tokenIntrospectData, err := client.User.TokenIntrospect(ctx, accessToken)
+	tokenIntrospectData, err := client.User().TokenIntrospect(ctx, accessToken)
 
 	// Assert
 	if err == nil {
@@ -141,7 +141,7 @@ func Test_TokenIntrospect_Success(t *testing.T) {
 
 	// Act
 
-	tokenIntrospectData, err := client.User.TokenIntrospect(ctx, accessToken)
+	tokenIntrospectData, err := client.User().TokenIntrospect(ctx, accessToken)
 
 	// Assert
 	if tokenIntrospectData == nil {
