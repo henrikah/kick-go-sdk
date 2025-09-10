@@ -32,7 +32,7 @@ func Test_SendChatMessageAsUserMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	sendChatMessageData, err := client.Chat.SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData != nil {
@@ -72,7 +72,7 @@ func Test_SendChatMessageAsUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	sendChatMessageData, err := client.Chat.SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData != nil {
@@ -112,7 +112,7 @@ func Test_SendChatMessageAsUserEmptyMessage_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	sendChatMessageData, err := client.Chat.SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData != nil {
@@ -158,7 +158,7 @@ func Test_SendChatMessageAsUserUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	sendChatMessageData, err := client.Chat.SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
 
 	// Assert
 	if err == nil {
@@ -246,7 +246,7 @@ func Test_SendChatMessageAsUser_Success(t *testing.T) {
 
 	// Act
 
-	sendChatMessageData, err := client.Chat.SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData == nil {
@@ -317,7 +317,7 @@ func Test_SendChatMessageAsUserWithReplyToMessageID_Success(t *testing.T) {
 
 	// Act
 
-	sendChatMessageData, err := client.Chat.SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData == nil {

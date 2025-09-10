@@ -31,7 +31,7 @@ func Test_GetLivestreamsMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	livestreamsData, err := client.Livestream.SearchLivestreams(ctx, accessToken, filter)
+	livestreamsData, err := client.Livestream().SearchLivestreams(ctx, accessToken, filter)
 
 	// Assert
 	if livestreamsData != nil {
@@ -75,7 +75,7 @@ func Test_GetLivestreamsUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	livestreamsData, err := client.Livestream.SearchLivestreams(ctx, accessToken, filter)
+	livestreamsData, err := client.Livestream().SearchLivestreams(ctx, accessToken, filter)
 
 	// Assert
 	if err == nil {
@@ -168,7 +168,7 @@ func Test_GetLivestreams_Success(t *testing.T) {
 
 	// Act
 
-	livestreamsData, err := client.Livestream.SearchLivestreams(ctx, accessToken, filter)
+	livestreamsData, err := client.Livestream().SearchLivestreams(ctx, accessToken, filter)
 
 	// Assert
 	if livestreamsData == nil {
@@ -265,7 +265,7 @@ func Test_GetLivestreamsWithoutFilter_Success(t *testing.T) {
 
 	// Act
 
-	livestreamsData, err := client.Livestream.SearchLivestreams(ctx, accessToken, filter)
+	livestreamsData, err := client.Livestream().SearchLivestreams(ctx, accessToken, filter)
 
 	// Assert
 	if livestreamsData == nil {

@@ -20,7 +20,7 @@ type moderation interface {
 	//
 	// Example:
 	//
-	//	moderationResponse, err := client.Moderation.TimeOutUser(context.TODO(), accessToken, broadcasterID, userID, 600, nil)
+	//	moderationResponse, err := client.Moderation().TimeOutUser(context.TODO(), accessToken, broadcasterID, userID, 600, nil)
 	//	if err != nil {
 	//	    log.Printf("could not timeout user: %v", err)
 	//	    return nil, err
@@ -33,7 +33,7 @@ type moderation interface {
 	//
 	// Example:
 	//
-	//	moderationResponse, err := client.Moderation.BanUser(context.TODO(), accessToken, broadcasterID, userID, nil)
+	//	moderationResponse, err := client.Moderation().BanUser(context.TODO(), accessToken, broadcasterID, userID, nil)
 	//	if err != nil {
 	//	    log.Printf("could not ban user: %v", err)
 	//	    return nil, err
@@ -44,7 +44,7 @@ type moderation interface {
 	//
 	// Example:
 	//
-	//	moderationResponse, err := client.Moderation.UnbanUser(context.TODO(), accessToken, broadcasterID, userID)
+	//	moderationResponse, err := client.Moderation().UnbanUser(context.TODO(), accessToken, broadcasterID, userID)
 	//	if err != nil {
 	//	    log.Printf("could not unban user: %v", err)
 	//	    return nil, err

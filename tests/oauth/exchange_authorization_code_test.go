@@ -36,7 +36,7 @@ func Test_ExchangeAuthorizationCodeMissingRedirectURI_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	tokenData, err := client.OAuth.ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
+	tokenData, err := client.OAuth().ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
 	// Assert
 	if tokenData != nil {
 		t.Fatal("Expected tokenData to be nil")
@@ -74,7 +74,7 @@ func Test_ExchangeAuthorizationCodeMissingAuthorizationCode_Error(t *testing.T) 
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	tokenData, err := client.OAuth.ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
+	tokenData, err := client.OAuth().ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
 	// Assert
 	if tokenData != nil {
 		t.Fatal("Expected tokenData to be nil")
@@ -112,7 +112,7 @@ func Test_ExchangeAuthorizationCodeMissingCodeVerifier_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	tokenData, err := client.OAuth.ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
+	tokenData, err := client.OAuth().ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
 	// Assert
 	if tokenData != nil {
 		t.Fatal("Expected tokenData to be nil")
@@ -155,7 +155,7 @@ func Test_ExchangeAuthorizationCodeWrongCredentials_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	tokenData, err := client.OAuth.ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
+	tokenData, err := client.OAuth().ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
 
 	// Assert
 	if err == nil {
@@ -258,7 +258,7 @@ func Test_ExchangeAuthorizationCode_Success(t *testing.T) {
 
 	// Act
 
-	tokenData, err := client.OAuth.ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
+	tokenData, err := client.OAuth().ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
 
 	// Assert
 	if tokenData == nil {

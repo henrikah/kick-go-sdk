@@ -75,7 +75,7 @@ func Test_GetCurrentBroadcasterChannel_Success(t *testing.T) {
 
 	// Act
 
-	channelData, err := client.Channel.GetCurrentBroadcasterChannel(ctx, accessToken)
+	channelData, err := client.Channel().GetCurrentBroadcasterChannel(ctx, accessToken)
 
 	// Assert
 	if channelData == nil {

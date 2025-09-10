@@ -35,7 +35,7 @@ func Test_GetAppAccessTokenWrongCredentials_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	tokenData, err := client.OAuth.GetAppAccessToken(ctx)
+	tokenData, err := client.OAuth().GetAppAccessToken(ctx)
 
 	// Assert
 	if err == nil {
@@ -127,7 +127,7 @@ func Test_GetAppAccessToken_Success(t *testing.T) {
 
 	// Act
 
-	tokenData, err := client.OAuth.GetAppAccessToken(ctx)
+	tokenData, err := client.OAuth().GetAppAccessToken(ctx)
 
 	// Assert
 	if tokenData == nil {

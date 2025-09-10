@@ -20,7 +20,7 @@ type channel interface {
 	//
 	// Example:
 	//
-	//	channels, err := client.Channel.GetChannelsByBroadcasterUserID(context.TODO(), accessToken, []int64{123, 456})
+	//	channels, err := client.Channel().GetChannelsByBroadcasterUserID(context.TODO(), accessToken, []int64{123, 456})
 	//	if err != nil {
 	//	    log.Printf("could not get channels by broadcaster IDs: %v", err)
 	//	    return nil, err
@@ -31,7 +31,7 @@ type channel interface {
 	//
 	// Example:
 	//
-	//	channel, err := client.Channel.GetChannelByBroadcasterUserID(context.TODO(), accessToken, 123)
+	//	channel, err := client.Channel().GetChannelByBroadcasterUserID(context.TODO(), accessToken, 123)
 	//	if err != nil {
 	//	    log.Printf("could not get channel by broadcaster ID: %v", err)
 	//	    return nil, err
@@ -42,7 +42,7 @@ type channel interface {
 	//
 	// Example:
 	//
-	//	channel, err := client.Channel.GetCurrentBroadcasterChannel(context.TODO(), accessToken)
+	//	channel, err := client.Channel().GetCurrentBroadcasterChannel(context.TODO(), accessToken)
 	//	if err != nil {
 	//	    log.Printf("could not get current broadcaster channel: %v", err)
 	//	    return nil, err
@@ -53,7 +53,7 @@ type channel interface {
 	//
 	// Example:
 	//
-	//	channels, err := client.Channel.GetChannelsByBroadcasterSlug(context.TODO(), accessToken, []string{"slug1", "slug2"})
+	//	channels, err := client.Channel().GetChannelsByBroadcasterSlug(context.TODO(), accessToken, []string{"slug1", "slug2"})
 	//	if err != nil {
 	//	    log.Printf("could not get channels by slug: %v", err)
 	//	    return nil, err
@@ -64,7 +64,7 @@ type channel interface {
 	//
 	// Example:
 	//
-	//	err := client.Channel.UpdateChannel(context.TODO(), accessToken, kickapitypes.UpdateChannelRequest{...})
+	//	err := client.Channel().UpdateChannel(context.TODO(), accessToken, kickapitypes.UpdateChannelRequest{...})
 	//	if err != nil {
 	//	    log.Printf("could not update channel: %v", err)
 	//	    return err

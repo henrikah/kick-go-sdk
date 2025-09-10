@@ -20,7 +20,7 @@ type chat interface {
 	//
 	// Example:
 	//
-	//	sendChatResponse, err := client.Chat.SendChatMessageAsUser(context.TODO(), accessToken, 123, nil, "Hello chat!")
+	//	sendChatResponse, err := client.Chat().SendChatMessageAsUser(context.TODO(), accessToken, 123, nil, "Hello chat!")
 	//	if err != nil {
 	//	    log.Printf("could not send chat message: %v", err)
 	//	    return nil, err
@@ -33,7 +33,7 @@ type chat interface {
 	//
 	// Example:
 	//
-	//	sendChatResponse, err := client.Chat.SendChatMessageAsBot(context.TODO(), accessToken, nil, "Hello from bot!")
+	//	sendChatResponse, err := client.Chat().SendChatMessageAsBot(context.TODO(), accessToken, nil, "Hello from bot!")
 	//	if err != nil {
 	//	    log.Printf("could not send bot chat message: %v", err)
 	//	    return nil, err

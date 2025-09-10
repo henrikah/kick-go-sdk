@@ -29,7 +29,7 @@ func Test_GetUsersByIDMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	usersData, err := client.User.GetUsersByID(ctx, accessToken, users)
+	usersData, err := client.User().GetUsersByID(ctx, accessToken, users)
 
 	// Assert
 	if usersData != nil {
@@ -73,7 +73,7 @@ func Test_GetUsersByIDUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	usersData, err := client.User.GetUsersByID(ctx, accessToken, users)
+	usersData, err := client.User().GetUsersByID(ctx, accessToken, users)
 
 	// Assert
 	if err == nil {
@@ -146,7 +146,7 @@ func Test_GetUsersByID_Success(t *testing.T) {
 
 	// Act
 
-	usersData, err := client.User.GetUsersByID(ctx, accessToken, users)
+	usersData, err := client.User().GetUsersByID(ctx, accessToken, users)
 
 	// Assert
 	if usersData == nil {

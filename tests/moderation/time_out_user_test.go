@@ -33,7 +33,7 @@ func Test_TimeOutUserMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	timeOutUserData, err := client.Moderation.TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData != nil {
@@ -74,7 +74,7 @@ func Test_TimeOutUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	timeOutUserData, err := client.Moderation.TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData != nil {
@@ -115,7 +115,7 @@ func Test_TimeOutUserDurationTooLow_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	timeOutUserData, err := client.Moderation.TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData != nil {
@@ -156,7 +156,7 @@ func Test_TimeOutUserDurationTooHigh_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	timeOutUserData, err := client.Moderation.TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData != nil {
@@ -197,7 +197,7 @@ func Test_TimeOutUserInvalidUserID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	timeOutUserData, err := client.Moderation.TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData != nil {
@@ -244,7 +244,7 @@ func Test_TimeOutUserUnAuthorized_Error(t *testing.T) {
 
 	var apiError *kickerrors.APIError
 	// Act
-	timeOutUserData, err := client.Moderation.TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if err == nil {
@@ -330,7 +330,7 @@ func Test_TimeOutUser_Success(t *testing.T) {
 
 	// Act
 
-	timeOutUserData, err := client.Moderation.TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, reason)
 
 	// Assert
 	if timeOutUserData == nil {
@@ -395,7 +395,7 @@ func Test_TimeOutUserWithReason_Success(t *testing.T) {
 
 	// Act
 
-	timeOutUserData, err := client.Moderation.TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData == nil {
