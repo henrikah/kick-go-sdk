@@ -3,31 +3,20 @@ package kick
 import (
 	"github.com/henrikah/kick-go-sdk/internal/httpclient"
 	"github.com/henrikah/kick-go-sdk/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/kickcontracts"
 	"github.com/henrikah/kick-go-sdk/kickerrors"
 )
 
-type APIClient interface {
-	Category() category
-	Channel() channel
-	Chat() chat
-	EventsSubscription() eventsSubscription
-	Livestream() livestream
-	Moderation() moderation
-	OAuth() oAuth
-	PublicKey() publicKey
-	User() user
-}
-
 type apiClient struct {
-	category           category
-	channel            channel
-	chat               chat
-	eventsSubscription eventsSubscription
-	livestream         livestream
-	moderation         moderation
-	oAuth              oAuth
-	publicKey          publicKey
-	user               user
+	category           kickcontracts.Category
+	channel            kickcontracts.Channel
+	chat               kickcontracts.Chat
+	eventsSubscription kickcontracts.EventsSubscription
+	livestream         kickcontracts.Livestream
+	moderation         kickcontracts.Moderation
+	oAuth              kickcontracts.OAuth
+	publicKey          kickcontracts.PublicKey
+	user               kickcontracts.User
 	clientID           string
 	clientSecret       string
 	httpClient         httpclient.ClientInterface
@@ -76,30 +65,30 @@ func NewAPIClient(clientConfig kickapitypes.APIClientConfig) (*apiClient, error)
 	return client, nil
 }
 
-func (c *apiClient) Category() category {
+func (c *apiClient) Category() kickcontracts.Category {
 	return c.category
 }
-func (c *apiClient) Channel() channel {
+func (c *apiClient) Channel() kickcontracts.Channel {
 	return c.channel
 }
-func (c *apiClient) Chat() chat {
+func (c *apiClient) Chat() kickcontracts.Chat {
 	return c.chat
 }
-func (c *apiClient) EventsSubscription() eventsSubscription {
+func (c *apiClient) EventsSubscription() kickcontracts.EventsSubscription {
 	return c.eventsSubscription
 }
-func (c *apiClient) Livestream() livestream {
+func (c *apiClient) Livestream() kickcontracts.Livestream {
 	return c.livestream
 }
-func (c *apiClient) Moderation() moderation {
+func (c *apiClient) Moderation() kickcontracts.Moderation {
 	return c.moderation
 }
-func (c *apiClient) OAuth() oAuth {
+func (c *apiClient) OAuth() kickcontracts.OAuth {
 	return c.oAuth
 }
-func (c *apiClient) PublicKey() publicKey {
+func (c *apiClient) PublicKey() kickcontracts.PublicKey {
 	return c.publicKey
 }
-func (c *apiClient) User() user {
+func (c *apiClient) User() kickcontracts.User {
 	return c.user
 }
