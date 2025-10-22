@@ -12,4 +12,5 @@ const (
 	LivestreamStatusUpdated    WebhookType = "livestream.status.updated"
 	LivestreamMetadataUpdated  WebhookType = "livestream.metadata.updated"
 	ModerationBanned           WebhookType = "moderation.banned"
+	KicksGifted                WebhookType = "kicks.gifted"
 )
