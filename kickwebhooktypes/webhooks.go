@@ -61,6 +61,13 @@ type ModerationBanned struct {
 	Metadata    ModerationBannedMetadata `json:"metadata"`
 }
 
+type KicksGifted struct {
+	Broadcaster User   `json:"broadcaster"`
+	Sender      User   `json:"sender"`
+	Gift        Gift   `json:"gift"`
+	CreatedAt   string `json:"created_at"`
+}
+
 /** Body structs **/
 
 type RepliesTo struct {
@@ -117,4 +124,12 @@ type ModerationBannedMetadata struct {
 	Reason    string `json:"reason"`
 	CreatedAt string `json:"created_at"`
 	ExpiresAt string `json:"expires_at"`
+}
+
+type Gift struct {
+	Amount  int    `json:"amount"`
+	Name    string `json:"name"`
+	Type    string `json:"type"`
+	Tier    string `json:"tier"`
+	Message string `json:"message"`
 }

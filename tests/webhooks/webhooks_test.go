@@ -216,6 +216,18 @@ func TestWebhookHandlers(t *testing.T) {
 				})
 			},
 		},
+		{
+			name:    "KicksGifted",
+			webhook: kickwebhookenum.KicksGifted,
+			payload: kickwebhooktypes.KicksGifted{Sender: kickwebhooktypes.User{UserID: 123}},
+			register: func() error {
+				return client.RegisterKicksGiftedHandler(func(w http.ResponseWriter, r *http.Request, h kickwebhooktypes.KickWebhookHeaders, data kickwebhooktypes.KicksGifted) {
+					if data.Sender.UserID != 123 {
+						t.Error("wrong data")
+					}
+				})
+			},
+		},
 	}
 
 	for _, tt := range tests {

@@ -61,6 +61,10 @@ type webhook interface {
 	//
 	RegisterModerationBannedHandler(handler func(http.ResponseWriter, *http.Request, kickwebhooktypes.KickWebhookHeaders, kickwebhooktypes.ModerationBanned)) error
 
+	// RegisterKicksGiftedHandler registers a handler for KicksGifted events.
+	//
+	RegisterKicksGiftedHandler(handler func(http.ResponseWriter, *http.Request, kickwebhooktypes.KickWebhookHeaders, kickwebhooktypes.KicksGifted)) error
+
 	// WebhookHandler serves incoming webhook HTTP requests.
 	//
 	// Example:
@@ -258,6 +262,21 @@ func (c *webhookClient) RegisterModerationBannedHandler(handler func(http.Respon
 	}
 	c.handlers[kickwebhookenum.ModerationBanned] = func(writer http.ResponseWriter, request *http.Request, kickHeaders kickwebhooktypes.KickWebhookHeaders) {
 		data, err := decodeJSON[kickwebhooktypes.ModerationBanned](request)
+		if err != nil {
+			c.onError(kickerrors.SetInternalWebhookError(kickHeaders.MessageID, err))
+			return
+		}
+		handler(writer, request, kickHeaders, *data)
+	}
+	return nil
+}
+
+func (c *webhookClient) RegisterKicksGiftedHandler(handler func(http.ResponseWriter, *http.Request, kickwebhooktypes.KickWebhookHeaders, kickwebhooktypes.KicksGifted)) error {
+	if _, exists := c.handlers[kickwebhookenum.KicksGifted]; exists {
+		return kickerrors.WebhookHandlerExists("KicksGifted")
+	}
+	c.handlers[kickwebhookenum.KicksGifted] = func(writer http.ResponseWriter, request *http.Request, kickHeaders kickwebhooktypes.KickWebhookHeaders) {
+		data, err := decodeJSON[kickwebhooktypes.KicksGifted](request)
 		if err != nil {
 			c.onError(kickerrors.SetInternalWebhookError(kickHeaders.MessageID, err))
 			return
