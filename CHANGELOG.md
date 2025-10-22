@@ -1,5 +1,11 @@
 # Changelog
 
+## \[1.3.0] - 2025-10-21
+
+### Added
+
+* Added kicks.gifted to webhooks event and types
+
 All notable changes to this project will be documented in this file.
 
 ## \[1.2.1] - 2025-09-11
