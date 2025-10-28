@@ -36,6 +36,7 @@ const (
 	viewEventsSubscriptionsDetailsPath   = "public/v1/events/subscriptions"
 	registerEventsSubscriptionsPath      = "public/v1/events/subscriptions"
 	removeEventsSubscriptionsPath        = "public/v1/events/subscriptions"
+	getKicksLeaderboardPath              = "public/v1/kicks/leaderboard"
 )
 
 // UserAuthorizationURL is where the user can log in and approve the application's access request.
@@ -131,4 +132,9 @@ func RegisterEventsSubscriptionsURL() string {
 // RemoveEventsSubscriptionsURL is the url to remove webhook events subscriptions
 func RemoveEventsSubscriptionsURL() string {
 	return helpers.ConcatURL(apiHostname, removeEventsSubscriptionsPath)
+}
+
+// ViewKicksLeaderboardURL is the url to get the leaderboard for top kick gifters
+func ViewKicksLeaderboardURL() string {
+	return helpers.ConcatURL(apiHostname, getKicksLeaderboardPath)
 }
