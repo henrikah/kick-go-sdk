@@ -23,19 +23,19 @@ func TestGetKicksLeaderboardSuccess(t *testing.T) {
 				"gifted_amount": 100,
 				"rank": 1,
 				"user_id": 321,
-				"username": "TestUser",
+				"username": "TestUser"
 			}],
 			"month": [{
 				"gifted_amount": 100,
 				"rank": 1,
 				"user_id": 321,
-				"username": "TestUser",
+				"username": "TestUser"
 			}],
 			"week": [{
 				"gifted_amount": 100,
 				"rank": 1,
 				"user_id": 321,
-				"username": "TestUser",
+				"username": "TestUser"
 			}]
 		},
 		"message": "test-message"
@@ -77,7 +77,7 @@ func TestGetKicksLeaderboardSuccess(t *testing.T) {
 
 	// Assert
 	if kicksLeaderboardData == nil {
-		t.Fatal("Expected channelsData to not be nil")
+		t.Fatal("Expected kicksLeaderboardData to not be nil")
 	}
 
 	if err != nil {
