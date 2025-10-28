@@ -18,6 +18,7 @@ const (
 	StreamKeyRead   Scope = "streamkey:read"
 	EventsSubscribe Scope = "events:subscribe"
 	ModerationBan   Scope = "moderation:ban"
+	KicksRead       Scope = "kicks:read"
 )
 
 type Scopes []Scope

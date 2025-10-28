@@ -12,6 +12,7 @@ type apiClient struct {
 	channel            kickcontracts.Channel
 	chat               kickcontracts.Chat
 	eventsSubscription kickcontracts.EventsSubscription
+	kicks              kickcontracts.Kicks
 	livestream         kickcontracts.Livestream
 	moderation         kickcontracts.Moderation
 	oAuth              kickcontracts.OAuth
@@ -56,6 +57,7 @@ func NewAPIClient(clientConfig kickapitypes.APIClientConfig) (*apiClient, error)
 	client.channel = newChannelClient(client)
 	client.chat = newChatClient(client)
 	client.eventsSubscription = newEventsSubscriptionClient(client)
+	client.kicks = newKicksClient(client)
 	client.livestream = newLivestreamClient(client)
 	client.moderation = newModerationClient(client)
 	client.oAuth = newOAuthClient(client)
@@ -76,6 +78,9 @@ func (c *apiClient) Chat() kickcontracts.Chat {
 }
 func (c *apiClient) EventsSubscription() kickcontracts.EventsSubscription {
 	return c.eventsSubscription
+}
+func (c *apiClient) Kicks() kickcontracts.Kicks {
+	return c.kicks
 }
 func (c *apiClient) Livestream() kickcontracts.Livestream {
 	return c.livestream

@@ -1,4 +1,5 @@
 # Kick Go SDK
+
 [![Go Reference](https://pkg.go.dev/badge/github.com/henrikah/kick-go-sdk.svg)](https://pkg.go.dev/github.com/henrikah/kick-go-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/henrikah/kick-go-sdk)](https://github.com/henrikah/kick-go-sdk/releases)
@@ -12,11 +13,11 @@ This SDK provides clients for accessing Kick's API and for processing webhook ev
 
 ## Features
 
-* **API Client** – Access Kick API endpoints such as users, livestreams, events, and moderation.
-* **OAuth** – Support for PKCE OAuth2 flow and app access tokens.
-* **Webhook Client** – Handle incoming Kick webhook events securely using the public key.
-* **Typed Event Data** – Handlers receive typed structs for each event type.
-* **Combined Workflow** – Retrieve the webhook public key directly from the API to set up your webhook client automatically.
+- **API Client** – Access Kick API endpoints such as users, livestreams, events, and moderation.
+- **OAuth** – Support for PKCE OAuth2 flow and app access tokens.
+- **Webhook Client** – Handle incoming Kick webhook events securely using the public key.
+- **Typed Event Data** – Handlers receive typed structs for each event type.
+- **Combined Workflow** – Retrieve the webhook public key directly from the API to set up your webhook client automatically.
 
 ---
 
@@ -110,12 +111,6 @@ if err != nil {
 
 http.HandleFunc("/webhook", webhookClient.WebhookHandler)
 ```
-
----
-
-## License
-
-MIT License
 
 ---
 
