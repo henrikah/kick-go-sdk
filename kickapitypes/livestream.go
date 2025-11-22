@@ -9,6 +9,7 @@ type LivestreamResponseData struct {
 	BroadcasterUserID int      `json:"broadcaster_user_id"`
 	Category          Category `json:"category"`
 	ChannelID         int      `json:"channel_id"`
+	CustomTags        []string `json:"custom_tags"`
 	HasMatureContent  bool     `json:"has_mature_content"`
 	Language          string   `json:"language"`
 	Slug              string   `json:"slug"`
