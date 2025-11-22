@@ -132,6 +132,7 @@ func Test_GetChannelsByBroadcasterUserID_Success(t *testing.T) {
 			"channel_description": "channel-description-2",
 			"slug": "user-2-slug",
 			"stream": {
+				"custom_tags": ["some tag"],
 				"is_live": true,
 				"is_mature": true,
 				"key": "key-2",
