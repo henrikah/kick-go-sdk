@@ -104,6 +104,7 @@ func Test_GetCurrentUserLivestream_Success(t *testing.T) {
 				"thumbnail": "https://category-42"
 			},
 			"channel_id": 1,
+			"custom_tags": ["some-tag"],
 			"has_mature_content": true,
 			"language": "en",
 			"slug": "slug-1",
