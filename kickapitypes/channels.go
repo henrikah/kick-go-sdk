@@ -16,14 +16,15 @@ type ChannelData struct {
 }
 
 type ChannelStream struct {
-	IsLive      bool   `json:"is_live"`
-	IsMature    bool   `json:"is_mature"`
-	Key         string `json:"key"`
-	Language    string `json:"language"`
-	StartTime   string `json:"start_time"`
-	Thumbnail   string `json:"thumbnail"`
-	URL         string `json:"url"`
-	ViewerCount int    `json:"viewer_count"`
+	CustomTags  []string `json:"custom_tags"`
+	IsLive      bool     `json:"is_live"`
+	IsMature    bool     `json:"is_mature"`
+	Key         string   `json:"key"`
+	Language    string   `json:"language"`
+	StartTime   string   `json:"start_time"`
+	Thumbnail   string   `json:"thumbnail"`
+	URL         string   `json:"url"`
+	ViewerCount int      `json:"viewer_count"`
 }
 
 type UpdateChannelRequest struct {

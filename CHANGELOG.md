@@ -1,5 +1,11 @@
 # Changelog
 
+## \[1.5.0] - 2025-11-22
+
+### Added
+
+* Added CustomTags field to livestream and channel endpoints
+
 ## \[1.4.0] - 2025-10-28
 
 ### Added
