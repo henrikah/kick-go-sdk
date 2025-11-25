@@ -141,7 +141,9 @@ func Test_GetCategoryByCategoryID_Success(t *testing.T) {
 		"data": {
 			"id": 1,
 			"name": "test-category",
-			"thumbnail": "https://test-thumbnail"
+			"tags": ["pog", "chad"],
+			"thumbnail": "https://test-thumbnail",
+			"viewer_count": 42
 		}, "message": "test-message"
 	}`
 
@@ -190,6 +192,14 @@ func Test_GetCategoryByCategoryID_Success(t *testing.T) {
 
 	if categoryData.Data.ID != 1 {
 		t.Fatalf("Expected Data ID to be 1, got %d", categoryData.Data.ID)
+	}
+
+	if len(categoryData.Data.Tags) != 2 {
+		t.Fatalf("Expected Data Tags to be 2 entries, got %d", len(categoryData.Data.Tags))
+	}
+
+	if categoryData.Data.ViewerCount != 42 {
+		t.Fatalf("Expected Data ViewerCount to be 42, got %d", categoryData.Data.ViewerCount)
 	}
 
 	if categoryData.Message != "test-message" {
