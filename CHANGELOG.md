@@ -1,5 +1,15 @@
 # Changelog
 
+## \[1.6.0] - 2025-11-25
+
+### Added
+
+* Added Tags and ViewerCount fields to category.
+
+### Changed
+
+* Changed GetCategories data into its own type as it no longer is the same data structure as GetCategory
+
 ## \[1.5.0] - 2025-11-22
 
 ### Added
