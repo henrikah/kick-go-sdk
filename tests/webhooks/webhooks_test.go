@@ -16,6 +16,7 @@ import (
 	"testing"
 
 	"github.com/henrikah/kick-go-sdk"
+	"github.com/henrikah/kick-go-sdk/enums/kickchannelrewardstatus"
 	"github.com/henrikah/kick-go-sdk/enums/kickwebhookenum"
 	"github.com/henrikah/kick-go-sdk/kickwebhooktypes"
 )
@@ -224,6 +225,21 @@ func TestWebhookHandlers(t *testing.T) {
 				return client.RegisterKicksGiftedHandler(func(w http.ResponseWriter, r *http.Request, h kickwebhooktypes.KickWebhookHeaders, data kickwebhooktypes.KicksGifted) {
 					if data.Sender.UserID != 123 {
 						t.Error("wrong data")
+					}
+				})
+			},
+		},
+		{
+			name:    "ChannelRewardRedemptionUpdated",
+			webhook: kickwebhookenum.ChannelRewardRedemptionUpdated,
+			payload: kickwebhooktypes.ChannelRewardRedemptionUpdated{Redeemer: kickwebhooktypes.Redeemer{UserID: 123}, Status: kickchannelrewardstatus.Accepted},
+			register: func() error {
+				return client.RegisterChannelRewardRedemptionUpdatedHandler(func(w http.ResponseWriter, r *http.Request, h kickwebhooktypes.KickWebhookHeaders, data kickwebhooktypes.ChannelRewardRedemptionUpdated) {
+					if data.Redeemer.UserID != 123 {
+						t.Error("wrong data")
+					}
+					if data.Status != "accepted" {
+						t.Error("incorrect enum usage")
 					}
 				})
 			},

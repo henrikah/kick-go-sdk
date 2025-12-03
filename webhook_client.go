@@ -65,6 +65,10 @@ type webhook interface {
 	//
 	RegisterKicksGiftedHandler(handler func(http.ResponseWriter, *http.Request, kickwebhooktypes.KickWebhookHeaders, kickwebhooktypes.KicksGifted)) error
 
+	// RegisterChannelRewardRedemptionUpdatedHandler registers a handler for Channel Reward Redemption events.
+	//
+	RegisterChannelRewardRedemptionUpdatedHandler(handler func(http.ResponseWriter, *http.Request, kickwebhooktypes.KickWebhookHeaders, kickwebhooktypes.ChannelRewardRedemptionUpdated)) error
+
 	// WebhookHandler serves incoming webhook HTTP requests.
 	//
 	// Example:
@@ -277,6 +281,21 @@ func (c *webhookClient) RegisterKicksGiftedHandler(handler func(http.ResponseWri
 	}
 	c.handlers[kickwebhookenum.KicksGifted] = func(writer http.ResponseWriter, request *http.Request, kickHeaders kickwebhooktypes.KickWebhookHeaders) {
 		data, err := decodeJSON[kickwebhooktypes.KicksGifted](request)
+		if err != nil {
+			c.onError(kickerrors.SetInternalWebhookError(kickHeaders.MessageID, err))
+			return
+		}
+		handler(writer, request, kickHeaders, *data)
+	}
+	return nil
+}
+
+func (c *webhookClient) RegisterChannelRewardRedemptionUpdatedHandler(handler func(http.ResponseWriter, *http.Request, kickwebhooktypes.KickWebhookHeaders, kickwebhooktypes.ChannelRewardRedemptionUpdated)) error {
+	if _, exists := c.handlers[kickwebhookenum.ChannelRewardRedemptionUpdated]; exists {
+		return kickerrors.WebhookHandlerExists("ChannelRewardRedemptionUpdated")
+	}
+	c.handlers[kickwebhookenum.ChannelRewardRedemptionUpdated] = func(writer http.ResponseWriter, request *http.Request, kickHeaders kickwebhooktypes.KickWebhookHeaders) {
+		data, err := decodeJSON[kickwebhooktypes.ChannelRewardRedemptionUpdated](request)
 		if err != nil {
 			c.onError(kickerrors.SetInternalWebhookError(kickHeaders.MessageID, err))
 			return
