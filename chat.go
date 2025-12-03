@@ -45,6 +45,22 @@ func (c *chatClient) SendChatMessageAsBot(ctx context.Context, accessToken strin
 	return c.sendChatMessage(ctx, accessToken, chatRequest)
 }
 
+func (c *chatClient) DeleteChatMessage(ctx context.Context, accessToken string, messageID string) error {
+	if err := kickerrors.ValidateAccessToken(accessToken); err != nil {
+		return err
+	}
+	if err := kickerrors.ValidateNotEmpty("messageID", messageID); err != nil {
+		return err
+	}
+
+	err := c.client.makeDeleteRequest(ctx, endpoints.DeleteChatMessageURL(messageID), &accessToken, nil)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (c *chatClient) sendChatMessage(ctx context.Context, accessToken string, chatRequest kickapitypes.SendChatRequest) (*kickapitypes.SendChatResponse, error) {
 	if err := kickerrors.ValidateAccessToken(accessToken); err != nil {
 		return nil, err

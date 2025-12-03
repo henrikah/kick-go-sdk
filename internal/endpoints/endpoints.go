@@ -28,6 +28,7 @@ const (
 	viewChannelsDetailsPath              = "public/v1/channels"
 	updateChannelDetailsPath             = "public/v1/channels"
 	sendChatMessagePath                  = "public/v1/chat"
+	deleteChatMessagePath                = "public/v1/chat"
 	banUserPath                          = "public/v1/moderation/bans"
 	liftBanPath                          = "public/v1/moderation/bans"
 	viewLivestreamsDetailsPath           = "public/v1/livestreams"
@@ -92,6 +93,11 @@ func UpdateChannelDetailsURL() string {
 // SendChatMessageURL is the url to send a chat message to a channel
 func SendChatMessageURL() string {
 	return helpers.ConcatURL(apiHostname, sendChatMessagePath)
+}
+
+// DeleteChatMessageURL is the url to delete a chat message from a channel
+func DeleteChatMessageURL(messageID string) string {
+	return helpers.ConcatURL(apiHostname, deleteChatMessagePath, messageID)
 }
 
 // BanUserURL is the url to ban a user from a channel
