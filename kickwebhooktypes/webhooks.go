@@ -127,9 +127,10 @@ type ModerationBannedMetadata struct {
 }
 
 type Gift struct {
-	Amount  int    `json:"amount"`
-	Name    string `json:"name"`
-	Type    string `json:"type"`
-	Tier    string `json:"tier"`
-	Message string `json:"message"`
+	Amount            int    `json:"amount"`
+	Name              string `json:"name"`
+	Type              string `json:"type"`
+	Tier              string `json:"tier"`
+	Message           string `json:"message"`
+	PinnedTimeSeconds int    `json:"pinned_time_seconds"`
 }
