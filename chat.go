@@ -61,7 +61,6 @@ func (c *chatClient) DeleteChatMessage(ctx context.Context, accessToken string, 
 	return nil
 }
 
-
 func (c *chatClient) sendChatMessage(ctx context.Context, accessToken string, chatRequest kickapitypes.SendChatRequest) (*kickapitypes.SendChatResponse, error) {
 	if err := kickerrors.ValidateAccessToken(accessToken); err != nil {
 		return nil, err
