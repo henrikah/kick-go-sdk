@@ -38,6 +38,8 @@ const (
 	registerEventsSubscriptionsPath      = "public/v1/events/subscriptions"
 	removeEventsSubscriptionsPath        = "public/v1/events/subscriptions"
 	getKicksLeaderboardPath              = "public/v1/kicks/leaderboard"
+	viewChannelRewards                    = "public/v1/channels/rewards"
+	createChannelRewards                    = "public/v1/channels/rewards"
 )
 
 // UserAuthorizationURL is where the user can log in and approve the application's access request.
@@ -143,4 +145,14 @@ func RemoveEventsSubscriptionsURL() string {
 // ViewKicksLeaderboardURL is the url to get the leaderboard for top kick gifters
 func ViewKicksLeaderboardURL() string {
 	return helpers.ConcatURL(apiHostname, getKicksLeaderboardPath)
+}
+
+// ViewChannelRewards is the url to get the channel rewards for a channel
+func ViewChannelRewards() string {
+	return helpers.ConcatURL(apiHostname, viewChannelRewards)
+}
+
+// CreateChannelReward is the url to create a reward for a channel
+func CreateChannelReward() string {
+	return helpers.ConcatURL(apiHostname, createChannelRewards)
 }

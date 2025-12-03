@@ -20,6 +20,8 @@ const (
 	ModerationBan               Scope = "moderation:ban"
 	ModerationChatMessageManage Scope = "moderation:chat_message:manage"
 	KicksRead                   Scope = "kicks:read"
+	ChannelRewardsRead          Scope = "channel:rewards:read"
+	ChannelRewardsWrite         Scope = "channel:rewards:write"
 )
 
 type Scopes []Scope
