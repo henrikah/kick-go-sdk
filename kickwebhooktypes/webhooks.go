@@ -1,5 +1,7 @@
 package kickwebhooktypes
 
+import "github.com/henrikah/kick-go-sdk/enums/kickchannelrewardstatus"
+
 /** Parent structs **/
 
 type ChatMessageSent struct {
@@ -77,13 +79,13 @@ type RepliesTo struct {
 }
 
 type User struct {
-	IsAnonymous     bool      `json:"is_anonymous"`
-	UserID          int       `json:"user_id"`
-	Username        string    `json:"username"`
-	IsVerified      bool      `json:"is_verified"`
-	ProfilePictures string    `json:"profile_picture"`
-	ChannelSlug     string    `json:"channel_slug"`
-	Identity        *Identity `json:"identity"`
+	IsAnonymous    bool      `json:"is_anonymous"`
+	UserID         int       `json:"user_id"`
+	Username       string    `json:"username"`
+	IsVerified     bool      `json:"is_verified"`
+	ProfilePicture string    `json:"profile_picture"`
+	ChannelSlug    string    `json:"channel_slug"`
+	Identity       *Identity `json:"identity"`
 }
 
 type Identity struct {
@@ -133,4 +135,37 @@ type Gift struct {
 	Tier              string `json:"tier"`
 	Message           string `json:"message"`
 	PinnedTimeSeconds int    `json:"pinned_time_seconds"`
+}
+
+type ChannelRewardRedemptionUpdated struct {
+	ID          string                                      `json:"id"`
+	UserInput   string                                      `json:"user_input"`
+	Status      kickchannelrewardstatus.ChannelRewardStatus `json:"status"`
+	RedeemedAt  string                                      `json:"redeemed_at"`
+	Reward      Reward                                      `json:"reward"`
+	Redeemer    Redeemer                                    `json:"redeemer"`
+	Broadcaster Broadcaster                                 `json:"broadcaster"`
+}
+
+type Reward struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Cost        int    `json:"cost"`
+	Description string `json:"description"`
+}
+
+type Redeemer struct {
+	UserID         int    `json:"user_id"`
+	Username       string `json:"username"`
+	IsVerified     bool   `json:"is_verified"`
+	ProfilePicture string `json:"profile_picture"`
+	ChannelSlug    string `json:"channel_slug"`
+}
+
+type Broadcaster struct {
+	UserID         int    `json:"user_id"`
+	Username       string `json:"username"`
+	IsVerified     bool   `json:"is_verified"`
+	ProfilePicture string `json:"profile_picture"`
+	ChannelSlug    string `json:"channel_slug"`
 }
