@@ -10,6 +10,7 @@ import (
 type apiClient struct {
 	category           kickcontracts.Category
 	channel            kickcontracts.Channel
+	channelReward      kickcontracts.ChannelReward
 	chat               kickcontracts.Chat
 	eventsSubscription kickcontracts.EventsSubscription
 	kicks              kickcontracts.Kicks
@@ -55,6 +56,7 @@ func NewAPIClient(clientConfig kickapitypes.APIClientConfig) (*apiClient, error)
 
 	client.category = newCategoryClient(client)
 	client.channel = newChannelClient(client)
+	client.channelReward = newChannelRewardClient(client)
 	client.chat = newChatClient(client)
 	client.eventsSubscription = newEventsSubscriptionClient(client)
 	client.kicks = newKicksClient(client)
@@ -72,6 +74,9 @@ func (c *apiClient) Category() kickcontracts.Category {
 }
 func (c *apiClient) Channel() kickcontracts.Channel {
 	return c.channel
+}
+func (c *apiClient) ChannelReward() kickcontracts.ChannelReward {
+	return c.channelReward
 }
 func (c *apiClient) Chat() kickcontracts.Chat {
 	return c.chat
