@@ -1,5 +1,18 @@
 # Changelog
 
+## \[1.7.0] - 2025-12-05
+
+### Added
+
+* Added PinnedTimeSeconds to kicks.gifted webhook payload.
+* Added DeleteChatMessage endpoint.
+* Added Channel Reward Redemption to webhooks
+* Added Channel Reward endpoints to the API (GET, POST, PATCH, DELETE)
+
+### Bug Fix
+
+* Typo in ProfilePicture on User struct as it was accidentally pluralised (ProfilePictures)
+
 ## \[1.6.0] - 2025-11-25
 
 ### Added

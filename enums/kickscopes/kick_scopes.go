@@ -11,14 +11,17 @@ import (
 type Scope string
 
 const (
-	UserRead        Scope = "user:read"
-	ChannelRead     Scope = "channel:read"
-	ChannelWrite    Scope = "channel:write"
-	ChatWrite       Scope = "chat:write"
-	StreamKeyRead   Scope = "streamkey:read"
-	EventsSubscribe Scope = "events:subscribe"
-	ModerationBan   Scope = "moderation:ban"
-	KicksRead       Scope = "kicks:read"
+	UserRead                    Scope = "user:read"
+	ChannelRead                 Scope = "channel:read"
+	ChannelWrite                Scope = "channel:write"
+	ChatWrite                   Scope = "chat:write"
+	StreamKeyRead               Scope = "streamkey:read"
+	EventsSubscribe             Scope = "events:subscribe"
+	ModerationBan               Scope = "moderation:ban"
+	ModerationChatMessageManage Scope = "moderation:chat_message:manage"
+	KicksRead                   Scope = "kicks:read"
+	ChannelRewardsRead          Scope = "channel:rewards:read"
+	ChannelRewardsWrite         Scope = "channel:rewards:write"
 )
 
 type Scopes []Scope
