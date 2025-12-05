@@ -93,6 +93,16 @@ func ValidateNotNil(field string, param any) error {
 	return nil
 }
 
+func ValidateNotNilPointer[T any](field string, param *T) error {
+	if param == nil {
+		return &ValidationError{
+			Field:   field,
+			Message: "cannot be nil",
+		}
+	}
+	return nil
+}
+
 func ValidateMaxItems[T any](field string, values []T, max int) error {
 	if len(values) > max {
 		return &ValidationError{

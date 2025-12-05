@@ -28,6 +28,7 @@ const (
 	viewChannelsDetailsPath              = "public/v1/channels"
 	updateChannelDetailsPath             = "public/v1/channels"
 	sendChatMessagePath                  = "public/v1/chat"
+	deleteChatMessagePath                = "public/v1/chat"
 	banUserPath                          = "public/v1/moderation/bans"
 	liftBanPath                          = "public/v1/moderation/bans"
 	viewLivestreamsDetailsPath           = "public/v1/livestreams"
@@ -37,6 +38,10 @@ const (
 	registerEventsSubscriptionsPath      = "public/v1/events/subscriptions"
 	removeEventsSubscriptionsPath        = "public/v1/events/subscriptions"
 	getKicksLeaderboardPath              = "public/v1/kicks/leaderboard"
+	viewChannelRewards                   = "public/v1/channels/rewards"
+	createChannelReward                  = "public/v1/channels/rewards"
+	deleteChannelReward                  = "public/v1/channels/rewards"
+	updateChannelReward                  = "public/v1/channels/rewards"
 )
 
 // UserAuthorizationURL is where the user can log in and approve the application's access request.
@@ -94,6 +99,11 @@ func SendChatMessageURL() string {
 	return helpers.ConcatURL(apiHostname, sendChatMessagePath)
 }
 
+// DeleteChatMessageURL is the url to delete a chat message from a channel
+func DeleteChatMessageURL(messageID string) string {
+	return helpers.ConcatURL(apiHostname, deleteChatMessagePath, messageID)
+}
+
 // BanUserURL is the url to ban a user from a channel
 func BanUserURL() string {
 	return helpers.ConcatURL(apiHostname, banUserPath)
@@ -137,4 +147,24 @@ func RemoveEventsSubscriptionsURL() string {
 // ViewKicksLeaderboardURL is the url to get the leaderboard for top kick gifters
 func ViewKicksLeaderboardURL() string {
 	return helpers.ConcatURL(apiHostname, getKicksLeaderboardPath)
+}
+
+// ViewChannelRewardsURL is the url to get the channel rewards for a channel
+func ViewChannelRewardsURL() string {
+	return helpers.ConcatURL(apiHostname, viewChannelRewards)
+}
+
+// CreateChannelRewardURL is the url to create a reward for a channel
+func CreateChannelRewardURL() string {
+	return helpers.ConcatURL(apiHostname, createChannelReward)
+}
+
+// DeleteChannelRewardURL is the url to delete a reward for a channel
+func DeleteChannelRewardURL(rewardID string) string {
+	return helpers.ConcatURL(apiHostname, deleteChannelReward, rewardID)
+}
+
+// UpdateChannelRewardURL is the url to update a reward for a channel
+func UpdateChannelRewardURL(rewardID string) string {
+	return helpers.ConcatURL(apiHostname, updateChannelReward, rewardID)
 }

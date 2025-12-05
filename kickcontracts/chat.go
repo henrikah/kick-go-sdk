@@ -36,4 +36,15 @@ type Chat interface {
 	//	    return nil, err
 	//	}
 	SendChatMessageAsBot(ctx context.Context, accessToken string, replyToMessageID *string, message string) (*kickapitypes.SendChatResponse, error)
+
+	// DeleteChatMessage deletes the message with the corresponding message ID from the broadcasters channel.
+	//
+	// Example:
+	//
+	//	err := client.Chat().DeleteChatMessage(context.TODO(), accessToken, "message-id")
+	//	if err != nil {
+	//	    log.Printf("could not delete chat message: %v", err)
+	//	    return nil, err
+	//	}
+	DeleteChatMessage(ctx context.Context, accessToken string, messageID string) error
 }
