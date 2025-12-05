@@ -31,3 +31,14 @@ type CreateChannelReward struct {
 	ShouldRedemptionsSkipRequestQueue *bool   `json:"should_redemptions_skip_request_queue,omitempty"`
 	Title                             string  `json:"title"`
 }
+
+type UpdateChannelReward struct {
+	BackgroundColor                   *string `json:"background_color,omitempty"`
+	Cost                              *int    `json:"cost,omitempty"`
+	Description                       *string `json:"description,omitempty"`
+	IsEnabled                         *bool   `json:"is_enabled,omitempty"`
+	IsPaused                          *bool   `json:"is_paused,omitempty"`
+	IsUserInputRequired               *bool   `json:"is_user_input_required,omitempty"`
+	ShouldRedemptionsSkipRequestQueue *bool   `json:"should_redemptions_skip_request_queue,omitempty"`
+	Title                             *string `json:"title,omitempty"`
+}
