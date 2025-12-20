@@ -12,6 +12,7 @@ type LivestreamResponseData struct {
 	CustomTags        []string `json:"custom_tags"`
 	HasMatureContent  bool     `json:"has_mature_content"`
 	Language          string   `json:"language"`
+	ProfilePicture    string   `json:"profile_picture"`
 	Slug              string   `json:"slug"`
 	StartedAt         string   `json:"started_at"`
 	StreamTitle       string   `json:"stream_title"`
