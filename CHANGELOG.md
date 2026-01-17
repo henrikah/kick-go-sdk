@@ -1,5 +1,18 @@
 # Changelog
 
+## \[1.8.0] - 2026-01-17
+
+### Notes
+
+* Final release of major version 1.
+* Several endpoints used in this version have been deprecated by Kick.
+* Endpoint clients are coupled to OAuth in v1; this will be decoupled in v2.
+* No further updates or new features will be released for v1. This version is no longer maintained.
+
+### Added
+
+* Added ProfilePicture field to livestream endpoint.
+
 ## \[1.7.0] - 2025-12-05
 
 ### Added
