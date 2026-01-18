@@ -16,7 +16,7 @@ type eventsSubscriptionClient struct {
 	client *apiClient
 }
 
-func newEventsSubscriptionClient(client *apiClient) kickcontracts.EventsSubscription {
+func newEventsSubscriptionService(client *apiClient) kickcontracts.EventsSubscription {
 	return &eventsSubscriptionClient{
 		client: client,
 	}
@@ -29,7 +29,7 @@ func (c *eventsSubscriptionClient) GetEventSubscriptions(ctx context.Context, ac
 
 	var result kickapitypes.EventSubscription
 
-	err := c.client.makeJSONRequest(ctx, http.MethodGet, endpoints.ViewEventsSubscriptionsDetailsURL(), nil, &accessToken, &result)
+	err := c.client.requester.MakeJSONRequest(ctx, http.MethodGet, endpoints.ViewEventsSubscriptionsDetailsURL(), nil, &accessToken, &result)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (c *eventsSubscriptionClient) createEventSubscriptions(ctx context.Context,
 	}
 
 	var createEventSubscriptionsResponse kickapitypes.CreateEventSubscriptionsResponse
-	err := c.client.makeJSONRequest(ctx, http.MethodPost, endpoints.ViewEventsSubscriptionsDetailsURL(), createEventSubscriptionsRequest, &accessToken, &createEventSubscriptionsResponse)
+	err := c.client.requester.MakeJSONRequest(ctx, http.MethodPost, endpoints.ViewEventsSubscriptionsDetailsURL(), createEventSubscriptionsRequest, &accessToken, &createEventSubscriptionsResponse)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (c *eventsSubscriptionClient) DeleteEventSubscriptions(ctx context.Context,
 	}
 	deleteEventsSubscriptionsURL.RawQuery = queryParams.Encode()
 
-	err = c.client.makeDeleteRequest(ctx, deleteEventsSubscriptionsURL.String(), &accessToken, nil)
+	err = c.client.requester.MakeDeleteRequest(ctx, deleteEventsSubscriptionsURL.String(), &accessToken, nil)
 	if err != nil {
 		return err
 	}

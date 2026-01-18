@@ -8,25 +8,22 @@ import (
 	"github.com/henrikah/kick-go-sdk/kickerrors"
 )
 
-// LivestreamFilterBuilder is a fluent builder for constructing filters when searching livestreams.
-//
-// Use the builder to safely configure filters and pass it directly into
-// client methods such as livestream.SearchLivestreams.
-type LivestreamFilterBuilder interface {
+// LivestreamsFilter is a fluent builder for constructing filters when searching livestreams.
+type LivestreamsFilter interface {
 	// WithBroadcasterUserIDs filters by one or more broadcaster user IDs.
-	WithBroadcasterUserIDs(ids []int64) LivestreamFilterBuilder
+	WithBroadcasterUserIDs(ids []int64) LivestreamsFilter
 
 	// WithCategoryID filters by a specific category ID.
-	WithCategoryID(id int64) LivestreamFilterBuilder
+	WithCategoryID(id int64) LivestreamsFilter
 
 	// WithLanguage filters by language code (e.g., "en").
-	WithLanguage(language string) LivestreamFilterBuilder
+	WithLanguage(language string) LivestreamsFilter
 
 	// WithLimit limits the number of results (1–100).
-	WithLimit(limit int) LivestreamFilterBuilder
+	WithLimit(limit int) LivestreamsFilter
 
 	// WithSortBy sorts results by the given field.
-	WithSortBy(sort kicksortbyenum.SortBy) LivestreamFilterBuilder
+	WithSortBy(sort kicksortbyenum.SortBy) LivestreamsFilter
 
 	// ToQueryString converts the builder into a query string for the API call.
 	//
@@ -34,7 +31,7 @@ type LivestreamFilterBuilder interface {
 	ToQueryString() (url.Values, error)
 }
 
-type livestreamFilter struct {
+type livestreams struct {
 	BroadcasterUserIDs []int64
 	CategoryID         *int64
 	Language           *string
@@ -42,15 +39,15 @@ type livestreamFilter struct {
 	SortBy             *kicksortbyenum.SortBy
 }
 
-type livestreamFilterBuilder struct {
-	filter livestreamFilter
+type livestreamsFilter struct {
+	filter livestreams
 }
 
-// NewLivestreamFilterBuilder creates a new builder for livestream filters.
+// NewLivestreamsFilter creates a new builder for livestream filters.
 //
 // Example:
 //
-//	filters := kickfilters.NewLivestreamFilterBuilder().
+//	filters := kickfilters.NewLivestreamsFilter().
 //	    WithCategoryID(42).
 //	    WithLanguage("en").
 //	    WithLimit(20)
@@ -58,40 +55,39 @@ type livestreamFilterBuilder struct {
 //	query, err := filters.ToQueryString()
 //	if err != nil {
 //	    log.Printf("could not build query string: %v", err)
-//	    return nil, err
 //	}
-func NewLivestreamFilterBuilder() LivestreamFilterBuilder {
-	return &livestreamFilterBuilder{
-		filter: livestreamFilter{},
+func NewLivestreamsFilter() LivestreamsFilter {
+	return &livestreamsFilter{
+		filter: livestreams{},
 	}
 }
 
-func (f *livestreamFilterBuilder) WithBroadcasterUserIDs(ids []int64) LivestreamFilterBuilder {
+func (f *livestreamsFilter) WithBroadcasterUserIDs(ids []int64) LivestreamsFilter {
 	f.filter.BroadcasterUserIDs = ids
 	return f
 }
 
-func (f *livestreamFilterBuilder) WithCategoryID(id int64) LivestreamFilterBuilder {
+func (f *livestreamsFilter) WithCategoryID(id int64) LivestreamsFilter {
 	f.filter.CategoryID = &id
 	return f
 }
 
-func (f *livestreamFilterBuilder) WithLanguage(language string) LivestreamFilterBuilder {
+func (f *livestreamsFilter) WithLanguage(language string) LivestreamsFilter {
 	f.filter.Language = &language
 	return f
 }
 
-func (f *livestreamFilterBuilder) WithLimit(limit int) LivestreamFilterBuilder {
+func (f *livestreamsFilter) WithLimit(limit int) LivestreamsFilter {
 	f.filter.Limit = &limit
 	return f
 }
 
-func (f *livestreamFilterBuilder) WithSortBy(sort kicksortbyenum.SortBy) LivestreamFilterBuilder {
+func (f *livestreamsFilter) WithSortBy(sort kicksortbyenum.SortBy) LivestreamsFilter {
 	f.filter.SortBy = &sort
 	return f
 }
 
-func (f *livestreamFilterBuilder) ToQueryString() (url.Values, error) {
+func (f *livestreamsFilter) ToQueryString() (url.Values, error) {
 	values := url.Values{}
 	for _, id := range f.filter.BroadcasterUserIDs {
 		if id < 1 {

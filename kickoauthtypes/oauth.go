@@ -1,4 +1,4 @@
-package kickapitypes
+package kickoauthtypes
 
 import "github.com/henrikah/kick-go-sdk/enums/kickscopes"
 
@@ -19,4 +19,17 @@ type CodeExchangeResponse struct {
 type InitiateAuthorizationData struct {
 	AuthorizationURL string
 	PKCEVerifier     string
+}
+
+type TokenIntrospectData struct {
+	Active    bool              `json:"active,omitempty"`
+	ClientID  string            `json:"client_id,omitempty"`
+	Expires   int               `json:"exp,omitempty"`
+	Scopes    kickscopes.Scopes `json:"scope,omitempty"`
+	TokenType string            `json:"token_type,omitempty"`
+}
+
+type TokenIntrospect struct {
+	Data    TokenIntrospectData `json:"data,omitempty"`
+	Message string              `json:"message,omitempty"`
 }

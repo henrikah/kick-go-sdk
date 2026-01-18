@@ -5,7 +5,5 @@ import (
 )
 
 type APIClientConfig struct {
-	ClientID     string
-	ClientSecret string
-	HTTPClient   httpclient.ClientInterface
+	HTTPClient httpclient.ClientInterface
 }

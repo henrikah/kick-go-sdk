@@ -15,23 +15,20 @@ import (
 
 func Test_GetLivestreamsMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
-	filter := kickfilters.NewLivestreamFilterBuilder().WithBroadcasterUserIDs([]int64{1, 2}).WithCategoryID(42).WithLanguage("en").WithLimit(69).WithSortBy(kicksortbyenum.SortByViewerCount)
+	filter := kickfilters.NewLivestreamsFilter().WithBroadcasterUserIDs([]int64{1, 2}).WithCategoryID(42).WithLanguage("en").WithLimit(69).WithSortBy(kicksortbyenum.SortByViewerCount)
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	livestreamsData, err := client.Livestream().SearchLivestreams(ctx, accessToken, filter)
+	livestreamsData, err := client.Livestream().SearchLivestreams(t.Context(), accessToken, filter)
 
 	// Assert
 	if livestreamsData != nil {
@@ -55,10 +52,8 @@ func Test_GetLivestreamsUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
-	filter := kickfilters.NewLivestreamFilterBuilder().WithBroadcasterUserIDs([]int64{1, 2}).WithCategoryID(42).WithLanguage("en").WithLimit(69).WithSortBy(kicksortbyenum.SortByViewerCount)
+	filter := kickfilters.NewLivestreamsFilter().WithBroadcasterUserIDs([]int64{1, 2}).WithCategoryID(42).WithLanguage("en").WithLimit(69).WithSortBy(kicksortbyenum.SortByViewerCount)
 
 	mockClient := &mocks.MockHTTPClient{
 		DoFunc: func(req *http.Request) (*http.Response, error) {
@@ -67,15 +62,13 @@ func Test_GetLivestreamsUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	livestreamsData, err := client.Livestream().SearchLivestreams(ctx, accessToken, filter)
+	livestreamsData, err := client.Livestream().SearchLivestreams(t.Context(), accessToken, filter)
 
 	// Assert
 	if err == nil {
@@ -93,12 +86,8 @@ func Test_GetLivestreamsUnAuthorized_Error(t *testing.T) {
 
 func Test_GetLivestreams_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
-	filter := kickfilters.NewLivestreamFilterBuilder().WithBroadcasterUserIDs([]int64{1, 2}).WithCategoryID(42).WithLanguage("en").WithLimit(69).WithSortBy(kicksortbyenum.SortByViewerCount)
+	filter := kickfilters.NewLivestreamsFilter().WithBroadcasterUserIDs([]int64{1, 2}).WithCategoryID(42).WithLanguage("en").WithLimit(69).WithSortBy(kicksortbyenum.SortByViewerCount)
 
 	expectedJSON := `{
 		"data": [{
@@ -159,16 +148,14 @@ func Test_GetLivestreams_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	livestreamsData, err := client.Livestream().SearchLivestreams(ctx, accessToken, filter)
+	livestreamsData, err := client.Livestream().SearchLivestreams(t.Context(), accessToken, filter)
 
 	// Assert
 	if livestreamsData == nil {
@@ -190,12 +177,8 @@ func Test_GetLivestreams_Success(t *testing.T) {
 
 func Test_GetLivestreamsWithoutFilter_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
-	var filter kickfilters.LivestreamFilterBuilder = nil
+	var filter kickfilters.LivestreamsFilter = nil
 
 	expectedJSON := `{
 		"data": [{
@@ -256,16 +239,14 @@ func Test_GetLivestreamsWithoutFilter_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	livestreamsData, err := client.Livestream().SearchLivestreams(ctx, accessToken, filter)
+	livestreamsData, err := client.Livestream().SearchLivestreams(t.Context(), accessToken, filter)
 
 	// Assert
 	if livestreamsData == nil {

@@ -7,7 +7,6 @@ type APIClient interface {
 	EventsSubscription() EventsSubscription
 	Livestream() Livestream
 	Moderation() Moderation
-	OAuth() OAuth
 	PublicKey() PublicKey
 	User() User
 }

@@ -16,7 +16,7 @@ type channelClient struct {
 	client *apiClient
 }
 
-func newChannelClient(client *apiClient) kickcontracts.Channel {
+func newChannelService(client *apiClient) kickcontracts.Channel {
 	return &channelClient{
 		client: client,
 	}
@@ -43,7 +43,7 @@ func (c *channelClient) GetChannelsByBroadcasterUserID(ctx context.Context, acce
 
 	var channelsData kickapitypes.Channels
 
-	if err = c.client.makeJSONRequest(ctx, http.MethodGet, channelsURL.String(), nil, &accessToken, &channelsData); err != nil {
+	if err = c.client.requester.MakeJSONRequest(ctx, http.MethodGet, channelsURL.String(), nil, &accessToken, &channelsData); err != nil {
 		return nil, err
 	}
 
@@ -85,7 +85,7 @@ func (c *channelClient) GetChannelsByBroadcasterSlug(ctx context.Context, access
 
 	var channelsData kickapitypes.Channels
 
-	if err = c.client.makeJSONRequest(ctx, http.MethodGet, channelsURL.String(), nil, &accessToken, &channelsData); err != nil {
+	if err = c.client.requester.MakeJSONRequest(ctx, http.MethodGet, channelsURL.String(), nil, &accessToken, &channelsData); err != nil {
 		return nil, err
 	}
 
@@ -105,7 +105,7 @@ func (c *channelClient) UpdateChannel(ctx context.Context, accessToken string, u
 		return err
 	}
 
-	if err = c.client.makeJSONRequest(ctx, http.MethodPatch, channelURL.String(), updateChannelData, &accessToken, nil); err != nil {
+	if err = c.client.requester.MakeJSONRequest(ctx, http.MethodPatch, channelURL.String(), updateChannelData, &accessToken, nil); err != nil {
 		return err
 	}
 

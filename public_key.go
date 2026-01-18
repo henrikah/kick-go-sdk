@@ -12,7 +12,7 @@ type publicKeyClient struct {
 	client *apiClient
 }
 
-func newPublicKeyClient(client *apiClient) kickcontracts.PublicKey {
+func newPublicKeyService(client *apiClient) kickcontracts.PublicKey {
 	return &publicKeyClient{
 		client: client,
 	}
@@ -20,7 +20,7 @@ func newPublicKeyClient(client *apiClient) kickcontracts.PublicKey {
 func (c *publicKeyClient) GetWebhookPublicKey(ctx context.Context) (*kickapitypes.PublicKeyResponse, error) {
 	var publicKeyResponse kickapitypes.PublicKeyResponse
 
-	if err := c.client.makeGetRequest(ctx, endpoints.ViewWebhookPublicKeyURL(), nil, &publicKeyResponse); err != nil {
+	if err := c.client.requester.MakeGetRequest(ctx, endpoints.ViewWebhookPublicKeyURL(), nil, &publicKeyResponse); err != nil {
 		return nil, err
 	}
 

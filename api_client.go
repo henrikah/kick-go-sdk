@@ -1,10 +1,9 @@
 package kick
 
 import (
-	"github.com/henrikah/kick-go-sdk/internal/httpclient"
+	"github.com/henrikah/kick-go-sdk/internal/transport"
 	"github.com/henrikah/kick-go-sdk/kickapitypes"
 	"github.com/henrikah/kick-go-sdk/kickcontracts"
-	"github.com/henrikah/kick-go-sdk/kickerrors"
 )
 
 type apiClient struct {
@@ -16,12 +15,9 @@ type apiClient struct {
 	kicks              kickcontracts.Kicks
 	livestream         kickcontracts.Livestream
 	moderation         kickcontracts.Moderation
-	oAuth              kickcontracts.OAuth
 	publicKey          kickcontracts.PublicKey
 	user               kickcontracts.User
-	clientID           string
-	clientSecret       string
-	httpClient         httpclient.ClientInterface
+	requester          *transport.Requester
 }
 
 // NewAPIClient creates a new APIClient instance with the provided configuration.
@@ -29,42 +25,31 @@ type apiClient struct {
 // Example:
 //
 //	apiClient, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
-//		ClientID:     "your-client-id",
-//		ClientSecret: "your-client-secret",
 //		HTTPClient:   http.DefaultClient,
 //	})
 //	if err != nil {
 //		log.Fatalf("could not create APIClient: %v", err)
 //	}
 func NewAPIClient(clientConfig kickapitypes.APIClientConfig) (*apiClient, error) {
-	if err := kickerrors.ValidateNotEmpty("ClientID", clientConfig.ClientID); err != nil {
-		return nil, err
-	}
-	if err := kickerrors.ValidateNotEmpty("ClientSecret", clientConfig.ClientSecret); err != nil {
-		return nil, err
-	}
-
-	if err := kickerrors.ValidateNotNil("HTTPClient", clientConfig.HTTPClient); err != nil {
+	requester, err := transport.NewRequester(clientConfig.HTTPClient)
+	if err != nil {
 		return nil, err
 	}
 
 	client := &apiClient{
-		clientID:     clientConfig.ClientID,
-		clientSecret: clientConfig.ClientSecret,
-		httpClient:   clientConfig.HTTPClient,
+		requester: requester,
 	}
 
-	client.category = newCategoryClient(client)
-	client.channel = newChannelClient(client)
-	client.channelReward = newChannelRewardClient(client)
-	client.chat = newChatClient(client)
-	client.eventsSubscription = newEventsSubscriptionClient(client)
-	client.kicks = newKicksClient(client)
-	client.livestream = newLivestreamClient(client)
-	client.moderation = newModerationClient(client)
-	client.oAuth = newOAuthClient(client)
-	client.publicKey = newPublicKeyClient(client)
-	client.user = newUserClient(client)
+	client.category = newCategoryService(client)
+	client.channel = newChannelService(client)
+	client.channelReward = newChannelRewardService(client)
+	client.chat = newChatService(client)
+	client.eventsSubscription = newEventsSubscriptionService(client)
+	client.kicks = newKicksService(client)
+	client.livestream = newLivestreamService(client)
+	client.moderation = newModerationService(client)
+	client.publicKey = newPublicKeyService(client)
+	client.user = newUserService(client)
 
 	return client, nil
 }
@@ -72,33 +57,39 @@ func NewAPIClient(clientConfig kickapitypes.APIClientConfig) (*apiClient, error)
 func (c *apiClient) Category() kickcontracts.Category {
 	return c.category
 }
+
 func (c *apiClient) Channel() kickcontracts.Channel {
 	return c.channel
 }
+
 func (c *apiClient) ChannelReward() kickcontracts.ChannelReward {
 	return c.channelReward
 }
+
 func (c *apiClient) Chat() kickcontracts.Chat {
 	return c.chat
 }
+
 func (c *apiClient) EventsSubscription() kickcontracts.EventsSubscription {
 	return c.eventsSubscription
 }
+
 func (c *apiClient) Kicks() kickcontracts.Kicks {
 	return c.kicks
 }
+
 func (c *apiClient) Livestream() kickcontracts.Livestream {
 	return c.livestream
 }
+
 func (c *apiClient) Moderation() kickcontracts.Moderation {
 	return c.moderation
 }
-func (c *apiClient) OAuth() kickcontracts.OAuth {
-	return c.oAuth
-}
+
 func (c *apiClient) PublicKey() kickcontracts.PublicKey {
 	return c.publicKey
 }
+
 func (c *apiClient) User() kickcontracts.User {
 	return c.user
 }

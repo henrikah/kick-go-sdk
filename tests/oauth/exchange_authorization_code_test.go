@@ -11,8 +11,8 @@ import (
 
 	"github.com/henrikah/kick-go-sdk"
 	"github.com/henrikah/kick-go-sdk/enums/kickscopes"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
 	"github.com/henrikah/kick-go-sdk/kickerrors"
+	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
 	"github.com/henrikah/kick-go-sdk/tests/mocks"
 )
 
@@ -20,23 +20,22 @@ func Test_ExchangeAuthorizationCodeMissingRedirectURI_Error(t *testing.T) {
 	// Arrange
 	httpClient := http.DefaultClient
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
-	ctx := t.Context()
 	redirectURI := ""
 	authorizationCode := "authorization-code"
 	codeVerifier := "code-verifier"
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	tokenData, err := client.OAuth().ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
+	tokenData, err := client.ExchangeAuthorizationCode(t.Context(), redirectURI, authorizationCode, codeVerifier)
 	// Assert
 	if tokenData != nil {
 		t.Fatal("Expected tokenData to be nil")
@@ -58,23 +57,22 @@ func Test_ExchangeAuthorizationCodeMissingAuthorizationCode_Error(t *testing.T) 
 	// Arrange
 	httpClient := http.DefaultClient
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
-	ctx := t.Context()
 	redirectURI := "http://localhost"
 	authorizationCode := ""
 	codeVerifier := "code-verifier"
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	tokenData, err := client.OAuth().ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
+	tokenData, err := client.ExchangeAuthorizationCode(t.Context(), redirectURI, authorizationCode, codeVerifier)
 	// Assert
 	if tokenData != nil {
 		t.Fatal("Expected tokenData to be nil")
@@ -96,23 +94,22 @@ func Test_ExchangeAuthorizationCodeMissingCodeVerifier_Error(t *testing.T) {
 	// Arrange
 	httpClient := http.DefaultClient
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
-	ctx := t.Context()
 	redirectURI := "http://localhost"
 	authorizationCode := "authorization-code"
 	codeVerifier := ""
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	tokenData, err := client.OAuth().ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
+	tokenData, err := client.ExchangeAuthorizationCode(t.Context(), redirectURI, authorizationCode, codeVerifier)
 	// Assert
 	if tokenData != nil {
 		t.Fatal("Expected tokenData to be nil")
@@ -135,7 +132,6 @@ func Test_ExchangeAuthorizationCodeWrongCredentials_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"error": "Invalid request"}`
 
-	ctx := t.Context()
 	redirectURI := "http://localhost"
 	authorizationCode := "authorization-code"
 	codeVerifier := "code-verifier"
@@ -146,16 +142,16 @@ func Test_ExchangeAuthorizationCodeWrongCredentials_Error(t *testing.T) {
 		},
 	}
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	tokenData, err := client.OAuth().ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
+	tokenData, err := client.ExchangeAuthorizationCode(t.Context(), redirectURI, authorizationCode, codeVerifier)
 
 	// Assert
 	if err == nil {
@@ -173,7 +169,6 @@ func Test_ExchangeAuthorizationCodeWrongCredentials_Error(t *testing.T) {
 
 func Test_ExchangeAuthorizationCode_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	clientID := "test-id"
 	clientSecret := "test-secret"
 	redirectURI := "http://localhost"
@@ -248,17 +243,17 @@ func Test_ExchangeAuthorizationCode_Success(t *testing.T) {
 		},
 	}
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	// Act
 
-	tokenData, err := client.OAuth().ExchangeAuthorizationCode(ctx, redirectURI, authorizationCode, codeVerifier)
+	tokenData, err := client.ExchangeAuthorizationCode(t.Context(), redirectURI, authorizationCode, codeVerifier)
 
 	// Assert
 	if tokenData == nil {

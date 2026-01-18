@@ -17,10 +17,21 @@ type Chat interface {
 	//
 	// Example:
 	//
+	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+	//	    HTTPClient: http.DefaultClient,
+	//	})
+	//	if err != nil {
+	//	    log.Fatal(err)
+	//	}
+	//
 	//	sendChatResponse, err := client.Chat().SendChatMessageAsUser(context.TODO(), accessToken, 123, nil, "Hello chat!")
 	//	if err != nil {
-	//	    log.Printf("could not send chat message: %v", err)
-	//	    return nil, err
+	//		var apiErr *kickerrors.APIError
+	//		if errors.As(err, &apiErr) {
+	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	//		} else {
+	//			log.Printf("internal error: %v", err)
+	//		}
 	//	}
 	SendChatMessageAsUser(ctx context.Context, accessToken string, broadcasterUserID int, replyToMessageID *string, message string) (*kickapitypes.SendChatResponse, error)
 
@@ -30,10 +41,21 @@ type Chat interface {
 	//
 	// Example:
 	//
+	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+	//	    HTTPClient: http.DefaultClient,
+	//	})
+	//	if err != nil {
+	//	    log.Fatal(err)
+	//	}
+	//
 	//	sendChatResponse, err := client.Chat().SendChatMessageAsBot(context.TODO(), accessToken, nil, "Hello from bot!")
 	//	if err != nil {
-	//	    log.Printf("could not send bot chat message: %v", err)
-	//	    return nil, err
+	//		var apiErr *kickerrors.APIError
+	//		if errors.As(err, &apiErr) {
+	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	//		} else {
+	//			log.Printf("internal error: %v", err)
+	//		}
 	//	}
 	SendChatMessageAsBot(ctx context.Context, accessToken string, replyToMessageID *string, message string) (*kickapitypes.SendChatResponse, error)
 
@@ -41,10 +63,22 @@ type Chat interface {
 	//
 	// Example:
 	//
+	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+	//	    HTTPClient: http.DefaultClient,
+	//	})
+	//	if err != nil {
+	//	    log.Fatal(err)
+	//	}
+	//
+
 	//	err := client.Chat().DeleteChatMessage(context.TODO(), accessToken, "message-id")
 	//	if err != nil {
-	//	    log.Printf("could not delete chat message: %v", err)
-	//	    return nil, err
+	//		var apiErr *kickerrors.APIError
+	//		if errors.As(err, &apiErr) {
+	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	//		} else {
+	//			log.Printf("internal error: %v", err)
+	//		}
 	//	}
 	DeleteChatMessage(ctx context.Context, accessToken string, messageID string) error
 }

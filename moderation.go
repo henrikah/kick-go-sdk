@@ -14,7 +14,7 @@ type moderationClient struct {
 	client *apiClient
 }
 
-func newModerationClient(client *apiClient) kickcontracts.Moderation {
+func newModerationService(client *apiClient) kickcontracts.Moderation {
 	return &moderationClient{
 		client: client,
 	}
@@ -61,7 +61,7 @@ func (c *moderationClient) moderateUser(ctx context.Context, accessToken string,
 
 	var moderationResponse kickapitypes.ModerationResponse
 
-	if err := c.client.makeJSONRequest(ctx, http.MethodPost, endpoints.BanUserURL(), moderationRequest, &accessToken, &moderationResponse); err != nil {
+	if err := c.client.requester.MakeJSONRequest(ctx, http.MethodPost, endpoints.BanUserURL(), moderationRequest, &accessToken, &moderationResponse); err != nil {
 		return nil, err
 	}
 
@@ -86,7 +86,7 @@ func (c *moderationClient) UnbanUser(ctx context.Context, accessToken string, br
 
 	var moderationResponse kickapitypes.ModerationResponse
 
-	if err := c.client.makeJSONRequest(ctx, http.MethodDelete, endpoints.LiftBanURL(), moderationRequest, &accessToken, &moderationResponse); err != nil {
+	if err := c.client.requester.MakeJSONRequest(ctx, http.MethodDelete, endpoints.LiftBanURL(), moderationRequest, &accessToken, &moderationResponse); err != nil {
 		return nil, err
 	}
 
