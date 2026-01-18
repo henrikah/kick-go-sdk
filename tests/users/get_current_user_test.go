@@ -11,10 +11,6 @@ import (
 
 func Test_GetCurrentUser_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 
 	expectedJSON := `{
@@ -50,16 +46,14 @@ func Test_GetCurrentUser_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	userData, err := client.User().GetCurrentUser(ctx, accessToken)
+	userData, err := client.User().GetCurrentUser(t.Context(), accessToken)
 
 	// Assert
 	if userData == nil {

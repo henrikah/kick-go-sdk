@@ -14,7 +14,6 @@ import (
 
 func Test_SendChatMessageAsUserMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
@@ -23,16 +22,14 @@ func Test_SendChatMessageAsUserMissingAccessToken_Error(t *testing.T) {
 	message := "test-message"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(t.Context(), accessToken, broadcasterUserID, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData != nil {
@@ -54,7 +51,6 @@ func Test_SendChatMessageAsUserMissingAccessToken_Error(t *testing.T) {
 
 func Test_SendChatMessageAsUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -63,16 +59,14 @@ func Test_SendChatMessageAsUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	message := "test-message"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(t.Context(), accessToken, broadcasterUserID, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData != nil {
@@ -94,7 +88,6 @@ func Test_SendChatMessageAsUserInvalidBroadcasterUserID_Error(t *testing.T) {
 
 func Test_SendChatMessageAsUserEmptyMessage_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -103,16 +96,14 @@ func Test_SendChatMessageAsUserEmptyMessage_Error(t *testing.T) {
 	message := ""
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(t.Context(), accessToken, broadcasterUserID, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData != nil {
@@ -136,8 +127,6 @@ func Test_SendChatMessageAsUserUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	replyToMessageID := "test-reply-message"
@@ -150,15 +139,13 @@ func Test_SendChatMessageAsUserUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(t.Context(), accessToken, broadcasterUserID, &replyToMessageID, message)
 
 	// Assert
 	if err == nil {
@@ -176,10 +163,6 @@ func Test_SendChatMessageAsUserUnAuthorized_Error(t *testing.T) {
 
 func Test_SendChatMessageAsUser_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	var replyToMessageID *string = nil
@@ -237,16 +220,14 @@ func Test_SendChatMessageAsUser_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(t.Context(), accessToken, broadcasterUserID, replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData == nil {
@@ -268,10 +249,6 @@ func Test_SendChatMessageAsUser_Success(t *testing.T) {
 
 func Test_SendChatMessageAsUserWithReplyToMessageID_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	replyToMessageID := "test-reply-message"
@@ -308,16 +285,14 @@ func Test_SendChatMessageAsUserWithReplyToMessageID_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(ctx, accessToken, broadcasterUserID, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(t.Context(), accessToken, broadcasterUserID, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData == nil {

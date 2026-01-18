@@ -13,23 +13,20 @@ import (
 
 func Test_GetChannelsByBroadcasterSlugMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
 	slugs := []string{"slug-1", "slug-2"}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	channelsData, err := client.Channel().GetChannelsByBroadcasterSlug(ctx, accessToken, slugs)
+	channelsData, err := client.Channel().GetChannelsByBroadcasterSlug(t.Context(), accessToken, slugs)
 
 	// Assert
 	if channelsData != nil {
@@ -53,8 +50,6 @@ func Test_GetChannelsByBroadcasterSlugUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	slugs := []string{"slug-1", "slug-2"}
 
@@ -65,15 +60,13 @@ func Test_GetChannelsByBroadcasterSlugUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	channelsData, err := client.Channel().GetChannelsByBroadcasterSlug(ctx, accessToken, slugs)
+	channelsData, err := client.Channel().GetChannelsByBroadcasterSlug(t.Context(), accessToken, slugs)
 
 	// Assert
 	if err == nil {
@@ -91,10 +84,6 @@ func Test_GetChannelsByBroadcasterSlugUnAuthorized_Error(t *testing.T) {
 
 func Test_GetChannelsByBroadcasterSlug_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	slugs := []string{"slug-1", "slug-2"}
 
@@ -169,16 +158,14 @@ func Test_GetChannelsByBroadcasterSlug_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	channelsData, err := client.Channel().GetChannelsByBroadcasterSlug(ctx, accessToken, slugs)
+	channelsData, err := client.Channel().GetChannelsByBroadcasterSlug(t.Context(), accessToken, slugs)
 
 	// Assert
 	if channelsData == nil {

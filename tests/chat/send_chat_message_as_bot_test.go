@@ -14,7 +14,6 @@ import (
 
 func Test_SendChatMessageAsBotMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
@@ -22,16 +21,14 @@ func Test_SendChatMessageAsBotMissingAccessToken_Error(t *testing.T) {
 	message := "test-message"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(t.Context(), accessToken, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData != nil {
@@ -53,7 +50,6 @@ func Test_SendChatMessageAsBotMissingAccessToken_Error(t *testing.T) {
 
 func Test_SendChatMessageAsBotEmptyMessage_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -61,16 +57,14 @@ func Test_SendChatMessageAsBotEmptyMessage_Error(t *testing.T) {
 	message := ""
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(t.Context(), accessToken, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData != nil {
@@ -94,8 +88,6 @@ func Test_SendChatMessageAsBotUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	replyToMessageID := "test-reply-message"
 	message := "test-message"
@@ -107,15 +99,13 @@ func Test_SendChatMessageAsBotUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(t.Context(), accessToken, &replyToMessageID, message)
 
 	// Assert
 	if err == nil {
@@ -133,10 +123,6 @@ func Test_SendChatMessageAsBotUnAuthorized_Error(t *testing.T) {
 
 func Test_SendChatMessageAsBot_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	var replyToMessageID *string = nil
 	message := "test-message"
@@ -193,16 +179,14 @@ func Test_SendChatMessageAsBot_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(ctx, accessToken, replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(t.Context(), accessToken, replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData == nil {
@@ -224,10 +208,6 @@ func Test_SendChatMessageAsBot_Success(t *testing.T) {
 
 func Test_SendChatMessageAsBotWithReplyToMessageID_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	replyToMessageID := "test-reply-message"
 	message := "test-message"
@@ -263,16 +243,14 @@ func Test_SendChatMessageAsBotWithReplyToMessageID_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(ctx, accessToken, &replyToMessageID, message)
+	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(t.Context(), accessToken, &replyToMessageID, message)
 
 	// Assert
 	if sendChatMessageData == nil {

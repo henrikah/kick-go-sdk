@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/henrikah/kick-go-sdk/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/kickfilters"
 )
 
 // Category handles operations related to Kick categories.
@@ -11,25 +12,30 @@ import (
 // All examples use context.TODO() as a placeholder. Replace with a proper
 // context (with timeout/cancel) in production code.
 type Category interface {
-	// SearchCategories gets all the categories associated with the searchQuery.
+	// SearchCategories gets all the categories associated with the applied filter.
 	//
 	// Example:
 	//
-	//	categories, err := client.Category().SearchCategories(context.TODO(), accessToken, searchQuery, pageNumber)
+	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+	//	    HTTPClient: http.DefaultClient,
+	//	})
 	//	if err != nil {
-	//	    log.Printf("could not search categories: %v", err)
-	//	    return nil, err
+	//	    log.Fatal(err)
 	//	}
-	SearchCategories(ctx context.Context, accessToken string, searchQuery string, pageNumber int) (*kickapitypes.GetCategoriesResponse, error)
-
-	// GetCategoryByCategoryID gets detailed data for the category associated with the categoryID.
 	//
-	// Example:
+	//	filters := kickfilters.NewCategoriesFilter().
+	//	    WithCategoryIDs([]int64{42}).
+	//	    WithTags([]string{"GoLang"}).
+	//	    WithLimit(20)
 	//
-	//	category, err := client.Category().GetCategoryByCategoryID(context.TODO(), accessToken, categoryID)
+	//	categories, err := client.Category().SearchCategories(context.TODO(), accessToken, filters)
 	//	if err != nil {
-	//	    log.Printf("could not get category by ID: %v", err)
-	//	    return nil, err
+	//		var apiErr *kickerrors.APIError
+	//		if errors.As(err, &apiErr) {
+	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	//		} else {
+	//			log.Printf("internal error: %v", err)
+	//		}
 	//	}
-	GetCategoryByCategoryID(ctx context.Context, accessToken string, categoryID int) (*kickapitypes.GetCategoryResponse, error)
+	SearchCategories(ctx context.Context, accessToken string, filters kickfilters.CategoriesFilter) (*kickapitypes.GetCategoriesResponse, error)
 }

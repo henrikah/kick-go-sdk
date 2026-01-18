@@ -15,23 +15,20 @@ import (
 
 func Test_CreateEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
 	events := []kickwebhookenum.WebhookType{kickwebhookenum.ChatMessageSent, kickwebhookenum.ChannelFollowed}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(ctx, accessToken, events)
+	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(t.Context(), accessToken, events)
 
 	// Assert
 	if eventsSubscriptionsData != nil {
@@ -53,23 +50,20 @@ func Test_CreateEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 
 func Test_CreateEventsSubscriptionsMissingEvents_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
 	events := []kickwebhookenum.WebhookType{}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(ctx, accessToken, events)
+	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(t.Context(), accessToken, events)
 
 	// Assert
 	if eventsSubscriptionsData != nil {
@@ -93,8 +87,6 @@ func Test_CreateEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	events := []kickwebhookenum.WebhookType{kickwebhookenum.ChatMessageSent, kickwebhookenum.ChannelFollowed}
 
@@ -105,15 +97,13 @@ func Test_CreateEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(ctx, accessToken, events)
+	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(t.Context(), accessToken, events)
 
 	// Assert
 	if err == nil {
@@ -131,10 +121,6 @@ func Test_CreateEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 
 func Test_CreateEventsSubscriptions_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	events := []kickwebhookenum.WebhookType{kickwebhookenum.ChatMessageSent, kickwebhookenum.ChannelFollowed}
 
@@ -192,16 +178,14 @@ func Test_CreateEventsSubscriptions_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(ctx, accessToken, events)
+	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptions(t.Context(), accessToken, events)
 
 	// Assert
 	if eventsSubscriptionsData == nil {
@@ -227,10 +211,6 @@ func Test_CreateEventsSubscriptions_Success(t *testing.T) {
 
 func Test_CreateEventsSubscriptionsAsApp_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	events := []kickwebhookenum.WebhookType{kickwebhookenum.ChatMessageSent, kickwebhookenum.ChannelFollowed}
@@ -268,16 +248,14 @@ func Test_CreateEventsSubscriptionsAsApp_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptionsAsApp(ctx, accessToken, broadcasterUserID, events)
+	eventsSubscriptionsData, err := client.EventsSubscription().CreateEventSubscriptionsAsApp(t.Context(), accessToken, broadcasterUserID, events)
 
 	// Assert
 	if eventsSubscriptionsData == nil {

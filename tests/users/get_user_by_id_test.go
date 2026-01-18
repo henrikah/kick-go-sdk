@@ -11,10 +11,6 @@ import (
 
 func Test_GetUserByID_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	var user int64 = 2
 
@@ -51,16 +47,14 @@ func Test_GetUserByID_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	userData, err := client.User().GetUserByID(ctx, accessToken, user)
+	userData, err := client.User().GetUserByID(t.Context(), accessToken, user)
 
 	// Assert
 	if userData == nil {

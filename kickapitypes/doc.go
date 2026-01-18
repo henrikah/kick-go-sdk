@@ -1,2 +1,2 @@
-// Package kickapitypes contains data types for the Kick API and OAuth2 requests.
+// Package kickapitypes contains data types for the Kick API requests.
 package kickapitypes

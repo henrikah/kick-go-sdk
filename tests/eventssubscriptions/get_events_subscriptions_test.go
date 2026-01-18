@@ -13,22 +13,19 @@ import (
 
 func Test_GetEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription().GetEventSubscriptions(ctx, accessToken)
+	eventsSubscriptionsData, err := client.EventsSubscription().GetEventSubscriptions(t.Context(), accessToken)
 
 	// Assert
 	if eventsSubscriptionsData != nil {
@@ -52,8 +49,6 @@ func Test_GetEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 
 	mockClient := &mocks.MockHTTPClient{
@@ -63,15 +58,13 @@ func Test_GetEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription().GetEventSubscriptions(ctx, accessToken)
+	eventsSubscriptionsData, err := client.EventsSubscription().GetEventSubscriptions(t.Context(), accessToken)
 
 	// Assert
 	if err == nil {
@@ -89,10 +82,6 @@ func Test_GetEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 
 func Test_GetEventsSubscriptions_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 
 	expectedJSON := `{
@@ -142,15 +131,13 @@ func Test_GetEventsSubscriptions_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
-	eventsSubscriptionsData, err := client.EventsSubscription().GetEventSubscriptions(ctx, accessToken)
+	eventsSubscriptionsData, err := client.EventsSubscription().GetEventSubscriptions(t.Context(), accessToken)
 
 	// Assert
 	if eventsSubscriptionsData == nil {

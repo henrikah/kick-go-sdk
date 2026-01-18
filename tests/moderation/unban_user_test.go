@@ -14,7 +14,6 @@ import (
 
 func Test_UnbanUserMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
@@ -22,16 +21,14 @@ func Test_UnbanUserMissingAccessToken_Error(t *testing.T) {
 	userID := 2
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	unbanUserData, err := client.Moderation().UnbanUser(ctx, accessToken, broadcasterUserID, userID)
+	unbanUserData, err := client.Moderation().UnbanUser(t.Context(), accessToken, broadcasterUserID, userID)
 
 	// Assert
 	if unbanUserData != nil {
@@ -53,7 +50,6 @@ func Test_UnbanUserMissingAccessToken_Error(t *testing.T) {
 
 func Test_UnbanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -61,16 +57,14 @@ func Test_UnbanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	userID := 2
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	unbanUserData, err := client.Moderation().UnbanUser(ctx, accessToken, broadcasterUserID, userID)
+	unbanUserData, err := client.Moderation().UnbanUser(t.Context(), accessToken, broadcasterUserID, userID)
 
 	// Assert
 	if unbanUserData != nil {
@@ -92,7 +86,6 @@ func Test_UnbanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 
 func Test_UnbanUserInvalidUserID_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -100,16 +93,14 @@ func Test_UnbanUserInvalidUserID_Error(t *testing.T) {
 	userID := 0
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	unbanUserData, err := client.Moderation().UnbanUser(ctx, accessToken, broadcasterUserID, userID)
+	unbanUserData, err := client.Moderation().UnbanUser(t.Context(), accessToken, broadcasterUserID, userID)
 
 	// Assert
 	if unbanUserData != nil {
@@ -133,8 +124,6 @@ func Test_UnbanUserUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	userID := 2
@@ -146,15 +135,13 @@ func Test_UnbanUserUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	unbanUserData, err := client.Moderation().UnbanUser(ctx, accessToken, broadcasterUserID, userID)
+	unbanUserData, err := client.Moderation().UnbanUser(t.Context(), accessToken, broadcasterUserID, userID)
 
 	// Assert
 	if err == nil {
@@ -172,10 +159,6 @@ func Test_UnbanUserUnAuthorized_Error(t *testing.T) {
 
 func Test_UnbanUser_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	userID := 2
@@ -225,16 +208,14 @@ func Test_UnbanUser_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	unbanUserData, err := client.Moderation().UnbanUser(ctx, accessToken, broadcasterUserID, userID)
+	unbanUserData, err := client.Moderation().UnbanUser(t.Context(), accessToken, broadcasterUserID, userID)
 
 	// Assert
 	if unbanUserData == nil {

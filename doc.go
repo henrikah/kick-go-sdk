@@ -1,21 +1,45 @@
-// Package kick provides clients for the Kick API and for processing webhooks.
+// Package kick provides clients for the Kick API, OAuth and for processing webhooks.
 //
-// # Quickstart: API Client Only
+// # Quickstart: API Client
 //
-//	apiClient, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+//	oAuthClient, err := kick.NewOAuthClient(kickapitypes.APIClientConfig{
 //		ClientID:     "your-client-id",
 //		ClientSecret: "your-client-secret",
+//		HTTPClient:   http.DefaultClient,
+//	})
+//	if err != nil {
+//		log.Fatalf("could not create OAuthClient: %v", err)
+//	}
+//
+//	apiClient, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
 //		HTTPClient:   http.DefaultClient,
 //	})
 //	if err != nil {
 //		log.Fatalf("could not create APIClient: %v", err)
 //	}
 //
-//	currentUser, err := apiClient.User.GetCurrentUser(context.TODO(), "user-access-token")
+//	accessToken, err := oAuthClient.GetAppAccessToken(context.TODO())
 //	if err != nil {
-//		log.Printf("could not get current user: %v", err)
+//		var apiErr *kickerrors.APIError
+//		if errors.As(err, &apiErr) {
+//			log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+//		} else {
+//			log.Fatalf("internal error: %v", err)
+//		}
 //	}
-//	log.Println("Logged in as:", currentUser.Data[0].Username)
+//
+//	categorySearchData, err := apiClient.Category().SearchCategories(context.TODO(), accessToken, kickfilters.NewCategoriesFilter().WithNames([]string{"Software Development"}))
+//
+//	if err != nil {
+//		var apiErr *kickerrors.APIError
+//		if errors.As(err, &apiErr) {
+//			log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+//		} else {
+//			log.Fatalf("internal error: %v", err)
+//		}
+//	}
+//
+//	log.Println("Found category:", categorySearchData.Data[0].Name)
 //
 // # Quickstart: Webhook Client Only
 //
@@ -40,28 +64,28 @@
 //
 // # Quickstart: Combined API + Webhook Client
 //
-//		apiClient, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
-//			ClientID:     "your-client-id",
-//			ClientSecret: "your-client-secret",
-//			HTTPClient:   http.DefaultClient,
-//		})
-//		if err != nil {
-//			log.Fatalf("could not create APIClient: %v", err)
-//		}
+//	apiClient, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+//		HTTPClient:   http.DefaultClient,
+//	})
+//	if err != nil {
+//		log.Fatalf("could not create APIClient: %v", err)
+//	}
 //
-//		publicKey, err := apiClient.PublicKey.GetWebhookPublicKey(context.TODO())
-//		if err != nil {
-//			log.Fatalf("could not get the public key for the webhook: %v", err)
+//	publicKey, err := apiClient.PublicKey().GetWebhookPublicKey(context.TODO())
+//	if err != nil {
+//		var apiErr *kickerrors.APIError
+//		if errors.As(err, &apiErr) {
+//			log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+//		} else {
+//			log.Fatalf("internal error: %v", err)
 //		}
+//	}
 //
-//		webhookClient, err := kick.NewWebhookClient(publicKey.Data.PublicKey)
-//		if err != nil {
-//			log.Fatalf("could not create WebhookClient: %v", err)
-//		}
+//	webhookClient, err := kick.NewWebhookClient(publicKey.Data.PublicKey)
+//	if err != nil {
+//		log.Fatalf("could not create WebhookClient: %v", err)
+//	}
 //
-//		// Register handlers and start server as above
-//	 //
-//	 // Note: Provide a dummy ClientID and ClientSecret if you just want to automate
-//		// creation of the webhook client with the public key without using any other part
-//		// of the API Client. Credentials are not required for that route
+//	// Register handlers and start server as above
+
 package kick

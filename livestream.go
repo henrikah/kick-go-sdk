@@ -16,13 +16,13 @@ type livestreamClient struct {
 	client *apiClient
 }
 
-func newLivestreamClient(client *apiClient) kickcontracts.Livestream {
+func newLivestreamService(client *apiClient) kickcontracts.Livestream {
 	return &livestreamClient{
 		client: client,
 	}
 }
 
-func (c *livestreamClient) SearchLivestreams(ctx context.Context, accessToken string, filters kickfilters.LivestreamFilterBuilder) (*kickapitypes.LivestreamResponse, error) {
+func (c *livestreamClient) SearchLivestreams(ctx context.Context, accessToken string, filters kickfilters.LivestreamsFilter) (*kickapitypes.LivestreamResponse, error) {
 	if err := kickerrors.ValidateAccessToken(accessToken); err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (c *livestreamClient) SearchLivestreams(ctx context.Context, accessToken st
 
 	var livestreamResponse kickapitypes.LivestreamResponse
 
-	if err = c.client.makeJSONRequest(ctx, http.MethodGet, livestreamURL.String(), nil, &accessToken, &livestreamResponse); err != nil {
+	if err = c.client.requester.MakeJSONRequest(ctx, http.MethodGet, livestreamURL.String(), nil, &accessToken, &livestreamResponse); err != nil {
 		return nil, err
 	}
 
@@ -56,7 +56,7 @@ func (c *livestreamClient) GetCurrentUserLivestream(ctx context.Context, accessT
 
 	var livestreamResponse kickapitypes.LivestreamResponse
 
-	if err := c.client.makeJSONRequest(ctx, http.MethodGet, endpoints.ViewCurrentUserLivestreamDetailsURL(), nil, &accessToken, &livestreamResponse); err != nil {
+	if err := c.client.requester.MakeJSONRequest(ctx, http.MethodGet, endpoints.ViewCurrentUserLivestreamDetailsURL(), nil, &accessToken, &livestreamResponse); err != nil {
 		return nil, err
 	}
 
