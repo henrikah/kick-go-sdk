@@ -2,35 +2,35 @@ package kick_test
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"reflect"
 	"testing"
 
 	"github.com/henrikah/kick-go-sdk"
 	"github.com/henrikah/kick-go-sdk/enums/kickscopes"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
 	"github.com/henrikah/kick-go-sdk/kickerrors"
 	"github.com/henrikah/kick-go-sdk/tests/mocks"
 )
 
 func Test_TokenIntrospectMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	tokenIntrospectData, err := client.User().TokenIntrospect(ctx, accessToken)
+	tokenIntrospectData, err := client.TokenIntrospect(t.Context(), accessToken)
 
 	// Assert
 	if tokenIntrospectData != nil {
@@ -54,8 +54,6 @@ func Test_TokenIntrospectUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 
 	mockClient := &mocks.MockHTTPClient{
@@ -64,16 +62,16 @@ func Test_TokenIntrospectUnAuthorized_Error(t *testing.T) {
 		},
 	}
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	tokenIntrospectData, err := client.User().TokenIntrospect(ctx, accessToken)
+	tokenIntrospectData, err := client.TokenIntrospect(t.Context(), accessToken)
 
 	// Assert
 	if err == nil {
@@ -91,27 +89,28 @@ func Test_TokenIntrospectUnAuthorized_Error(t *testing.T) {
 
 func Test_TokenIntrospect_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	clientID := "test-id"
+	tokenType := "user"
+
+	expectedScopes := kickscopes.Scopes{kickscopes.UserRead, kickscopes.ChannelRead}
+	expectedJSON := fmt.Sprintf(`{
+		"data": {
+			"active": true,
+			"client_id": "%s",
+			"exp": 1,
+			"scope": "user:read channel:read",
+			"token_type": "%s"
+		},
+		"message": "test-message"
+	}`, clientID, tokenType)
+
 	clientSecret := "test-secret"
 
 	accessToken := "access-token"
 
-	expectedScopes := kickscopes.Scopes{kickscopes.UserRead, kickscopes.ChannelRead}
-	expectedJSON := `{
-		"data": {
-			"active": true,
-			"client_id": "client-id",
-			"exp": 1,
-			"scope": "user:read channel:read",
-			"token_type": "access_token"
-		},
-		"message": "test-message"
-	}`
-
 	httpClient := &mocks.MockHTTPClient{
 		DoFunc: func(req *http.Request) (*http.Response, error) {
-			if req.URL.String() != "https://api.kick.com/public/v1/token/introspect" {
+			if req.URL.String() != "https://id.kick.com/oauth/token/introspect" {
 				t.Fatalf("Unexpected request URL: %s", req.URL.String())
 			}
 
@@ -131,17 +130,17 @@ func Test_TokenIntrospect_Success(t *testing.T) {
 		},
 	}
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	// Act
 
-	tokenIntrospectData, err := client.User().TokenIntrospect(ctx, accessToken)
+	tokenIntrospectData, err := client.TokenIntrospect(t.Context(), accessToken)
 
 	// Assert
 	if tokenIntrospectData == nil {
@@ -156,7 +155,18 @@ func Test_TokenIntrospect_Success(t *testing.T) {
 		t.Fatalf("Expected Active to be true, got %t", tokenIntrospectData.Data.Active)
 	}
 
+	if tokenIntrospectData.Data.ClientID != clientID {
+		t.Fatalf("Expected ClientID to be %s, got %s", clientID, tokenIntrospectData.Data.ClientID)
+	}
+
 	if !reflect.DeepEqual(tokenIntrospectData.Data.Scopes, expectedScopes) {
 		t.Fatalf("Expected Scope to be %s, got %s", expectedScopes, tokenIntrospectData.Data.Scopes)
+	}
+
+	if tokenIntrospectData.Data.TokenType != tokenType {
+		t.Fatalf("Expected TokenType to be %s, got %s", tokenType, tokenIntrospectData.Data.TokenType)
+	}
+	if tokenIntrospectData.Data.Expires != 1 {
+		t.Fatalf("Expected Expires to be %d, got %d", 1, tokenIntrospectData.Data.Expires)
 	}
 }

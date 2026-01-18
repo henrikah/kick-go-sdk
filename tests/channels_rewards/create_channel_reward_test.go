@@ -14,7 +14,6 @@ import (
 
 func Test_CreateChannelRewardMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
@@ -25,8 +24,6 @@ func Test_CreateChannelRewardMissingAccessToken_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
@@ -36,7 +33,7 @@ func Test_CreateChannelRewardMissingAccessToken_Error(t *testing.T) {
 
 	// Act
 
-	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(ctx, accessToken, channelRewardData)
+	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(t.Context(), accessToken, channelRewardData)
 
 	// Assert
 
@@ -59,7 +56,6 @@ func Test_CreateChannelRewardMissingAccessToken_Error(t *testing.T) {
 
 func Test_CreateChannelRewardLessThanOneCost_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -70,8 +66,6 @@ func Test_CreateChannelRewardLessThanOneCost_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
@@ -81,7 +75,7 @@ func Test_CreateChannelRewardLessThanOneCost_Error(t *testing.T) {
 
 	// Act
 
-	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(ctx, accessToken, channelRewardData)
+	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(t.Context(), accessToken, channelRewardData)
 
 	// Assert
 
@@ -106,8 +100,6 @@ func Test_CreateChannelRewardUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 
 	channelRewardData := kickapitypes.CreateChannelReward{
@@ -122,8 +114,6 @@ func Test_CreateChannelRewardUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -131,7 +121,7 @@ func Test_CreateChannelRewardUnAuthorized_Error(t *testing.T) {
 	var apiError *kickerrors.APIError
 	// Act
 
-	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(ctx, accessToken, channelRewardData)
+	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(t.Context(), accessToken, channelRewardData)
 
 	// Assert
 
@@ -150,10 +140,6 @@ func Test_CreateChannelRewardUnAuthorized_Error(t *testing.T) {
 
 func Test_CreateChannelRewardWithMissingFields_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 
 	channelRewardData := kickapitypes.CreateChannelReward{
@@ -214,8 +200,6 @@ func Test_CreateChannelRewardWithMissingFields_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -223,7 +207,7 @@ func Test_CreateChannelRewardWithMissingFields_Success(t *testing.T) {
 
 	// Act
 
-	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(ctx, accessToken, channelRewardData)
+	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(t.Context(), accessToken, channelRewardData)
 
 	// Assert
 
@@ -238,10 +222,6 @@ func Test_CreateChannelRewardWithMissingFields_Success(t *testing.T) {
 
 func Test_CreateChannelReward_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 
 	backgroundColor := "#123456"
@@ -318,8 +298,6 @@ func Test_CreateChannelReward_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -327,7 +305,7 @@ func Test_CreateChannelReward_Success(t *testing.T) {
 
 	// Act
 
-	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(ctx, accessToken, channelRewardData)
+	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(t.Context(), accessToken, channelRewardData)
 
 	// Assert
 

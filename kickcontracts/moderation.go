@@ -17,10 +17,21 @@ type Moderation interface {
 	//
 	// Example:
 	//
+	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+	//	    HTTPClient: http.DefaultClient,
+	//	})
+	//	if err != nil {
+	//	    log.Fatal(err)
+	//	}
+	//
 	//	moderationResponse, err := client.Moderation().TimeOutUser(context.TODO(), accessToken, broadcasterID, userID, 600, nil)
 	//	if err != nil {
-	//	    log.Printf("could not timeout user: %v", err)
-	//	    return nil, err
+	//		var apiErr *kickerrors.APIError
+	//		if errors.As(err, &apiErr) {
+	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	//		} else {
+	//			log.Printf("internal error: %v", err)
+	//		}
 	//	}
 	TimeOutUser(ctx context.Context, accessToken string, broadcasterUserID, userID, durationInSeconds int, reason *string) (*kickapitypes.ModerationResponse, error)
 
@@ -30,10 +41,21 @@ type Moderation interface {
 	//
 	// Example:
 	//
+	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+	//	    HTTPClient: http.DefaultClient,
+	//	})
+	//	if err != nil {
+	//	    log.Fatal(err)
+	//	}
+	//
 	//	moderationResponse, err := client.Moderation().BanUser(context.TODO(), accessToken, broadcasterID, userID, nil)
 	//	if err != nil {
-	//	    log.Printf("could not ban user: %v", err)
-	//	    return nil, err
+	//		var apiErr *kickerrors.APIError
+	//		if errors.As(err, &apiErr) {
+	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	//		} else {
+	//			log.Printf("internal error: %v", err)
+	//		}
 	//	}
 	BanUser(ctx context.Context, accessToken string, broadcasterUserID, userID int, reason *string) (*kickapitypes.ModerationResponse, error)
 
@@ -41,10 +63,21 @@ type Moderation interface {
 	//
 	// Example:
 	//
+	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+	//	    HTTPClient: http.DefaultClient,
+	//	})
+	//	if err != nil {
+	//	    log.Fatal(err)
+	//	}
+	//
 	//	moderationResponse, err := client.Moderation().UnbanUser(context.TODO(), accessToken, broadcasterID, userID)
 	//	if err != nil {
-	//	    log.Printf("could not unban user: %v", err)
-	//	    return nil, err
+	//		var apiErr *kickerrors.APIError
+	//		if errors.As(err, &apiErr) {
+	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	//		} else {
+	//			log.Printf("internal error: %v", err)
+	//		}
 	//	}
 	UnbanUser(ctx context.Context, accessToken string, broadcasterUserID, userID int) (*kickapitypes.ModerationResponse, error)
 }

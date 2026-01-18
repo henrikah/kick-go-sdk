@@ -7,7 +7,7 @@ import (
 
 	"github.com/henrikah/kick-go-sdk"
 	"github.com/henrikah/kick-go-sdk/enums/kickscopes"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
 	"github.com/henrikah/kick-go-sdk/kickerrors"
 )
 
@@ -20,18 +20,18 @@ func Test_InitiateAuthorizationMissingRedirectURI_Error(t *testing.T) {
 
 	httpClient := http.DefaultClient
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	authorizationData, err := client.OAuth().InitiateAuthorization(redirectURI, state, scopes)
+	authorizationData, err := client.InitiateAuthorization(redirectURI, state, scopes)
 
 	// Assert
 	if authorizationData != nil {
@@ -59,18 +59,18 @@ func Test_InitiateAuthorizationMissingState_Error(t *testing.T) {
 
 	httpClient := http.DefaultClient
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	authorizationData, err := client.OAuth().InitiateAuthorization(redirectURI, state, scopes)
+	authorizationData, err := client.InitiateAuthorization(redirectURI, state, scopes)
 
 	// Assert
 	if authorizationData != nil {
@@ -98,18 +98,18 @@ func Test_InitiateAuthorizationMissingScopes_Error(t *testing.T) {
 
 	httpClient := http.DefaultClient
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var validationError *kickerrors.ValidationError
 	// Act
 
-	authorizationData, err := client.OAuth().InitiateAuthorization(redirectURI, state, scopes)
+	authorizationData, err := client.InitiateAuthorization(redirectURI, state, scopes)
 
 	// Assert
 	if authorizationData != nil {
@@ -137,17 +137,17 @@ func Test_InitiateAuthorization_Success(t *testing.T) {
 
 	httpClient := http.DefaultClient
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	// Act
 
-	authorizationData, err := client.OAuth().InitiateAuthorization(redirectURI, state, scopes)
+	authorizationData, err := client.InitiateAuthorization(redirectURI, state, scopes)
 
 	// Assert
 	if authorizationData == nil {

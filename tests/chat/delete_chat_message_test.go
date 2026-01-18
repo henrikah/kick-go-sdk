@@ -13,15 +13,12 @@ import (
 
 func Test_DeleteChatMessageMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
 	messageID := "test-message-id"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -29,7 +26,7 @@ func Test_DeleteChatMessageMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.Chat().DeleteChatMessage(ctx, accessToken, messageID)
+	err := client.Chat().DeleteChatMessage(t.Context(), accessToken, messageID)
 
 	// Assert
 	if err == nil {
@@ -47,15 +44,12 @@ func Test_DeleteChatMessageMissingAccessToken_Error(t *testing.T) {
 
 func Test_DeleteChatMessageEmptyMessageID_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
 	messageID := ""
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -63,7 +57,7 @@ func Test_DeleteChatMessageEmptyMessageID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.Chat().DeleteChatMessage(ctx, accessToken, messageID)
+	err := client.Chat().DeleteChatMessage(t.Context(), accessToken, messageID)
 
 	// Assert
 	if err == nil {
@@ -83,8 +77,6 @@ func Test_DeleteChatMessageUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := ``
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	messageID := "test-message-id"
 
@@ -95,15 +87,13 @@ func Test_DeleteChatMessageUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	err := client.Chat().DeleteChatMessage(ctx, accessToken, messageID)
+	err := client.Chat().DeleteChatMessage(t.Context(), accessToken, messageID)
 
 	// Assert
 	if err == nil {
@@ -117,10 +107,6 @@ func Test_DeleteChatMessageUnAuthorized_Error(t *testing.T) {
 
 func Test_DeleteChatMessage_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	messageID := "test-message-id"
 
@@ -147,8 +133,6 @@ func Test_DeleteChatMessage_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -156,7 +140,7 @@ func Test_DeleteChatMessage_Success(t *testing.T) {
 
 	// Act
 
-	err := client.Chat().DeleteChatMessage(ctx, accessToken, messageID)
+	err := client.Chat().DeleteChatMessage(t.Context(), accessToken, messageID)
 
 	// Assert
 	if err != nil {

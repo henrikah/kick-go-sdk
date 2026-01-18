@@ -11,10 +11,6 @@ import (
 
 func TestGetKicksLeaderboardSuccess(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 
 	expectedJSON := `{
@@ -64,8 +60,6 @@ func TestGetKicksLeaderboardSuccess(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -73,7 +67,7 @@ func TestGetKicksLeaderboardSuccess(t *testing.T) {
 
 	// Act
 
-	kicksLeaderboardData, err := client.Kicks().GetKicksLeaderboard(ctx, accessToken, nil)
+	kicksLeaderboardData, err := client.Kicks().GetKicksLeaderboard(t.Context(), accessToken, nil)
 
 	// Assert
 	if kicksLeaderboardData == nil {

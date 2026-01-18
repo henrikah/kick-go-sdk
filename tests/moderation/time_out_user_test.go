@@ -14,7 +14,6 @@ import (
 
 func Test_TimeOutUserMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
@@ -24,8 +23,6 @@ func Test_TimeOutUserMissingAccessToken_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -33,7 +30,7 @@ func Test_TimeOutUserMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData != nil {
@@ -55,7 +52,6 @@ func Test_TimeOutUserMissingAccessToken_Error(t *testing.T) {
 
 func Test_TimeOutUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -65,8 +61,6 @@ func Test_TimeOutUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -74,7 +68,7 @@ func Test_TimeOutUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData != nil {
@@ -96,7 +90,6 @@ func Test_TimeOutUserInvalidBroadcasterUserID_Error(t *testing.T) {
 
 func Test_TimeOutUserDurationTooLow_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -106,8 +99,6 @@ func Test_TimeOutUserDurationTooLow_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -115,7 +106,7 @@ func Test_TimeOutUserDurationTooLow_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData != nil {
@@ -137,7 +128,6 @@ func Test_TimeOutUserDurationTooLow_Error(t *testing.T) {
 
 func Test_TimeOutUserDurationTooHigh_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -147,8 +137,6 @@ func Test_TimeOutUserDurationTooHigh_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -156,7 +144,7 @@ func Test_TimeOutUserDurationTooHigh_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData != nil {
@@ -178,7 +166,6 @@ func Test_TimeOutUserDurationTooHigh_Error(t *testing.T) {
 
 func Test_TimeOutUserInvalidUserID_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -188,8 +175,6 @@ func Test_TimeOutUserInvalidUserID_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -197,7 +182,7 @@ func Test_TimeOutUserInvalidUserID_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData != nil {
@@ -221,8 +206,6 @@ func Test_TimeOutUserUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	duration := 60
@@ -236,15 +219,13 @@ func Test_TimeOutUserUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if err == nil {
@@ -262,10 +243,6 @@ func Test_TimeOutUserUnAuthorized_Error(t *testing.T) {
 
 func Test_TimeOutUser_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	duration := 60
@@ -321,8 +298,6 @@ func Test_TimeOutUser_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -330,7 +305,7 @@ func Test_TimeOutUser_Success(t *testing.T) {
 
 	// Act
 
-	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, reason)
 
 	// Assert
 	if timeOutUserData == nil {
@@ -348,10 +323,6 @@ func Test_TimeOutUser_Success(t *testing.T) {
 
 func Test_TimeOutUserWithReason_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	duration := 60
@@ -386,8 +357,6 @@ func Test_TimeOutUserWithReason_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -395,7 +364,7 @@ func Test_TimeOutUserWithReason_Success(t *testing.T) {
 
 	// Act
 
-	timeOutUserData, err := client.Moderation().TimeOutUser(ctx, accessToken, broadcasterUserID, userID, duration, &reason)
+	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
 	// Assert
 	if timeOutUserData == nil {

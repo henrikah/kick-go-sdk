@@ -14,7 +14,6 @@ import (
 
 func Test_UpdateChannelRewardMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
@@ -23,8 +22,6 @@ func Test_UpdateChannelRewardMissingAccessToken_Error(t *testing.T) {
 	channelRewardData := kickapitypes.UpdateChannelReward{}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
@@ -33,7 +30,7 @@ func Test_UpdateChannelRewardMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(ctx, accessToken, channelRewardID, channelRewardData)
+	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
 	// Assert
 	if updateChannelRewardData != nil {
@@ -55,7 +52,6 @@ func Test_UpdateChannelRewardMissingAccessToken_Error(t *testing.T) {
 
 func Test_UpdateChannelRewardCostLessThanOne_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -67,8 +63,6 @@ func Test_UpdateChannelRewardCostLessThanOne_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
@@ -77,7 +71,7 @@ func Test_UpdateChannelRewardCostLessThanOne_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(ctx, accessToken, channelRewardID, channelRewardData)
+	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
 	// Assert
 	if updateChannelRewardData != nil {
@@ -99,7 +93,6 @@ func Test_UpdateChannelRewardCostLessThanOne_Error(t *testing.T) {
 
 func Test_UpdateChannelRewardDescriptionTooLong_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -111,8 +104,6 @@ func Test_UpdateChannelRewardDescriptionTooLong_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
@@ -121,7 +112,7 @@ func Test_UpdateChannelRewardDescriptionTooLong_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(ctx, accessToken, channelRewardID, channelRewardData)
+	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
 	// Assert
 	if updateChannelRewardData != nil {
@@ -143,7 +134,6 @@ func Test_UpdateChannelRewardDescriptionTooLong_Error(t *testing.T) {
 
 func Test_UpdateChannelRewardTitleTooLong_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -155,8 +145,6 @@ func Test_UpdateChannelRewardTitleTooLong_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
@@ -165,7 +153,7 @@ func Test_UpdateChannelRewardTitleTooLong_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(ctx, accessToken, channelRewardID, channelRewardData)
+	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
 	// Assert
 	if updateChannelRewardData != nil {
@@ -189,8 +177,6 @@ func Test_UpdateChannelRewardUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 
 	channelRewardID := "test-reward-id"
@@ -203,15 +189,13 @@ func Test_UpdateChannelRewardUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(ctx, accessToken, channelRewardID, channelRewardData)
+	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
 	// Assert
 	if updateChannelRewardData != nil {
@@ -229,10 +213,6 @@ func Test_UpdateChannelRewardUnAuthorized_Error(t *testing.T) {
 
 func Test_UpdateChannelRewardWithMissingFields_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 
 	channelRewardID := "test-reward-id"
@@ -306,8 +286,6 @@ func Test_UpdateChannelRewardWithMissingFields_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -315,7 +293,7 @@ func Test_UpdateChannelRewardWithMissingFields_Success(t *testing.T) {
 
 	// Act
 
-	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(ctx, accessToken, channelRewardID, channelRewardData)
+	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
 	// Assert
 	if updateChannelRewardData == nil {
@@ -329,10 +307,6 @@ func Test_UpdateChannelRewardWithMissingFields_Success(t *testing.T) {
 
 func Test_UpdateChannel_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 
 	channelRewardID := "test-reward-id"
@@ -402,8 +376,6 @@ func Test_UpdateChannel_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -411,7 +383,7 @@ func Test_UpdateChannel_Success(t *testing.T) {
 
 	// Act
 
-	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(ctx, accessToken, channelRewardID, channelRewardData)
+	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
 	// Assert
 

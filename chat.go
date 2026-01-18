@@ -14,7 +14,7 @@ type chatClient struct {
 	client *apiClient
 }
 
-func newChatClient(client *apiClient) kickcontracts.Chat {
+func newChatService(client *apiClient) kickcontracts.Chat {
 	return &chatClient{
 		client: client,
 	}
@@ -53,7 +53,7 @@ func (c *chatClient) DeleteChatMessage(ctx context.Context, accessToken string, 
 		return err
 	}
 
-	err := c.client.makeDeleteRequest(ctx, endpoints.DeleteChatMessageURL(messageID), &accessToken, nil)
+	err := c.client.requester.MakeDeleteRequest(ctx, endpoints.DeleteChatMessageURL(messageID), &accessToken, nil)
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func (c *chatClient) sendChatMessage(ctx context.Context, accessToken string, ch
 
 	var chatResponse kickapitypes.SendChatResponse
 
-	if err := c.client.makeJSONRequest(ctx, http.MethodPost, endpoints.SendChatMessageURL(), chatRequest, &accessToken, &chatResponse); err != nil {
+	if err := c.client.requester.MakeJSONRequest(ctx, http.MethodPost, endpoints.SendChatMessageURL(), chatRequest, &accessToken, &chatResponse); err != nil {
 		return nil, err
 	}
 

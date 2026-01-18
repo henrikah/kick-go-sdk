@@ -2,36 +2,34 @@ package kick_test
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
-	"strconv"
 	"testing"
 
 	"github.com/henrikah/kick-go-sdk"
 	"github.com/henrikah/kick-go-sdk/kickapitypes"
 	"github.com/henrikah/kick-go-sdk/kickerrors"
+	"github.com/henrikah/kick-go-sdk/kickfilters"
 	"github.com/henrikah/kick-go-sdk/tests/mocks"
 )
 
 func Test_GetCategoriesMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
-	searchQuery := "search-query"
-	page := 1
+
+	filter := kickfilters.NewCategoriesFilter().WithCategoryIDs([]int64{42})
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	categoriesData, err := client.Category().SearchCategories(ctx, accessToken, searchQuery, page)
+	categoriesData, err := client.Category().SearchCategories(t.Context(), accessToken, filter)
 
 	// Assert
 	if categoriesData != nil {
@@ -51,26 +49,22 @@ func Test_GetCategoriesMissingAccessToken_Error(t *testing.T) {
 	}
 }
 
-func Test_GetCategoriesInvalidPage_Error(t *testing.T) {
+func Test_GetCategoriesInvalidCategoryID_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
-	searchQuery := "search-query"
-	page := 0
+	filter := kickfilters.NewCategoriesFilter().WithCategoryIDs([]int64{-42})
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	categoriesData, err := client.Category().SearchCategories(ctx, accessToken, searchQuery, page)
+	categoriesData, err := client.Category().SearchCategories(t.Context(), accessToken, filter)
 
 	// Assert
 	if categoriesData != nil {
@@ -85,8 +79,8 @@ func Test_GetCategoriesInvalidPage_Error(t *testing.T) {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "pageNumber" {
-		t.Fatalf("Expected error on field 'pageNumber', got '%s'", validationError.Field)
+	if validationError.Field != "CategoryIDs" {
+		t.Fatalf("Expected error on field 'CategoryIDs', got '%s'", validationError.Field)
 	}
 }
 
@@ -94,11 +88,8 @@ func Test_GetCategoriesUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
-	searchQuery := "search-query"
-	page := 1
+	filter := kickfilters.NewCategoriesFilter().WithCategoryIDs([]int64{42})
 
 	mockClient := &mocks.MockHTTPClient{
 		DoFunc: func(req *http.Request) (*http.Response, error) {
@@ -107,15 +98,13 @@ func Test_GetCategoriesUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	categoriesData, err := client.Category().SearchCategories(ctx, accessToken, searchQuery, page)
+	categoriesData, err := client.Category().SearchCategories(t.Context(), accessToken, filter)
 
 	// Assert
 	if err == nil {
@@ -133,25 +122,30 @@ func Test_GetCategoriesUnAuthorized_Error(t *testing.T) {
 
 func Test_GetCategories_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
 
 	accessToken := "access-token"
-	searchQuery := "search-query"
-	page := 1
+	var id int64 = 42
+	tag := "GoLang"
+	name := "Test Category"
+	thumbnail := "https://test-thumbnail"
+	filter := kickfilters.NewCategoriesFilter().WithCategoryIDs([]int64{id})
 
-	expectedJSON := `{
+	expectedJSON := fmt.Sprintf(`{
 		"data": [{
-			"id": 1,
-			"name": "test-category",
-			"thumbnail": "https://test-thumbnail"
-		}], "message": "test-message"
-	}`
+			"id": %d,
+			"tags": ["%s"],
+			"name": "%s",
+			"thumbnail": "%s"
+		}],
+		"message": "test-message",
+		"pagination": {
+			"next_cursor": ""
+		}
+	}`, id, tag, name, thumbnail)
 
 	httpClient := &mocks.MockHTTPClient{
 		DoFunc: func(req *http.Request) (*http.Response, error) {
-			if req.URL.String() != "https://api.kick.com/public/v1/categories?page="+strconv.Itoa(page)+"&q="+searchQuery {
+			if req.URL.String() != fmt.Sprintf("https://api.kick.com/public/v2/categories?id=%d", id) {
 				t.Fatalf("Unexpected request URL: %s", req.URL.String())
 			}
 
@@ -172,16 +166,14 @@ func Test_GetCategories_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	categoriesData, err := client.Category().SearchCategories(ctx, accessToken, searchQuery, page)
+	categoriesData, err := client.Category().SearchCategories(t.Context(), accessToken, filter)
 
 	// Assert
 	if categoriesData == nil {
@@ -194,6 +186,22 @@ func Test_GetCategories_Success(t *testing.T) {
 
 	if len(categoriesData.Data) != 1 {
 		t.Fatalf("Expected Data to be 1 slice, got %d", len(categoriesData.Data))
+	}
+
+	if categoriesData.Data[0].ID != int(id) {
+		t.Fatalf("Expected ID to be %d, got %d", id, categoriesData.Data[0].ID)
+	}
+
+	if categoriesData.Data[0].Name != name {
+		t.Fatalf("Expected Name to be %s, got %s", name, categoriesData.Data[0].Name)
+	}
+
+	if categoriesData.Data[0].Thumbnail != thumbnail {
+		t.Fatalf("Expected Thumbnail to be %s, got %s", thumbnail, categoriesData.Data[0].Thumbnail)
+	}
+
+	if categoriesData.Data[0].Tags[0] != tag {
+		t.Fatalf("Expected Tags to be %s, got %s", tag, categoriesData.Data[0].Tags[0])
 	}
 
 	if categoriesData.Message != "test-message" {

@@ -13,15 +13,12 @@ import (
 
 func Test_GetUsersByIDMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
 	users := []int64{1, 2}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -29,7 +26,7 @@ func Test_GetUsersByIDMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	usersData, err := client.User().GetUsersByID(ctx, accessToken, users)
+	usersData, err := client.User().GetUsersByID(t.Context(), accessToken, users)
 
 	// Assert
 	if usersData != nil {
@@ -53,8 +50,6 @@ func Test_GetUsersByIDUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	users := []int64{1, 2}
 
@@ -65,15 +60,13 @@ func Test_GetUsersByIDUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	usersData, err := client.User().GetUsersByID(ctx, accessToken, users)
+	usersData, err := client.User().GetUsersByID(t.Context(), accessToken, users)
 
 	// Assert
 	if err == nil {
@@ -91,10 +84,6 @@ func Test_GetUsersByIDUnAuthorized_Error(t *testing.T) {
 
 func Test_GetUsersByID_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	users := []int64{1, 2}
 
@@ -137,8 +126,6 @@ func Test_GetUsersByID_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -146,7 +133,7 @@ func Test_GetUsersByID_Success(t *testing.T) {
 
 	// Act
 
-	usersData, err := client.User().GetUsersByID(ctx, accessToken, users)
+	usersData, err := client.User().GetUsersByID(t.Context(), accessToken, users)
 
 	// Assert
 	if usersData == nil {

@@ -21,9 +21,9 @@ const (
 	codeExchangePath                     = "oauth/token"
 	generateAppAccessTokenPath           = "oauth/token"
 	revokeTokenPath                      = "oauth/revoke"
-	searchCategoriesPath                 = "public/v1/categories"
+	tokenIntrospectPath                  = "oauth/token/introspect"
+	searchCategoriesPath                 = "public/v2/categories"
 	viewCategoryDetailsPath              = "public/v1/categories"
-	viewTokenIntrospectPath              = "public/v1/token/introspect"
 	viewUsersDetailsPath                 = "public/v1/users"
 	viewChannelsDetailsPath              = "public/v1/channels"
 	updateChannelDetailsPath             = "public/v1/channels"
@@ -42,6 +42,9 @@ const (
 	createChannelReward                  = "public/v1/channels/rewards"
 	deleteChannelReward                  = "public/v1/channels/rewards"
 	updateChannelReward                  = "public/v1/channels/rewards"
+	viewChannelRewardRedemption          = "public/v1/channels/rewards/redemptions"
+	acceptChannelRewardRedemption        = "public/v1/channels/rewards/redemptions/accept"
+	rejectChannelRewardRedemption        = "public/v1/channels/rewards/redemptions/reject"
 )
 
 // UserAuthorizationURL is where the user can log in and approve the application's access request.
@@ -64,6 +67,11 @@ func RevokeTokenURL() string {
 	return helpers.ConcatURL(idHostname, revokeTokenPath)
 }
 
+// ViewTokenIntrospectURL is the url to retrieve details of the current user's tokens
+func ViewTokenIntrospectURL() string {
+	return helpers.ConcatURL(idHostname, tokenIntrospectPath)
+}
+
 // SearchCategoriesURL is the url to search for and retrieve categories
 func SearchCategoriesURL() string {
 	return helpers.ConcatURL(apiHostname, searchCategoriesPath)
@@ -72,11 +80,6 @@ func SearchCategoriesURL() string {
 // ViewCategoryDetailsURL is the url to retrieve details of a specific category
 func ViewCategoryDetailsURL(categoryID int) string {
 	return helpers.ConcatURL(apiHostname, viewCategoryDetailsPath, strconv.Itoa(categoryID))
-}
-
-// ViewTokenIntrospectURL is the url to retrieve details of the current user's tokens
-func ViewTokenIntrospectURL() string {
-	return helpers.ConcatURL(apiHostname, viewTokenIntrospectPath)
 }
 
 // ViewUsersDetailsURL is the url to retrieve details of one or more users
@@ -167,4 +170,19 @@ func DeleteChannelRewardURL(rewardID string) string {
 // UpdateChannelRewardURL is the url to update a reward for a channel
 func UpdateChannelRewardURL(rewardID string) string {
 	return helpers.ConcatURL(apiHostname, updateChannelReward, rewardID)
+}
+
+// ViewChannelRewardRedemptionsURL is the url to get redemptions for a channel
+func ViewChannelRewardRedemptionsURL() string {
+	return helpers.ConcatURL(apiHostname, viewChannelRewardRedemption)
+}
+
+// AcceptChannelRewardRedemptionsURL is the url to accept redemptions for a channel
+func AcceptChannelRewardRedemptionsURL() string {
+	return helpers.ConcatURL(apiHostname, acceptChannelRewardRedemption)
+}
+
+// RejectChannelRewardRedemptionsURL is the url to reject redemptions for a channel
+func RejectChannelRewardRedemptionsURL() string {
+	return helpers.ConcatURL(apiHostname, rejectChannelRewardRedemption)
 }

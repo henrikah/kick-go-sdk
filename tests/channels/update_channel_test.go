@@ -14,7 +14,6 @@ import (
 
 func Test_UpdateChannelMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
@@ -26,8 +25,6 @@ func Test_UpdateChannelMissingAccessToken_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
@@ -36,7 +33,7 @@ func Test_UpdateChannelMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
+	err := client.Channel().UpdateChannel(t.Context(), accessToken, channelData)
 
 	// Assert
 	if err == nil {
@@ -66,8 +63,6 @@ func Test_UpdateChannelNegativeCategoryID_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
@@ -96,8 +91,6 @@ func Test_UpdateChannelUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 
 	channelData := kickapitypes.UpdateChannelRequest{
@@ -113,15 +106,13 @@ func Test_UpdateChannelUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
+	err := client.Channel().UpdateChannel(t.Context(), accessToken, channelData)
 
 	// Assert
 	if err == nil {
@@ -135,10 +126,6 @@ func Test_UpdateChannelUnAuthorized_Error(t *testing.T) {
 
 func Test_UpdateChannelWithMissingFields_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 
 	channelData := kickapitypes.UpdateChannelRequest{
@@ -198,8 +185,6 @@ func Test_UpdateChannelWithMissingFields_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -207,7 +192,7 @@ func Test_UpdateChannelWithMissingFields_Success(t *testing.T) {
 
 	// Act
 
-	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
+	err := client.Channel().UpdateChannel(t.Context(), accessToken, channelData)
 
 	// Assert
 
@@ -218,10 +203,6 @@ func Test_UpdateChannelWithMissingFields_Success(t *testing.T) {
 
 func Test_UpdateChannel_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 
 	channelData := kickapitypes.UpdateChannelRequest{
@@ -274,8 +255,6 @@ func Test_UpdateChannel_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -283,7 +262,7 @@ func Test_UpdateChannel_Success(t *testing.T) {
 
 	// Act
 
-	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
+	err := client.Channel().UpdateChannel(t.Context(), accessToken, channelData)
 
 	// Assert
 

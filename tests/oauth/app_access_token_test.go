@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	"github.com/henrikah/kick-go-sdk"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
 	"github.com/henrikah/kick-go-sdk/kickerrors"
+	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
 	"github.com/henrikah/kick-go-sdk/tests/mocks"
 )
 
@@ -18,24 +18,22 @@ func Test_GetAppAccessTokenWrongCredentials_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"error": "Invalid request"}`
 
-	ctx := t.Context()
-
 	mockClient := &mocks.MockHTTPClient{
 		DoFunc: func(req *http.Request) (*http.Response, error) {
 			return mocks.NewMockResponse(http.StatusBadRequest, errorJSON), nil
 		},
 	}
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	tokenData, err := client.OAuth().GetAppAccessToken(ctx)
+	tokenData, err := client.GetAppAccessToken(t.Context())
 
 	// Assert
 	if err == nil {
@@ -53,7 +51,6 @@ func Test_GetAppAccessTokenWrongCredentials_Error(t *testing.T) {
 
 func Test_GetAppAccessToken_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	clientID := "test-id"
 	clientSecret := "test-secret"
 
@@ -117,17 +114,17 @@ func Test_GetAppAccessToken_Success(t *testing.T) {
 		},
 	}
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	// Act
 
-	tokenData, err := client.OAuth().GetAppAccessToken(ctx)
+	tokenData, err := client.GetAppAccessToken(t.Context())
 
 	// Assert
 	if tokenData == nil {

@@ -13,15 +13,12 @@ import (
 
 func Test_DeleteEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
 	subscriptionIDs := []string{"id-1", "id-2"}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -29,7 +26,7 @@ func Test_DeleteEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.EventsSubscription().DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
+	err := client.EventsSubscription().DeleteEventSubscriptions(t.Context(), accessToken, subscriptionIDs)
 
 	// Assert
 	if err == nil {
@@ -47,15 +44,12 @@ func Test_DeleteEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 
 func Test_DeleteEventsSubscriptionsMissingSubscriptionIDs_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
 	subscriptionIDs := []string{}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
@@ -63,7 +57,7 @@ func Test_DeleteEventsSubscriptionsMissingSubscriptionIDs_Error(t *testing.T) {
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.EventsSubscription().DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
+	err := client.EventsSubscription().DeleteEventSubscriptions(t.Context(), accessToken, subscriptionIDs)
 
 	// Assert
 	if err == nil {
@@ -83,8 +77,6 @@ func Test_DeleteEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	subscriptionIDs := []string{"id-1", "id-2"}
 
@@ -95,15 +87,13 @@ func Test_DeleteEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	err := client.EventsSubscription().DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
+	err := client.EventsSubscription().DeleteEventSubscriptions(t.Context(), accessToken, subscriptionIDs)
 
 	// Assert
 	if err == nil {
@@ -117,10 +107,6 @@ func Test_DeleteEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 
 func Test_DeleteEventsSubscriptions_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	subscriptionIDs := []string{"id-1", "id-2"}
 
@@ -146,8 +132,6 @@ func Test_DeleteEventsSubscriptions_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -155,7 +139,7 @@ func Test_DeleteEventsSubscriptions_Success(t *testing.T) {
 
 	// Act
 
-	err := client.EventsSubscription().DeleteEventSubscriptions(ctx, accessToken, subscriptionIDs)
+	err := client.EventsSubscription().DeleteEventSubscriptions(t.Context(), accessToken, subscriptionIDs)
 
 	// Assert
 	if err != nil {

@@ -8,27 +8,26 @@ import (
 	"testing"
 
 	"github.com/henrikah/kick-go-sdk"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
 	"github.com/henrikah/kick-go-sdk/kickerrors"
 	"github.com/henrikah/kick-go-sdk/tests/mocks"
 )
 
 func Test_RevokeRefreshTokenMissingToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 	refreshToken := ""
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var validationError *kickerrors.ValidationError
 	// Act
-	err := client.OAuth().RevokeRefreshToken(ctx, refreshToken)
+	err := client.RevokeRefreshToken(t.Context(), refreshToken)
 
 	// Assert
 	if err == nil {
@@ -48,7 +47,6 @@ func Test_RevokeRefreshToken_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"error": "Invalid request"}`
 
-	ctx := t.Context()
 	refreshToken := "refresh-token"
 
 	mockClient := &mocks.MockHTTPClient{
@@ -57,16 +55,16 @@ func Test_RevokeRefreshToken_Error(t *testing.T) {
 		},
 	}
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   mockClient,
 	}
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	err := client.OAuth().RevokeRefreshToken(ctx, refreshToken)
+	err := client.RevokeRefreshToken(t.Context(), refreshToken)
 
 	// Assert
 	if err == nil {
@@ -80,7 +78,6 @@ func Test_RevokeRefreshToken_Error(t *testing.T) {
 
 func Test_RevokeRefreshToken_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	clientID := "test-id"
 	clientSecret := "test-secret"
 
@@ -134,17 +131,17 @@ func Test_RevokeRefreshToken_Success(t *testing.T) {
 		},
 	}
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
-	client, _ := kick.NewAPIClient(config)
+	client, _ := kick.NewOAuthClient(config)
 
 	// Act
 
-	err := client.OAuth().RevokeRefreshToken(ctx, refreshToken)
+	err := client.RevokeRefreshToken(t.Context(), refreshToken)
 
 	// Assert
 	if err != nil {

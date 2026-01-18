@@ -6,15 +6,15 @@ import (
 	"testing"
 
 	"github.com/henrikah/kick-go-sdk"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
 	"github.com/henrikah/kick-go-sdk/kickerrors"
+	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
 )
 
-func Test_NewAPIClientMissingClientID_Error(t *testing.T) {
+func Test_NewOAuthClientMissingClientID_Error(t *testing.T) {
 	// Arrange
 	httpClient := http.DefaultClient
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
@@ -22,7 +22,7 @@ func Test_NewAPIClientMissingClientID_Error(t *testing.T) {
 
 	var validationError *kickerrors.ValidationError
 	// Act
-	client, err := kick.NewAPIClient(config)
+	client, err := kick.NewOAuthClient(config)
 
 	// Assert
 	if client != nil {
@@ -42,11 +42,11 @@ func Test_NewAPIClientMissingClientID_Error(t *testing.T) {
 	}
 }
 
-func Test_NewAPIClientMissingClientSecret_Error(t *testing.T) {
+func Test_NewOAuthClientMissingClientSecret_Error(t *testing.T) {
 	// Arrange
 	httpClient := http.DefaultClient
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "",
 		HTTPClient:   httpClient,
@@ -54,7 +54,7 @@ func Test_NewAPIClientMissingClientSecret_Error(t *testing.T) {
 
 	var validationError *kickerrors.ValidationError
 	// Act
-	client, err := kick.NewAPIClient(config)
+	client, err := kick.NewOAuthClient(config)
 
 	// Assert
 	if client != nil {
@@ -74,9 +74,9 @@ func Test_NewAPIClientMissingClientSecret_Error(t *testing.T) {
 	}
 }
 
-func Test_NewAPIClientMissingHTTPClient_Error(t *testing.T) {
+func Test_NewOAuthClientMissingHTTPClient_Error(t *testing.T) {
 	// Arrange
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   nil,
@@ -84,7 +84,7 @@ func Test_NewAPIClientMissingHTTPClient_Error(t *testing.T) {
 
 	var validationError *kickerrors.ValidationError
 	// Act
-	client, err := kick.NewAPIClient(config)
+	client, err := kick.NewOAuthClient(config)
 
 	// Assert
 	if client != nil {
@@ -99,23 +99,23 @@ func Test_NewAPIClientMissingHTTPClient_Error(t *testing.T) {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "HTTPClient" {
-		t.Fatalf("Expected error on field 'HTTPClient', got '%s'", validationError.Field)
+	if validationError.Field != "httpClient" {
+		t.Fatalf("Expected error on field 'httpClient', got '%s'", validationError.Field)
 	}
 }
 
-func Test_NewAPIClient_Success(t *testing.T) {
+func Test_NewOAuthClient_Success(t *testing.T) {
 	// Arrange
 	httpClient := http.DefaultClient
 
-	config := kickapitypes.APIClientConfig{
+	config := kickoauthtypes.OAuthClientConfig{
 		ClientID:     "test-id",
 		ClientSecret: "test-secret",
 		HTTPClient:   httpClient,
 	}
 
 	// Act
-	client, err := kick.NewAPIClient(config)
+	client, err := kick.NewOAuthClient(config)
 
 	// Assert
 	if client == nil {

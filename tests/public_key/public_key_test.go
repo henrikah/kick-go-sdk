@@ -11,10 +11,6 @@ import (
 
 func Test_GetPublicKey_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	expectedJSON := `{
 		"data": {
 			"public_key": "public-key"
@@ -41,8 +37,6 @@ func Test_GetPublicKey_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
 		HTTPClient:   httpClient,
 	}
 
@@ -50,7 +44,7 @@ func Test_GetPublicKey_Success(t *testing.T) {
 
 	// Act
 
-	publicKeyData, err := client.PublicKey().GetWebhookPublicKey(ctx)
+	publicKeyData, err := client.PublicKey().GetWebhookPublicKey(t.Context())
 
 	// Assert
 	if publicKeyData == nil {
