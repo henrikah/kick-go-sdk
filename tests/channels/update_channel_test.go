@@ -25,7 +25,7 @@ func Test_UpdateChannelMissingAccessToken_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
@@ -63,7 +63,7 @@ func Test_UpdateChannelNegativeCategoryID_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
@@ -106,7 +106,7 @@ func Test_UpdateChannelUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -185,7 +185,7 @@ func Test_UpdateChannelWithMissingFields_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
@@ -255,7 +255,7 @@ func Test_UpdateChannel_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

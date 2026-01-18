@@ -47,7 +47,7 @@ func Test_GetUserByID_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

@@ -7,8 +7,8 @@ import (
 
 	"github.com/henrikah/kick-go-sdk"
 	"github.com/henrikah/kick-go-sdk/enums/kickscopes"
-	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
 	"github.com/henrikah/kick-go-sdk/kickerrors"
+	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
 )
 
 func Test_InitiateAuthorizationMissingRedirectURI_Error(t *testing.T) {

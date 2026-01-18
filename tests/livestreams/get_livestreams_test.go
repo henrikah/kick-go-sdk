@@ -21,7 +21,7 @@ func Test_GetLivestreamsMissingAccessToken_Error(t *testing.T) {
 	filter := kickfilters.NewLivestreamsFilter().WithBroadcasterUserIDs([]int64{1, 2}).WithCategoryID(42).WithLanguage("en").WithLimit(69).WithSortBy(kicksortbyenum.SortByViewerCount)
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -62,7 +62,7 @@ func Test_GetLivestreamsUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -148,7 +148,7 @@ func Test_GetLivestreams_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
@@ -239,7 +239,7 @@ func Test_GetLivestreamsWithoutFilter_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

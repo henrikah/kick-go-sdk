@@ -21,7 +21,7 @@ func Test_SendChatMessageAsBotMissingAccessToken_Error(t *testing.T) {
 	message := "test-message"
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -57,7 +57,7 @@ func Test_SendChatMessageAsBotEmptyMessage_Error(t *testing.T) {
 	message := ""
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -99,7 +99,7 @@ func Test_SendChatMessageAsBotUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -179,7 +179,7 @@ func Test_SendChatMessageAsBot_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
@@ -243,7 +243,7 @@ func Test_SendChatMessageAsBotWithReplyToMessageID_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

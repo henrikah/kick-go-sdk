@@ -24,7 +24,7 @@ func Test_CreateChannelRewardMissingAccessToken_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
@@ -66,7 +66,7 @@ func Test_CreateChannelRewardLessThanOneCost_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
@@ -114,7 +114,7 @@ func Test_CreateChannelRewardUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -200,7 +200,7 @@ func Test_CreateChannelRewardWithMissingFields_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
@@ -298,7 +298,7 @@ func Test_CreateChannelReward_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

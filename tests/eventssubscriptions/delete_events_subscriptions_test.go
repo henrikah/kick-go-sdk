@@ -19,7 +19,7 @@ func Test_DeleteEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 	subscriptionIDs := []string{"id-1", "id-2"}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -50,7 +50,7 @@ func Test_DeleteEventsSubscriptionsMissingSubscriptionIDs_Error(t *testing.T) {
 	subscriptionIDs := []string{}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -87,7 +87,7 @@ func Test_DeleteEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -132,7 +132,7 @@ func Test_DeleteEventsSubscriptions_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

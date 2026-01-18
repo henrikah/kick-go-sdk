@@ -19,7 +19,7 @@ func Test_DeleteChatMessageMissingAccessToken_Error(t *testing.T) {
 	messageID := "test-message-id"
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -50,7 +50,7 @@ func Test_DeleteChatMessageEmptyMessageID_Error(t *testing.T) {
 	messageID := ""
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -87,7 +87,7 @@ func Test_DeleteChatMessageUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -133,7 +133,7 @@ func Test_DeleteChatMessage_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

@@ -21,7 +21,7 @@ func Test_CreateEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 	events := []kickwebhookenum.WebhookType{kickwebhookenum.ChatMessageSent, kickwebhookenum.ChannelFollowed}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -56,7 +56,7 @@ func Test_CreateEventsSubscriptionsMissingEvents_Error(t *testing.T) {
 	events := []kickwebhookenum.WebhookType{}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -97,7 +97,7 @@ func Test_CreateEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -178,7 +178,7 @@ func Test_CreateEventsSubscriptions_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
@@ -248,7 +248,7 @@ func Test_CreateEventsSubscriptionsAsApp_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

@@ -21,7 +21,7 @@ func Test_UnbanUserMissingAccessToken_Error(t *testing.T) {
 	userID := 2
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -57,7 +57,7 @@ func Test_UnbanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	userID := 2
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -93,7 +93,7 @@ func Test_UnbanUserInvalidUserID_Error(t *testing.T) {
 	userID := 0
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -135,7 +135,7 @@ func Test_UnbanUserUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -208,7 +208,7 @@ func Test_UnbanUser_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

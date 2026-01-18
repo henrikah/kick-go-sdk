@@ -23,7 +23,7 @@ func Test_TimeOutUserMissingAccessToken_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -61,7 +61,7 @@ func Test_TimeOutUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -99,7 +99,7 @@ func Test_TimeOutUserDurationTooLow_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -137,7 +137,7 @@ func Test_TimeOutUserDurationTooHigh_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -175,7 +175,7 @@ func Test_TimeOutUserInvalidUserID_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -219,7 +219,7 @@ func Test_TimeOutUserUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -298,7 +298,7 @@ func Test_TimeOutUser_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
@@ -357,7 +357,7 @@ func Test_TimeOutUserWithReason_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

@@ -19,7 +19,7 @@ func Test_GetChannelsByBroadcasterSlugMissingAccessToken_Error(t *testing.T) {
 	slugs := []string{"slug-1", "slug-2"}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -60,7 +60,7 @@ func Test_GetChannelsByBroadcasterSlugUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -158,7 +158,7 @@ func Test_GetChannelsByBroadcasterSlug_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)

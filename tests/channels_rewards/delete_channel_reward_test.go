@@ -19,7 +19,7 @@ func Test_DeleteChannelRewardMissingAccessToken_Error(t *testing.T) {
 	rewardID := "test-reward-id"
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -50,7 +50,7 @@ func Test_DeleteChannelRewardEmptyRewardID_Error(t *testing.T) {
 	rewardID := ""
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -87,7 +87,7 @@ func Test_DeleteChannelRewardUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
@@ -133,7 +133,7 @@ func Test_DeleteChannelReward_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
