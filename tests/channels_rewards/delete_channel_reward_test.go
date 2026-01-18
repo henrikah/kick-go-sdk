@@ -13,23 +13,20 @@ import (
 
 func Test_DeleteChannelRewardMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
 	rewardID := "test-reward-id"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.ChannelReward().DeleteChannelReward(ctx, accessToken, rewardID)
+	err := client.ChannelReward().DeleteChannelReward(t.Context(), accessToken, rewardID)
 
 	// Assert
 	if err == nil {
@@ -47,23 +44,20 @@ func Test_DeleteChannelRewardMissingAccessToken_Error(t *testing.T) {
 
 func Test_DeleteChannelRewardEmptyRewardID_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
 	rewardID := ""
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	err := client.ChannelReward().DeleteChannelReward(ctx, accessToken, rewardID)
+	err := client.ChannelReward().DeleteChannelReward(t.Context(), accessToken, rewardID)
 
 	// Assert
 	if err == nil {
@@ -83,8 +77,6 @@ func Test_DeleteChannelRewardUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := ``
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	rewardID := "test-reward-id"
 
@@ -95,15 +87,13 @@ func Test_DeleteChannelRewardUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	err := client.ChannelReward().DeleteChannelReward(ctx, accessToken, rewardID)
+	err := client.ChannelReward().DeleteChannelReward(t.Context(), accessToken, rewardID)
 
 	// Assert
 	if err == nil {
@@ -117,10 +107,6 @@ func Test_DeleteChannelRewardUnAuthorized_Error(t *testing.T) {
 
 func Test_DeleteChannelReward_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	rewardID := "test-reward-id"
 
@@ -147,16 +133,14 @@ func Test_DeleteChannelReward_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	err := client.ChannelReward().DeleteChannelReward(ctx, accessToken, rewardID)
+	err := client.ChannelReward().DeleteChannelReward(t.Context(), accessToken, rewardID)
 
 	// Assert
 	if err != nil {

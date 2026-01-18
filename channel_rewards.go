@@ -3,18 +3,20 @@ package kick
 import (
 	"context"
 	"net/http"
+	"net/url"
 
 	"github.com/henrikah/kick-go-sdk/internal/endpoints"
 	"github.com/henrikah/kick-go-sdk/kickapitypes"
 	"github.com/henrikah/kick-go-sdk/kickcontracts"
 	"github.com/henrikah/kick-go-sdk/kickerrors"
+	"github.com/henrikah/kick-go-sdk/kickfilters"
 )
 
 type channelRewardClient struct {
 	client *apiClient
 }
 
-func newChannelRewardClient(client *apiClient) kickcontracts.ChannelReward {
+func newChannelRewardService(client *apiClient) kickcontracts.ChannelReward {
 	return &channelRewardClient{
 		client: client,
 	}
@@ -27,7 +29,7 @@ func (c *channelRewardClient) GetChannelRewards(ctx context.Context, accessToken
 
 	var channelRewardsData kickapitypes.ChannelRewards
 
-	if err := c.client.makeJSONRequest(ctx, http.MethodGet, endpoints.ViewChannelRewardsURL(), nil, &accessToken, &channelRewardsData); err != nil {
+	if err := c.client.requester.MakeJSONRequest(ctx, http.MethodGet, endpoints.ViewChannelRewardsURL(), nil, &accessToken, &channelRewardsData); err != nil {
 		return nil, err
 	}
 
@@ -55,7 +57,7 @@ func (c *channelRewardClient) CreateChannelReward(ctx context.Context, accessTok
 
 	var channelRewardResponseData kickapitypes.ChannelReward
 
-	if err := c.client.makeJSONRequest(ctx, http.MethodPost, endpoints.CreateChannelRewardURL(), channelRewardData, &accessToken, &channelRewardResponseData); err != nil {
+	if err := c.client.requester.MakeJSONRequest(ctx, http.MethodPost, endpoints.CreateChannelRewardURL(), channelRewardData, &accessToken, &channelRewardResponseData); err != nil {
 		return nil, err
 	}
 
@@ -70,7 +72,7 @@ func (c *channelRewardClient) DeleteChannelReward(ctx context.Context, accessTok
 		return err
 	}
 
-	err := c.client.makeDeleteRequest(ctx, endpoints.DeleteChannelRewardURL(rewardID), &accessToken, nil)
+	err := c.client.requester.MakeDeleteRequest(ctx, endpoints.DeleteChannelRewardURL(rewardID), &accessToken, nil)
 	if err != nil {
 		return err
 	}
@@ -103,9 +105,77 @@ func (c *channelRewardClient) UpdateChannelReward(ctx context.Context, accessTok
 
 	var channelRewardResponseData kickapitypes.ChannelReward
 
-	if err := c.client.makeJSONRequest(ctx, http.MethodPatch, endpoints.UpdateChannelRewardURL(channelRewardID), channelRewardData, &accessToken, &channelRewardResponseData); err != nil {
+	if err := c.client.requester.MakeJSONRequest(ctx, http.MethodPatch, endpoints.UpdateChannelRewardURL(channelRewardID), channelRewardData, &accessToken, &channelRewardResponseData); err != nil {
 		return nil, err
 	}
 
 	return &channelRewardResponseData, nil
+}
+
+func (c *channelRewardClient) GetChannelRewardRedemptions(ctx context.Context, accessToken string, filters kickfilters.RewardRedemptionsFilter) (*kickapitypes.ChannelRewardRedemptions, error) {
+	if err := kickerrors.ValidateAccessToken(accessToken); err != nil {
+		return nil, err
+	}
+
+	getChannelRewardRedemptionsURL, err := url.Parse(endpoints.ViewChannelRewardRedemptionsURL())
+	if err != nil {
+		return nil, err
+	}
+
+	if filters != nil {
+		queryParams, filterErr := filters.ToQueryString()
+		if filterErr != nil {
+			return nil, filterErr
+		}
+
+		getChannelRewardRedemptionsURL.RawQuery = queryParams.Encode()
+	}
+
+	var channelRewardRedemptionsData kickapitypes.ChannelRewardRedemptions
+
+	if err := c.client.requester.MakeGetRequest(ctx, getChannelRewardRedemptionsURL.String(), &accessToken, &channelRewardRedemptionsData); err != nil {
+		return nil, err
+	}
+
+	return &channelRewardRedemptionsData, nil
+}
+
+func (c *channelRewardClient) AcceptRewardRedemption(ctx context.Context, accessToken string, redemptionIDs []string) (*kickapitypes.RedemptionDecision, error) {
+	acceptRewardRedemptionURL, err := url.Parse(endpoints.AcceptChannelRewardRedemptionsURL())
+	if err != nil {
+		return nil, err
+	}
+	return c.channelRewardRedemptionDecision(ctx, accessToken, acceptRewardRedemptionURL.String(), redemptionIDs)
+}
+func (c *channelRewardClient) RejectRewardRedemption(ctx context.Context, accessToken string, redemptionIDs []string) (*kickapitypes.RedemptionDecision, error) {
+	rejectRewardRedemptionURL, err := url.Parse(endpoints.RejectChannelRewardRedemptionsURL())
+	if err != nil {
+		return nil, err
+	}
+	return c.channelRewardRedemptionDecision(ctx, accessToken, rejectRewardRedemptionURL.String(), redemptionIDs)
+}
+
+func (c *channelRewardClient) channelRewardRedemptionDecision(ctx context.Context, accessToken string, url string, redemptionIDs []string) (*kickapitypes.RedemptionDecision, error) {
+	if err := kickerrors.ValidateAccessToken(accessToken); err != nil {
+		return nil, err
+	}
+
+	if err := kickerrors.ValidateMinItems("redemptionIDs", redemptionIDs, 1); err != nil {
+		return nil, err
+	}
+
+	if err := kickerrors.ValidateMaxItems("redemptionIDs", redemptionIDs, 25); err != nil {
+		return nil, err
+	}
+
+	redemptionData := kickapitypes.RedemptionsIDs{
+		IDs: redemptionIDs,
+	}
+	var redemptionDecisionResponseData kickapitypes.RedemptionDecision
+
+	if err := c.client.requester.MakeJSONRequest(ctx, http.MethodPost, url, redemptionData, &accessToken, &redemptionDecisionResponseData); err != nil {
+		return nil, err
+	}
+
+	return &redemptionDecisionResponseData, nil
 }

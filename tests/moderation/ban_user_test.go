@@ -14,7 +14,6 @@ import (
 
 func Test_BanUserMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
@@ -23,16 +22,14 @@ func Test_BanUserMissingAccessToken_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
+	banUserData, err := client.Moderation().BanUser(t.Context(), accessToken, broadcasterUserID, userID, &reason)
 
 	// Assert
 	if banUserData != nil {
@@ -54,7 +51,6 @@ func Test_BanUserMissingAccessToken_Error(t *testing.T) {
 
 func Test_BanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -63,16 +59,14 @@ func Test_BanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
+	banUserData, err := client.Moderation().BanUser(t.Context(), accessToken, broadcasterUserID, userID, &reason)
 
 	// Assert
 	if banUserData != nil {
@@ -94,7 +88,6 @@ func Test_BanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 
 func Test_BanUserInvalidUserID_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := "access-token"
@@ -103,16 +96,14 @@ func Test_BanUserInvalidUserID_Error(t *testing.T) {
 	reason := "some-reason"
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
+	banUserData, err := client.Moderation().BanUser(t.Context(), accessToken, broadcasterUserID, userID, &reason)
 
 	// Assert
 	if banUserData != nil {
@@ -136,8 +127,6 @@ func Test_BanUserUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	userID := 2
@@ -150,15 +139,13 @@ func Test_BanUserUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
+	banUserData, err := client.Moderation().BanUser(t.Context(), accessToken, broadcasterUserID, userID, &reason)
 
 	// Assert
 	if err == nil {
@@ -176,10 +163,6 @@ func Test_BanUserUnAuthorized_Error(t *testing.T) {
 
 func Test_BanUser_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	userID := 2
@@ -238,16 +221,14 @@ func Test_BanUser_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, reason)
+	banUserData, err := client.Moderation().BanUser(t.Context(), accessToken, broadcasterUserID, userID, reason)
 
 	// Assert
 	if banUserData == nil {
@@ -265,10 +246,6 @@ func Test_BanUser_Success(t *testing.T) {
 
 func Test_BanUserWithReason_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 	broadcasterUserID := 1
 	userID := 2
@@ -302,16 +279,14 @@ func Test_BanUserWithReason_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	banUserData, err := client.Moderation().BanUser(ctx, accessToken, broadcasterUserID, userID, &reason)
+	banUserData, err := client.Moderation().BanUser(t.Context(), accessToken, broadcasterUserID, userID, &reason)
 
 	// Assert
 	if banUserData == nil {

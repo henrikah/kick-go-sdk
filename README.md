@@ -14,7 +14,7 @@ This SDK provides clients for accessing Kick's API and for processing webhook ev
 ## Features
 
 - **API Client** – Access Kick API endpoints such as users, livestreams, events, and moderation.
-- **OAuth** – Support for PKCE OAuth2 flow and app access tokens.
+- **OAuth Client** – Support for PKCE OAuth2 flow and app access tokens.
 - **Webhook Client** – Handle incoming Kick webhook events securely using the public key.
 - **Typed Event Data** – Handlers receive typed structs for each event type.
 - **Combined Workflow** – Retrieve the webhook public key directly from the API to set up your webhook client automatically.
@@ -32,20 +32,42 @@ go get github.com/henrikah/kick-go-sdk
 ## Quickstart: API Client
 
 ```go
-apiClient, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+oAuthClient, err := kick.NewOAuthClient(kickapitypes.APIClientConfig{
     ClientID:     "your-client-id",
     ClientSecret: "your-client-secret",
+    HTTPClient:   http.DefaultClient,
+})
+if err != nil {
+    log.Fatalf("could not create OAuthClient: %v", err)
+}
+
+apiClient, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
     HTTPClient:   http.DefaultClient,
 })
 if err != nil {
     log.Fatalf("could not create APIClient: %v", err)
 }
 
-currentUser, err := apiClient.User.GetCurrentUser(context.TODO(), "user-access-token")
+accessToken, err := oAuthClient.GetAppAccessToken(context.TODO())
 if err != nil {
-    log.Printf("could not get current user: %v", err)
+	var apiErr *kickerrors.APIError
+	if errors.As(err, &apiErr) {
+		log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	} else {
+		log.Fatalf("internal error: %v", err)
+	}
 }
-log.Println("Logged in as:", currentUser.Data[0].Username)
+
+categorySearchData, err := apiClient.Category().SearchCategories(context.TODO(), accessToken, kickfilters.NewCategoriesFilter().WithNames([]string{"Software Development"}))
+if err != nil {
+	var apiErr *kickerrors.APIError
+	if errors.As(err, &apiErr) {
+		log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	} else {
+		log.Fatalf("internal error: %v", err)
+	}
+}
+log.Println("Found category:", categorySearchData.Data[0].Name)
 ```
 
 ---
@@ -80,10 +102,7 @@ http.HandleFunc("/webhook", webhookClient.WebhookHandler)
 You can automatically retrieve the public key from the API and use it to set up the webhook client without manually copying the key.
 
 ```go
-// ClientID and ClientSecret can be dummy text if you only want the get the Public Key
 apiClient, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
-    ClientID:     "your-client-id",
-    ClientSecret: "your-client-secret",
     HTTPClient:   http.DefaultClient,
 })
 if err != nil {
@@ -91,9 +110,14 @@ if err != nil {
 }
 
 // Fetch the webhook public key directly from the API
-publicKeyResp, err := apiClient.PublicKey.GetWebhookPublicKey(context.TODO())
+publicKeyResp, err := apiClient.PublicKey().GetWebhookPublicKey(context.TODO())
 if err != nil {
-    log.Fatalf("could not get the public key for the webhook: %v", err)
+	var apiErr *kickerrors.APIError
+	if errors.As(err, &apiErr) {
+		log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	} else {
+		log.Fatalf("internal error: %v", err)
+	}
 }
 
 webhookClient, err := kick.NewWebhookClient(publicKeyResp.Data.PublicKey)

@@ -16,7 +16,7 @@ type kicksClient struct {
 	client *apiClient
 }
 
-func newKicksClient(client *apiClient) kickcontracts.Kicks {
+func newKicksService(client *apiClient) kickcontracts.Kicks {
 	return &kicksClient{
 		client: client,
 	}
@@ -45,7 +45,7 @@ func (c *kicksClient) GetKicksLeaderboard(ctx context.Context, accessToken strin
 	}
 	var kicksLeaderboardData kickapitypes.Kicks
 
-	if err = c.client.makeJSONRequest(ctx, http.MethodGet, kicksLeaderboardURL.String(), nil, &accessToken, &kicksLeaderboardData); err != nil {
+	if err = c.client.requester.MakeJSONRequest(ctx, http.MethodGet, kicksLeaderboardURL.String(), nil, &accessToken, &kicksLeaderboardData); err != nil {
 		return nil, err
 	}
 

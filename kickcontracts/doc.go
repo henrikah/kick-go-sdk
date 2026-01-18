@@ -1,2 +1,2 @@
-// Package kickcontracts contains the interfaces for the API Client sub functions
+// Package kickcontracts contains all the interfaces for the SDK
 package kickcontracts

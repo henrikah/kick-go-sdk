@@ -11,9 +11,6 @@ import (
 
 func Test_GetChannelByBroadcasterUserID_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
 
 	accessToken := "access-token"
 	var broadcaster int64 = 1
@@ -67,16 +64,14 @@ func Test_GetChannelByBroadcasterUserID_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	channelData, err := client.Channel().GetChannelByBroadcasterUserID(ctx, accessToken, broadcaster)
+	channelData, err := client.Channel().GetChannelByBroadcasterUserID(t.Context(), accessToken, broadcaster)
 
 	// Assert
 	if channelData == nil {

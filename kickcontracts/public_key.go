@@ -15,15 +15,21 @@ type PublicKey interface {
 	//
 	// Example:
 	//
-	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{...})
+	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+	//	    HTTPClient: http.DefaultClient,
+	//	})
 	//	if err != nil {
 	//	    log.Fatal(err)
 	//	}
 	//
 	//	publicKeyResp, err := client.PublicKey().GetWebhookPublicKey(context.TODO())
 	//	if err != nil {
-	//  	log.Printf("could not get webhook public key: %v", err)
-	//  	return nil, err
+	//		var apiErr *kickerrors.APIError
+	//		if errors.As(err, &apiErr) {
+	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	//		} else {
+	//			log.Printf("internal error: %v", err)
+	//		}
 	//	}
 	GetWebhookPublicKey(ctx context.Context) (*kickapitypes.PublicKeyResponse, error)
 }

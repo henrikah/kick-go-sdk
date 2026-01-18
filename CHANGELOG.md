@@ -1,5 +1,21 @@
 # Changelog
 
+## \[2.0.0] - 2026-01-18
+
+### Added
+
+* Added NewOAuthClient.
+* Added Get Channel Reward Redemptions
+* Added Accept Channel Reward Redemptions
+* Added Reject Channel Reward Redemptions
+
+### Changed
+
+* Decoupled OAuth from NewAPIClient.
+* Moved the request helper into an internal package enabling usage across both APIClient and OAuthClient
+* Implementation of Categories removed and replaced with the new V2 endpoint.
+* LivestreamFilterBuilder renamed to LivestreamsFilter
+
 ## \[1.8.0] - 2026-01-17
 
 ### Notes

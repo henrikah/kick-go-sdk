@@ -13,22 +13,19 @@ import (
 
 func Test_GetChannelRewardsMissingAccessToken_Error(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
 	httpClient := http.DefaultClient
 
 	accessToken := ""
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var validationError *kickerrors.ValidationError
 
 	// Act
-	channelRewardsData, err := client.ChannelReward().GetChannelRewards(ctx, accessToken)
+	channelRewardsData, err := client.ChannelReward().GetChannelRewards(t.Context(), accessToken)
 
 	// Assert
 	if channelRewardsData != nil {
@@ -52,8 +49,6 @@ func Test_GetChannelRewardsUnAuthorized_Error(t *testing.T) {
 	// Arrange
 	errorJSON := `{"message": "Invalid request"}`
 
-	ctx := t.Context()
-
 	accessToken := "access-token"
 
 	mockClient := &mocks.MockHTTPClient{
@@ -63,15 +58,13 @@ func Test_GetChannelRewardsUnAuthorized_Error(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     "test-id",
-		ClientSecret: "test-secret",
-		HTTPClient:   mockClient,
+		HTTPClient: mockClient,
 	}
 	client, _ := kick.NewAPIClient(config)
 
 	var apiError *kickerrors.APIError
 	// Act
-	channelRewardsData, err := client.ChannelReward().GetChannelRewards(ctx, accessToken)
+	channelRewardsData, err := client.ChannelReward().GetChannelRewards(t.Context(), accessToken)
 
 	// Assert
 	if err == nil {
@@ -87,12 +80,8 @@ func Test_GetChannelRewardsUnAuthorized_Error(t *testing.T) {
 	}
 }
 
-func Test_GetChannelsByBroadcasterUserID_Success(t *testing.T) {
+func Test_GetChannelRewards_Success(t *testing.T) {
 	// Arrange
-	ctx := t.Context()
-	clientID := "test-id"
-	clientSecret := "test-secret"
-
 	accessToken := "access-token"
 
 	expectedJSON := `{
@@ -144,16 +133,14 @@ func Test_GetChannelsByBroadcasterUserID_Success(t *testing.T) {
 	}
 
 	config := kickapitypes.APIClientConfig{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		HTTPClient:   httpClient,
+		HTTPClient: httpClient,
 	}
 
 	client, _ := kick.NewAPIClient(config)
 
 	// Act
 
-	channelRewardsData, err := client.ChannelReward().GetChannelRewards(ctx, accessToken)
+	channelRewardsData, err := client.ChannelReward().GetChannelRewards(t.Context(), accessToken)
 
 	// Assert
 	if channelRewardsData == nil {

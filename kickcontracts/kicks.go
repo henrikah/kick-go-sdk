@@ -15,10 +15,21 @@ type Kicks interface {
 	//
 	// Example:
 	//
+	//	client, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
+	//	    HTTPClient: http.DefaultClient,
+	//	})
+	//	if err != nil {
+	//	    log.Fatal(err)
+	//	}
+	//
 	//	kicksLeaderboardResponse, err := client.Kicks().GetKicksLeaderboard(context.TODO(), accessToken, nil)
 	//	if err != nil {
-	//	    log.Printf("could not get kicks leaderboards: %v", err)
-	//	    return nil, err
+	//		var apiErr *kickerrors.APIError
+	//		if errors.As(err, &apiErr) {
+	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	//		} else {
+	//			log.Printf("internal error: %v", err)
+	//		}
 	//	}
 	GetKicksLeaderboard(ctx context.Context, accessToken string, limit *int) (*kickapitypes.Kicks, error)
 }

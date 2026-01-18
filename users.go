@@ -16,24 +16,12 @@ type userClient struct {
 	client *apiClient
 }
 
-func newUserClient(client *apiClient) kickcontracts.User {
+func newUserService(client *apiClient) kickcontracts.User {
 	return &userClient{
 		client: client,
 	}
 }
-func (c *userClient) TokenIntrospect(ctx context.Context, accessToken string) (*kickapitypes.TokenIntrospect, error) {
-	if err := kickerrors.ValidateAccessToken(accessToken); err != nil {
-		return nil, err
-	}
 
-	var tokenIntrospectData kickapitypes.TokenIntrospect
-
-	if err := c.client.makeJSONRequest(ctx, http.MethodPost, endpoints.ViewTokenIntrospectURL(), nil, &accessToken, &tokenIntrospectData); err != nil {
-		return nil, err
-	}
-
-	return &tokenIntrospectData, nil
-}
 func (c *userClient) GetUsersByID(ctx context.Context, accessToken string, userIDs []int64) (*kickapitypes.Users, error) {
 	if err := kickerrors.ValidateAccessToken(accessToken); err != nil {
 		return nil, err
@@ -52,7 +40,7 @@ func (c *userClient) GetUsersByID(ctx context.Context, accessToken string, userI
 
 	var usersData kickapitypes.Users
 
-	if err = c.client.makeJSONRequest(ctx, http.MethodGet, usersURL.String(), nil, &accessToken, &usersData); err != nil {
+	if err = c.client.requester.MakeJSONRequest(ctx, http.MethodGet, usersURL.String(), nil, &accessToken, &usersData); err != nil {
 		return nil, err
 	}
 
