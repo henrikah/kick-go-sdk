@@ -3,8 +3,8 @@ package kickcontracts
 import (
 	"context"
 
-	"github.com/henrikah/kick-go-sdk/enums/kickscopes"
-	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
+	"github.com/henrikah/kick-go-sdk/v2/enums/kickscopes"
+	"github.com/henrikah/kick-go-sdk/v2/kickoauthtypes"
 )
 
 // OAuth handles OAuth2 flows for the Kick API.

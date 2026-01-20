@@ -4,8 +4,8 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/henrikah/kick-go-sdk/enums/kicksortbyenum"
-	"github.com/henrikah/kick-go-sdk/kickerrors"
+	"github.com/henrikah/kick-go-sdk/v2/enums/kicksortbyenum"
+	"github.com/henrikah/kick-go-sdk/v2/kickerrors"
 )
 
 // LivestreamsFilter is a fluent builder for constructing filters when searching livestreams.

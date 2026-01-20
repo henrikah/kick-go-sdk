@@ -3,8 +3,8 @@ package kickcontracts
 import (
 	"context"
 
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
-	"github.com/henrikah/kick-go-sdk/kickfilters"
+	"github.com/henrikah/kick-go-sdk/v2/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/v2/kickfilters"
 )
 
 // ChannelReward handles operations related to a broadcaster channel rewards.

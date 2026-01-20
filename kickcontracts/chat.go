@@ -3,7 +3,7 @@ package kickcontracts
 import (
 	"context"
 
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/v2/kickapitypes"
 )
 
 // Chat handles sending messages in a broadcaster's chat channel.

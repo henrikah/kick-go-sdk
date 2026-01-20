@@ -21,7 +21,7 @@ type oAuthClient struct {
 	requester    *transport.Requester
 }
 
-// NewOAuthClient creates a new APIClient instance with the provided configuration.
+// NewOAuthClient creates a new NewOAuthClient instance with the provided configuration.
 //
 // Example:
 //
