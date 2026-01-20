@@ -1,6 +1,6 @@
 package kickapitypes
 
-import "github.com/henrikah/kick-go-sdk/enums/kickchannelrewardstatus"
+import "github.com/henrikah/kick-go-sdk/v2/enums/kickchannelrewardstatus"
 
 type ChannelRewards struct {
 	Data    []ChannelRewardData `json:"data"`

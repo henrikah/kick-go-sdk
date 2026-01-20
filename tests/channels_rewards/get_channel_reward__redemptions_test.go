@@ -5,12 +5,12 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/henrikah/kick-go-sdk"
-	"github.com/henrikah/kick-go-sdk/enums/kickchannelrewardstatus"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
-	"github.com/henrikah/kick-go-sdk/kickerrors"
-	"github.com/henrikah/kick-go-sdk/kickfilters"
-	"github.com/henrikah/kick-go-sdk/tests/mocks"
+	"github.com/henrikah/kick-go-sdk/v2"
+	"github.com/henrikah/kick-go-sdk/v2/enums/kickchannelrewardstatus"
+	"github.com/henrikah/kick-go-sdk/v2/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/v2/kickerrors"
+	"github.com/henrikah/kick-go-sdk/v2/kickfilters"
+	"github.com/henrikah/kick-go-sdk/v2/tests/mocks"
 )
 
 func Test_GetChannelRewardRedemptionsMissingAccessToken_Error(t *testing.T) {

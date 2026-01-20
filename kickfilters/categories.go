@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/henrikah/kick-go-sdk/kickerrors"
+	"github.com/henrikah/kick-go-sdk/v2/kickerrors"
 )
 
 // CategoriesFilter is a fluent builder for constructing filters when searching categories.

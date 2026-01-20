@@ -3,7 +3,7 @@ package kickcontracts
 import (
 	"context"
 
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/v2/kickapitypes"
 )
 
 // Moderation handles user moderation actions such as timeouts and bans.

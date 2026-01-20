@@ -9,8 +9,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/henrikah/kick-go-sdk/internal/httpclient"
-	"github.com/henrikah/kick-go-sdk/kickerrors"
+	"github.com/henrikah/kick-go-sdk/v2/internal/httpclient"
+	"github.com/henrikah/kick-go-sdk/v2/kickerrors"
 )
 
 type Requester struct {

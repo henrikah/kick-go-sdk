@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/henrikah/kick-go-sdk"
-	"github.com/henrikah/kick-go-sdk/kickerrors"
-	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
+	"github.com/henrikah/kick-go-sdk/v2"
+	"github.com/henrikah/kick-go-sdk/v2/kickerrors"
+	"github.com/henrikah/kick-go-sdk/v2/kickoauthtypes"
 )
 
 func Test_NewOAuthClientMissingClientID_Error(t *testing.T) {
