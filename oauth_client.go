@@ -6,13 +6,13 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/henrikah/kick-go-sdk/enums/kickscopes"
-	"github.com/henrikah/kick-go-sdk/internal/auth"
-	"github.com/henrikah/kick-go-sdk/internal/endpoints"
-	"github.com/henrikah/kick-go-sdk/internal/transport"
-	"github.com/henrikah/kick-go-sdk/kickcontracts"
-	"github.com/henrikah/kick-go-sdk/kickerrors"
-	"github.com/henrikah/kick-go-sdk/kickoauthtypes"
+	"github.com/henrikah/kick-go-sdk/v2/enums/kickscopes"
+	"github.com/henrikah/kick-go-sdk/v2/internal/auth"
+	"github.com/henrikah/kick-go-sdk/v2/internal/endpoints"
+	"github.com/henrikah/kick-go-sdk/v2/internal/transport"
+	"github.com/henrikah/kick-go-sdk/v2/kickcontracts"
+	"github.com/henrikah/kick-go-sdk/v2/kickerrors"
+	"github.com/henrikah/kick-go-sdk/v2/kickoauthtypes"
 )
 
 type oAuthClient struct {
@@ -21,7 +21,7 @@ type oAuthClient struct {
 	requester    *transport.Requester
 }
 
-// NewAPIClient creates a new APIClient instance with the provided configuration.
+// NewOAuthClient creates a new APIClient instance with the provided configuration.
 //
 // Example:
 //

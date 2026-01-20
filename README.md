@@ -1,9 +1,9 @@
 # Kick Go SDK
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/henrikah/kick-go-sdk.svg)](https://pkg.go.dev/github.com/henrikah/kick-go-sdk)
+[![Go Reference](https://pkg.go.dev/badge/github.com/henrikah/kick-go-sdk/v2.svg)](https://pkg.go.dev/github.com/henrikah/kick-go-sdk/v2)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/henrikah/kick-go-sdk)](https://github.com/henrikah/kick-go-sdk/releases)
-[![Build](https://github.com/henrikah/kick-go-sdk/actions/workflows/main.yaml/badge.svg)](https://github.com/henrikah/kick-go-sdk/actions/workflows/main.yaml)
+[![Release](https://img.shields.io/github/v/release/henrikah/kick-go-sdk)](https://github.com/henrikah/kick-go-sdk/v2/releases)
+[![Build](https://github.com/henrikah/kick-go-sdk/v2/actions/workflows/main.yaml/badge.svg)](https://github.com/henrikah/kick-go-sdk/v2/actions/workflows/main.yaml)
 
 A Go SDK for interacting with the [Kick API](https://docs.kick.com/) and handling webhooks.
 
@@ -24,7 +24,7 @@ This SDK provides clients for accessing Kick's API and for processing webhook ev
 ## Installation
 
 ```bash
-go get github.com/henrikah/kick-go-sdk
+go get github.com/henrikah/kick-go-sdk/v2
 ```
 
 ---
