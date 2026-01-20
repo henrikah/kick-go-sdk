@@ -24,7 +24,7 @@ This SDK provides clients for accessing Kick's API and for processing webhook ev
 ## Installation
 
 ```bash
-go get github.com/henrikah/kick-go-sdk
+go get github.com/henrikah/kick-go-sdk/v2
 ```
 
 ---
