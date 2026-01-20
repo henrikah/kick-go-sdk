@@ -3,7 +3,7 @@ package kickfilters
 import (
 	"net/url"
 
-	"github.com/henrikah/kick-go-sdk/enums/kickchannelrewardstatus"
+	"github.com/henrikah/kick-go-sdk/v2/enums/kickchannelrewardstatus"
 )
 
 // RewardRedemptionsFilter is a fluent builder for constructing filters when searching reward redemptions.

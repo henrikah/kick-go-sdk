@@ -1,9 +1,9 @@
 package kick
 
 import (
-	"github.com/henrikah/kick-go-sdk/internal/transport"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
-	"github.com/henrikah/kick-go-sdk/kickcontracts"
+	"github.com/henrikah/kick-go-sdk/v2/internal/transport"
+	"github.com/henrikah/kick-go-sdk/v2/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/v2/kickcontracts"
 )
 
 type apiClient struct {

@@ -8,8 +8,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/henrikah/kick-go-sdk"
-	"github.com/henrikah/kick-go-sdk/kickwebhooktypes"
+	"github.com/henrikah/kick-go-sdk/v2"
+	"github.com/henrikah/kick-go-sdk/v2/kickwebhooktypes"
 )
 
 func Test_WebookPassthroughInstatiation_Success(t *testing.T) {

@@ -3,8 +3,8 @@ package kickcontracts
 import (
 	"context"
 
-	"github.com/henrikah/kick-go-sdk/enums/kickwebhookenum"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/v2/enums/kickwebhookenum"
+	"github.com/henrikah/kick-go-sdk/v2/kickapitypes"
 )
 
 // EventsSubscription handles managing Kick webhook event subscriptions.

@@ -1,6 +1,6 @@
 package kickoauthtypes
 
-import "github.com/henrikah/kick-go-sdk/enums/kickscopes"
+import "github.com/henrikah/kick-go-sdk/v2/enums/kickscopes"
 
 type AppAccessTokenResponse struct {
 	AccessToken string `json:"access_token"`

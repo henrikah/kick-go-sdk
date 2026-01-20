@@ -13,9 +13,9 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/henrikah/kick-go-sdk/enums/kickwebhookenum"
-	"github.com/henrikah/kick-go-sdk/kickerrors"
-	"github.com/henrikah/kick-go-sdk/kickwebhooktypes"
+	"github.com/henrikah/kick-go-sdk/v2/enums/kickwebhookenum"
+	"github.com/henrikah/kick-go-sdk/v2/kickerrors"
+	"github.com/henrikah/kick-go-sdk/v2/kickwebhooktypes"
 )
 
 // webhook handles registering Kick webhook event handlers and serving incoming webhooks.

@@ -7,7 +7,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 
-	"github.com/henrikah/kick-go-sdk/internal/types"
+	"github.com/henrikah/kick-go-sdk/v2/internal/types"
 )
 
 // pkceMethodS256 is the only PKCE method currently supported by Kick.
