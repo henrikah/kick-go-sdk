@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/henrikah/kick-go-sdk/internal/endpoints"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
-	"github.com/henrikah/kick-go-sdk/kickcontracts"
-	"github.com/henrikah/kick-go-sdk/kickerrors"
-	"github.com/henrikah/kick-go-sdk/kickfilters"
+	"github.com/henrikah/kick-go-sdk/v2/internal/endpoints"
+	"github.com/henrikah/kick-go-sdk/v2/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/v2/kickcontracts"
+	"github.com/henrikah/kick-go-sdk/v2/kickerrors"
+	"github.com/henrikah/kick-go-sdk/v2/kickfilters"
 )
 
 type channelRewardClient struct {

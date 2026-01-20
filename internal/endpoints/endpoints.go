@@ -4,7 +4,7 @@ package endpoints
 import (
 	"strconv"
 
-	"github.com/henrikah/kick-go-sdk/internal/helpers"
+	"github.com/henrikah/kick-go-sdk/v2/internal/helpers"
 )
 
 type Endpoint string

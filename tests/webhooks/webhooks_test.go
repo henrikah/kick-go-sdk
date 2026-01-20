@@ -15,10 +15,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/henrikah/kick-go-sdk"
-	"github.com/henrikah/kick-go-sdk/enums/kickchannelrewardstatus"
-	"github.com/henrikah/kick-go-sdk/enums/kickwebhookenum"
-	"github.com/henrikah/kick-go-sdk/kickwebhooktypes"
+	"github.com/henrikah/kick-go-sdk/v2"
+	"github.com/henrikah/kick-go-sdk/v2/enums/kickchannelrewardstatus"
+	"github.com/henrikah/kick-go-sdk/v2/enums/kickwebhookenum"
+	"github.com/henrikah/kick-go-sdk/v2/kickwebhooktypes"
 )
 
 func generateKeyPair(t *testing.T) (*rsa.PrivateKey, string) {

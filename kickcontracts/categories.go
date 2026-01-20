@@ -3,8 +3,8 @@ package kickcontracts
 import (
 	"context"
 
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
-	"github.com/henrikah/kick-go-sdk/kickfilters"
+	"github.com/henrikah/kick-go-sdk/v2/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/v2/kickfilters"
 )
 
 // Category handles operations related to Kick categories.

@@ -1,4 +1,6 @@
 // Package kick provides clients for the Kick API, OAuth and for processing webhooks.
+package kick
+
 //
 // # Quickstart: API Client
 //
@@ -87,5 +89,3 @@
 //	}
 //
 //	// Register handlers and start server as above
-
-package kick

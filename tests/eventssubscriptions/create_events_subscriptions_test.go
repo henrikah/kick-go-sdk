@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/henrikah/kick-go-sdk"
-	"github.com/henrikah/kick-go-sdk/enums/kickwebhookenum"
-	"github.com/henrikah/kick-go-sdk/kickapitypes"
-	"github.com/henrikah/kick-go-sdk/kickerrors"
-	"github.com/henrikah/kick-go-sdk/tests/mocks"
+	"github.com/henrikah/kick-go-sdk/v2"
+	"github.com/henrikah/kick-go-sdk/v2/enums/kickwebhookenum"
+	"github.com/henrikah/kick-go-sdk/v2/kickapitypes"
+	"github.com/henrikah/kick-go-sdk/v2/kickerrors"
+	"github.com/henrikah/kick-go-sdk/v2/tests/mocks"
 )
 
 func Test_CreateEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
