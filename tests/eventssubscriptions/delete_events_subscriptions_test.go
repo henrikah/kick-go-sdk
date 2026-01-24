@@ -1,7 +1,6 @@
 package kick_test
 
 import (
-	"errors"
 	"net/http"
 	"testing"
 
@@ -23,8 +22,6 @@ func Test_DeleteEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	err := client.EventsSubscription().DeleteEventSubscriptions(t.Context(), accessToken, subscriptionIDs)
 
@@ -33,12 +30,14 @@ func Test_DeleteEventsSubscriptionsMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "accessToken" {
-		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationError.Field)
+	if validationErr.Field != "accessToken" {
+		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -54,8 +53,6 @@ func Test_DeleteEventsSubscriptionsMissingSubscriptionIDs_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	err := client.EventsSubscription().DeleteEventSubscriptions(t.Context(), accessToken, subscriptionIDs)
 
@@ -64,12 +61,14 @@ func Test_DeleteEventsSubscriptionsMissingSubscriptionIDs_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "subscriptionIDs" {
-		t.Fatalf("Expected error on field 'subscriptionIDs', got '%s'", validationError.Field)
+	if validationErr.Field != "subscriptionIDs" {
+		t.Fatalf("Expected error on field 'subscriptionIDs', got '%s'", validationErr.Field)
 	}
 }
 
@@ -91,7 +90,6 @@ func Test_DeleteEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	err := client.EventsSubscription().DeleteEventSubscriptions(t.Context(), accessToken, subscriptionIDs)
 
@@ -100,7 +98,9 @@ func Test_DeleteEventsSubscriptionsUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiErr := kickerrors.IsAPIError(err)
+
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

@@ -33,7 +33,7 @@ type oAuthClient struct {
 //	if err != nil {
 //		log.Fatalf("could not create OAuthClient: %v", err)
 //	}
-func NewOAuthClient(clientConfig kickoauthtypes.OAuthClientConfig) (kickcontracts.OAuth, error) {
+func NewOAuthClient(clientConfig kickoauthtypes.OAuthClientConfig) (kickcontracts.OAuthClient, error) {
 	if err := kickerrors.ValidateNotEmpty("ClientID", clientConfig.ClientID); err != nil {
 		return nil, err
 	}

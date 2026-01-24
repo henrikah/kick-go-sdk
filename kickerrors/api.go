@@ -1,6 +1,9 @@
 package kickerrors
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type APIError struct {
 	StatusCode int
@@ -18,4 +21,12 @@ func SetAPIError(statusCode int, message string, url string) *APIError {
 		Message:    message,
 		URL:        url,
 	}
+}
+
+func IsAPIError(err error) *APIError {
+	var apiErr *APIError
+	if errors.As(err, &apiErr) {
+		return apiErr
+	}
+	return nil
 }

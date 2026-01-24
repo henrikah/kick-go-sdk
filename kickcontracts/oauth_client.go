@@ -7,11 +7,11 @@ import (
 	"github.com/henrikah/kick-go-sdk/v2/kickoauthtypes"
 )
 
-// OAuth handles OAuth2 flows for the Kick API.
+// OAuthClient handles OAuth2 flows for the Kick API.
 //
 // All examples use context.TODO() as a placeholder. Replace with a proper
 // context (with timeout/cancel) in production code.
-type OAuth interface {
+type OAuthClient interface {
 	// InitiateAuthorization starts the PKCE OAuth2 flow by generating a code verifier and challenge,
 	// then constructing the authorization URL.
 	//
@@ -24,8 +24,7 @@ type OAuth interface {
 	//
 	//	authData, err := oAuth.InitiateAuthorization("http://localhost", "random-state", kickscopes.Scopes{kickscope.UserRead})
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -44,8 +43,7 @@ type OAuth interface {
 	//
 	//	tokenData, err := oAuth.ExchangeAuthorizationCode(context.TODO(), "http://localhost", "auth-code", "pkce-verifier")
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -64,8 +62,7 @@ type OAuth interface {
 	//
 	//	tokenData, err := oAuth.GetAppAccessToken(context.TODO())
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -84,8 +81,7 @@ type OAuth interface {
 	//
 	//	err := oAuth.RevokeAccessToken(context.TODO(), accessToken)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -104,8 +100,7 @@ type OAuth interface {
 	//
 	//	err := oAuth.RevokeRefreshToken(context.TODO(), refreshToken)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -125,8 +120,7 @@ type OAuth interface {
 	//
 	//	introspection, err := oAuth.TokenIntrospect(context.TODO(), accessToken)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)

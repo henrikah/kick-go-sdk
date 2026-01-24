@@ -25,8 +25,7 @@ type EventsSubscription interface {
 	//
 	//	subscriptions, err := client.EventsSubscription().GetEventSubscriptions(context.TODO(), accessToken)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -48,8 +47,7 @@ type EventsSubscription interface {
 	//	events := []kickwebhookenum.WebhookType{kickwebhookenum.ChatMessageSent}
 	//	createEventSubscriptionsResponse, err := client.EventsSubscription().CreateEventSubscriptions(context.TODO(), accessToken, events)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -73,8 +71,7 @@ type EventsSubscription interface {
 	//
 	//	createEventSubscriptionsResponse, err := client.EventsSubscription().CreateEventSubscriptionsAsApp(context.TODO(), accessToken, 12345, []kickwebhookenum.WebhookType{kickwebhookenum.ChatMessageSent})
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -95,8 +92,7 @@ type EventsSubscription interface {
 	//
 	//	err := client.EventsSubscription().DeleteEventSubscriptions(context.TODO(), accessToken, []string{"subscription-id-1", "subscription-id-2"})
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)

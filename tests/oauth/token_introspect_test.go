@@ -1,7 +1,6 @@
 package kick_test
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 	"reflect"
@@ -27,8 +26,6 @@ func Test_TokenIntrospectMissingAccessToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewOAuthClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	tokenIntrospectData, err := client.TokenIntrospect(t.Context(), accessToken)
 
@@ -41,12 +38,14 @@ func Test_TokenIntrospectMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "accessToken" {
-		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationError.Field)
+	if validationErr.Field != "accessToken" {
+		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -69,7 +68,6 @@ func Test_TokenIntrospectUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewOAuthClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	tokenIntrospectData, err := client.TokenIntrospect(t.Context(), accessToken)
 
@@ -82,7 +80,9 @@ func Test_TokenIntrospectUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected tokenIntrospectData to be nil on error")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiErr := kickerrors.IsAPIError(err)
+
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }
