@@ -38,7 +38,7 @@ func Test_TimeOutUserMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-		validationError := kickerrors.IsValidationError(err)
+	validationError := kickerrors.IsValidationError(err)
 
 	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
@@ -76,7 +76,7 @@ func Test_TimeOutUserInvalidBroadcasterUserID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-		validationError := kickerrors.IsValidationError(err)
+	validationError := kickerrors.IsValidationError(err)
 
 	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
@@ -114,7 +114,7 @@ func Test_TimeOutUserDurationTooLow_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-		validationError := kickerrors.IsValidationError(err)
+	validationError := kickerrors.IsValidationError(err)
 
 	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
@@ -152,7 +152,7 @@ func Test_TimeOutUserDurationTooHigh_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-		validationError := kickerrors.IsValidationError(err)
+	validationError := kickerrors.IsValidationError(err)
 
 	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
@@ -190,7 +190,7 @@ func Test_TimeOutUserInvalidUserID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-		validationError := kickerrors.IsValidationError(err)
+	validationError := kickerrors.IsValidationError(err)
 
 	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)

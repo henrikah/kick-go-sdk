@@ -33,7 +33,7 @@ func Test_RejectChannelRewardRedemptionsMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-		validationError := kickerrors.IsValidationError(err)
+	validationError := kickerrors.IsValidationError(err)
 
 	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
