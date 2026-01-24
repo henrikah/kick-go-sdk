@@ -7,11 +7,11 @@ import (
 	"github.com/henrikah/kick-go-sdk/v2/kickoauthtypes"
 )
 
-// OAuth handles OAuth2 flows for the Kick API.
+// OAuthClient handles OAuth2 flows for the Kick API.
 //
 // All examples use context.TODO() as a placeholder. Replace with a proper
 // context (with timeout/cancel) in production code.
-type OAuth interface {
+type OAuthClient interface {
 	// InitiateAuthorization starts the PKCE OAuth2 flow by generating a code verifier and challenge,
 	// then constructing the authorization URL.
 	//
