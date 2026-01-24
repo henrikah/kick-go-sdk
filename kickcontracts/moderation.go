@@ -26,8 +26,7 @@ type Moderation interface {
 	//
 	//	moderationResponse, err := client.Moderation().TimeOutUser(context.TODO(), accessToken, broadcasterID, userID, 600, nil)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -50,8 +49,7 @@ type Moderation interface {
 	//
 	//	moderationResponse, err := client.Moderation().BanUser(context.TODO(), accessToken, broadcasterID, userID, nil)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -72,8 +70,7 @@ type Moderation interface {
 	//
 	//	moderationResponse, err := client.Moderation().UnbanUser(context.TODO(), accessToken, broadcasterID, userID)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)

@@ -30,8 +30,7 @@ type Category interface {
 	//
 	//	categories, err := client.Category().SearchCategories(context.TODO(), accessToken, filters)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)

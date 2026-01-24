@@ -2,7 +2,6 @@ package kick_test
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"testing"
 
@@ -27,8 +26,6 @@ func Test_UpdateChannelRewardMissingAccessToken_Error(t *testing.T) {
 
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
@@ -41,7 +38,8 @@ func Test_UpdateChannelRewardMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -68,8 +66,6 @@ func Test_UpdateChannelRewardCostLessThanOne_Error(t *testing.T) {
 
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
@@ -82,7 +78,9 @@ func Test_UpdateChannelRewardCostLessThanOne_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -109,8 +107,6 @@ func Test_UpdateChannelRewardDescriptionTooLong_Error(t *testing.T) {
 
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
@@ -123,7 +119,9 @@ func Test_UpdateChannelRewardDescriptionTooLong_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -150,8 +148,6 @@ func Test_UpdateChannelRewardTitleTooLong_Error(t *testing.T) {
 
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
@@ -164,7 +160,9 @@ func Test_UpdateChannelRewardTitleTooLong_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -193,7 +191,6 @@ func Test_UpdateChannelRewardUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(t.Context(), accessToken, channelRewardID, channelRewardData)
 
@@ -206,7 +203,9 @@ func Test_UpdateChannelRewardUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiError := kickerrors.IsAPIError(err)
+
+	if apiError == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

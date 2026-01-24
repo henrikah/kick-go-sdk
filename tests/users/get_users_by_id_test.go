@@ -1,7 +1,6 @@
 package kick_test
 
 import (
-	"errors"
 	"net/http"
 	"testing"
 
@@ -23,8 +22,6 @@ func Test_GetUsersByIDMissingAccessToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	usersData, err := client.User().GetUsersByID(t.Context(), accessToken, users)
 
@@ -37,7 +34,9 @@ func Test_GetUsersByIDMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -64,7 +63,6 @@ func Test_GetUsersByIDUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	usersData, err := client.User().GetUsersByID(t.Context(), accessToken, users)
 
@@ -77,7 +75,9 @@ func Test_GetUsersByIDUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected usersData to be nil on error")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiError := kickerrors.IsAPIError(err)
+
+	if apiError == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

@@ -1,7 +1,6 @@
 package kick_test
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -31,7 +30,6 @@ func Test_GetAppAccessTokenWrongCredentials_Error(t *testing.T) {
 	}
 	client, _ := kick.NewOAuthClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	tokenData, err := client.GetAppAccessToken(t.Context())
 
@@ -44,7 +42,9 @@ func Test_GetAppAccessTokenWrongCredentials_Error(t *testing.T) {
 		t.Fatal("Expected tokenData to be nil on error")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiError := kickerrors.IsAPIError(err)
+
+	if apiError == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

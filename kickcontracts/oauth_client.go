@@ -24,8 +24,7 @@ type OAuthClient interface {
 	//
 	//	authData, err := oAuth.InitiateAuthorization("http://localhost", "random-state", kickscopes.Scopes{kickscope.UserRead})
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -44,8 +43,7 @@ type OAuthClient interface {
 	//
 	//	tokenData, err := oAuth.ExchangeAuthorizationCode(context.TODO(), "http://localhost", "auth-code", "pkce-verifier")
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -64,8 +62,7 @@ type OAuthClient interface {
 	//
 	//	tokenData, err := oAuth.GetAppAccessToken(context.TODO())
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -84,8 +81,7 @@ type OAuthClient interface {
 	//
 	//	err := oAuth.RevokeAccessToken(context.TODO(), accessToken)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -104,8 +100,7 @@ type OAuthClient interface {
 	//
 	//	err := oAuth.RevokeRefreshToken(context.TODO(), refreshToken)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -125,8 +120,7 @@ type OAuthClient interface {
 	//
 	//	introspection, err := oAuth.TokenIntrospect(context.TODO(), accessToken)
 	//	if err != nil {
-	//		var apiErr *kickerrors.APIError
-	//		if errors.As(err, &apiErr) {
+	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
