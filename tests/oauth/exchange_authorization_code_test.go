@@ -1,7 +1,6 @@
 package kick_test
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -32,7 +31,6 @@ func Test_ExchangeAuthorizationCodeMissingRedirectURI_Error(t *testing.T) {
 
 	client, _ := kick.NewOAuthClient(config)
 
-	var validationError *kickerrors.ValidationError
 	// Act
 
 	tokenData, err := client.ExchangeAuthorizationCode(t.Context(), redirectURI, authorizationCode, codeVerifier)
@@ -45,7 +43,9 @@ func Test_ExchangeAuthorizationCodeMissingRedirectURI_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -69,7 +69,6 @@ func Test_ExchangeAuthorizationCodeMissingAuthorizationCode_Error(t *testing.T) 
 
 	client, _ := kick.NewOAuthClient(config)
 
-	var validationError *kickerrors.ValidationError
 	// Act
 
 	tokenData, err := client.ExchangeAuthorizationCode(t.Context(), redirectURI, authorizationCode, codeVerifier)
@@ -82,7 +81,9 @@ func Test_ExchangeAuthorizationCodeMissingAuthorizationCode_Error(t *testing.T) 
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -106,7 +107,6 @@ func Test_ExchangeAuthorizationCodeMissingCodeVerifier_Error(t *testing.T) {
 
 	client, _ := kick.NewOAuthClient(config)
 
-	var validationError *kickerrors.ValidationError
 	// Act
 
 	tokenData, err := client.ExchangeAuthorizationCode(t.Context(), redirectURI, authorizationCode, codeVerifier)
@@ -119,7 +119,9 @@ func Test_ExchangeAuthorizationCodeMissingCodeVerifier_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -149,7 +151,6 @@ func Test_ExchangeAuthorizationCodeWrongCredentials_Error(t *testing.T) {
 	}
 	client, _ := kick.NewOAuthClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	tokenData, err := client.ExchangeAuthorizationCode(t.Context(), redirectURI, authorizationCode, codeVerifier)
 
@@ -162,7 +163,9 @@ func Test_ExchangeAuthorizationCodeWrongCredentials_Error(t *testing.T) {
 		t.Fatal("Expected tokenData to be nil on error")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiError := kickerrors.IsAPIError(err)
+
+	if apiError == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

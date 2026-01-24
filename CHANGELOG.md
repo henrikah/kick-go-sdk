@@ -1,10 +1,17 @@
 # Changelog
 
-## \[2.0.1] - 2026-01-24
+## \[2.1.0] - 2026-01-24
+
+### Added
+
+* Added error helper IsValidationError.
+* Added error helper IsAPIError.
+* Added error helper IsInternalWebhookError.
+* Added error helper IsWebhookHandlerError.
 
 ### Changed
 
-* Rename OAuth contract to OAuthClient to match the other clients.
+* Rename OAuth contract to OAuthClient to match the other client contract names.
 
 ## \[2.0.0] - 2026-01-18
 

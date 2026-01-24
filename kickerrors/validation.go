@@ -1,6 +1,7 @@
 package kickerrors
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -11,6 +12,14 @@ type ValidationError struct {
 
 func (e *ValidationError) Error() string {
 	return fmt.Sprintf("invalid value for '%s': %s", e.Field, e.Message)
+}
+
+func IsValidationError(err error) *ValidationError {
+	var validationError *ValidationError
+	if errors.As(err, &validationError) {
+		return validationError
+	}
+	return nil
 }
 
 func ValidateAccessToken(accessToken string) error {

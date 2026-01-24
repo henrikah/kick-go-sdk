@@ -2,7 +2,6 @@ package kick_test
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"testing"
 
@@ -26,8 +25,6 @@ func Test_SendChatMessageAsUserMissingAccessToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(t.Context(), accessToken, broadcasterUserID, &replyToMessageID, message)
 
@@ -40,7 +37,9 @@ func Test_SendChatMessageAsUserMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -63,8 +62,6 @@ func Test_SendChatMessageAsUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(t.Context(), accessToken, broadcasterUserID, &replyToMessageID, message)
 
@@ -77,7 +74,9 @@ func Test_SendChatMessageAsUserInvalidBroadcasterUserID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -100,8 +99,6 @@ func Test_SendChatMessageAsUserEmptyMessage_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(t.Context(), accessToken, broadcasterUserID, &replyToMessageID, message)
 
@@ -114,7 +111,9 @@ func Test_SendChatMessageAsUserEmptyMessage_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -143,7 +142,6 @@ func Test_SendChatMessageAsUserUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	sendChatMessageData, err := client.Chat().SendChatMessageAsUser(t.Context(), accessToken, broadcasterUserID, &replyToMessageID, message)
 
@@ -156,7 +154,9 @@ func Test_SendChatMessageAsUserUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected sendChatMessageData to be nil on error")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiError := kickerrors.IsAPIError(err)
+
+	if apiError == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

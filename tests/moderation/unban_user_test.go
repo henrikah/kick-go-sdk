@@ -2,7 +2,6 @@ package kick_test
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"testing"
 
@@ -25,8 +24,6 @@ func Test_UnbanUserMissingAccessToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	unbanUserData, err := client.Moderation().UnbanUser(t.Context(), accessToken, broadcasterUserID, userID)
 
@@ -39,7 +36,9 @@ func Test_UnbanUserMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -61,8 +60,6 @@ func Test_UnbanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	unbanUserData, err := client.Moderation().UnbanUser(t.Context(), accessToken, broadcasterUserID, userID)
 
@@ -75,7 +72,9 @@ func Test_UnbanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -97,8 +96,6 @@ func Test_UnbanUserInvalidUserID_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	unbanUserData, err := client.Moderation().UnbanUser(t.Context(), accessToken, broadcasterUserID, userID)
 
@@ -111,7 +108,9 @@ func Test_UnbanUserInvalidUserID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -139,7 +138,6 @@ func Test_UnbanUserUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	unbanUserData, err := client.Moderation().UnbanUser(t.Context(), accessToken, broadcasterUserID, userID)
 
@@ -152,7 +150,9 @@ func Test_UnbanUserUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected unbanUserData to be nil on error")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiError := kickerrors.IsAPIError(err)
+
+	if apiError == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

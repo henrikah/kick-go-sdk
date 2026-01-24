@@ -2,7 +2,6 @@ package kick_test
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"testing"
 
@@ -30,8 +29,6 @@ func Test_UpdateChannelMissingAccessToken_Error(t *testing.T) {
 
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	err := client.Channel().UpdateChannel(t.Context(), accessToken, channelData)
 
@@ -40,7 +37,9 @@ func Test_UpdateChannelMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -68,8 +67,6 @@ func Test_UpdateChannelNegativeCategoryID_Error(t *testing.T) {
 
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
 
@@ -78,7 +75,9 @@ func Test_UpdateChannelNegativeCategoryID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -110,7 +109,6 @@ func Test_UpdateChannelUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	err := client.Channel().UpdateChannel(t.Context(), accessToken, channelData)
 
@@ -119,7 +117,8 @@ func Test_UpdateChannelUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiError := kickerrors.IsAPIError(err)
+	if apiError == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

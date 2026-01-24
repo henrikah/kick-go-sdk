@@ -1,7 +1,6 @@
 package kick_test
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 	"testing"
@@ -26,8 +25,6 @@ func Test_GetCategoriesMissingAccessToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	categoriesData, err := client.Category().SearchCategories(t.Context(), accessToken, filter)
 
@@ -40,7 +37,8 @@ func Test_GetCategoriesMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -61,8 +59,6 @@ func Test_GetCategoriesInvalidCategoryID_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	categoriesData, err := client.Category().SearchCategories(t.Context(), accessToken, filter)
 
@@ -75,7 +71,8 @@ func Test_GetCategoriesInvalidCategoryID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -102,7 +99,6 @@ func Test_GetCategoriesUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	categoriesData, err := client.Category().SearchCategories(t.Context(), accessToken, filter)
 
@@ -115,7 +111,8 @@ func Test_GetCategoriesUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected categoriesData to be nil on error")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiError := kickerrors.IsAPIError(err)
+	if apiError == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

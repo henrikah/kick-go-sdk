@@ -2,7 +2,6 @@ package kick_test
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"testing"
 
@@ -29,8 +28,6 @@ func Test_CreateChannelRewardMissingAccessToken_Error(t *testing.T) {
 
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 
 	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(t.Context(), accessToken, channelRewardData)
@@ -45,7 +42,9 @@ func Test_CreateChannelRewardMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -71,8 +70,6 @@ func Test_CreateChannelRewardLessThanOneCost_Error(t *testing.T) {
 
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 
 	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(t.Context(), accessToken, channelRewardData)
@@ -87,7 +84,9 @@ func Test_CreateChannelRewardLessThanOneCost_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -118,7 +117,6 @@ func Test_CreateChannelRewardUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 
 	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(t.Context(), accessToken, channelRewardData)
@@ -133,7 +131,9 @@ func Test_CreateChannelRewardUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiError := kickerrors.IsAPIError(err)
+
+	if apiError == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

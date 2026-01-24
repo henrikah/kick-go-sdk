@@ -1,7 +1,6 @@
 package kick_test
 
 import (
-	"errors"
 	"net/http"
 	"testing"
 
@@ -23,8 +22,6 @@ func Test_DeleteChannelRewardMissingAccessToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	err := client.ChannelReward().DeleteChannelReward(t.Context(), accessToken, rewardID)
 
@@ -33,7 +30,9 @@ func Test_DeleteChannelRewardMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -54,8 +53,6 @@ func Test_DeleteChannelRewardEmptyRewardID_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	err := client.ChannelReward().DeleteChannelReward(t.Context(), accessToken, rewardID)
 
@@ -64,7 +61,9 @@ func Test_DeleteChannelRewardEmptyRewardID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationError := kickerrors.IsValidationError(err)
+
+	if validationError == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
@@ -91,7 +90,6 @@ func Test_DeleteChannelRewardUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	err := client.ChannelReward().DeleteChannelReward(t.Context(), accessToken, rewardID)
 
@@ -100,7 +98,9 @@ func Test_DeleteChannelRewardUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiError := kickerrors.IsAPIError(err)
+
+	if apiError == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }
