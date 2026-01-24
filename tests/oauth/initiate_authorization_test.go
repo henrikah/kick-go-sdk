@@ -40,14 +40,14 @@ func Test_InitiateAuthorizationMissingRedirectURI_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
+	validationErr := kickerrors.IsValidationError(err)
 
-	if validationError == nil {
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "redirectURI" {
-		t.Fatalf("Expected error on field 'redirectURI', got '%s'", validationError.Field)
+	if validationErr.Field != "redirectURI" {
+		t.Fatalf("Expected error on field 'redirectURI', got '%s'", validationErr.Field)
 	}
 }
 func Test_InitiateAuthorizationMissingState_Error(t *testing.T) {
@@ -80,14 +80,14 @@ func Test_InitiateAuthorizationMissingState_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
+	validationErr := kickerrors.IsValidationError(err)
 
-	if validationError == nil {
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "state" {
-		t.Fatalf("Expected error on field 'state', got '%s'", validationError.Field)
+	if validationErr.Field != "state" {
+		t.Fatalf("Expected error on field 'state', got '%s'", validationErr.Field)
 	}
 }
 func Test_InitiateAuthorizationMissingScopes_Error(t *testing.T) {
@@ -120,14 +120,14 @@ func Test_InitiateAuthorizationMissingScopes_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
+	validationErr := kickerrors.IsValidationError(err)
 
-	if validationError == nil {
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "scopes" {
-		t.Fatalf("Expected error on field 'scopes', got '%s'", validationError.Field)
+	if validationErr.Field != "scopes" {
+		t.Fatalf("Expected error on field 'scopes', got '%s'", validationErr.Field)
 	}
 }
 func Test_InitiateAuthorization_Success(t *testing.T) {

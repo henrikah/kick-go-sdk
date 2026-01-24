@@ -30,7 +30,7 @@ type Livestream interface {
 	//
 	//	livestreams, err := client.Livestream().SearchLivestreams(context.TODO(), accessToken, filters)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -51,7 +51,7 @@ type Livestream interface {
 	//
 	//	livestream, err := client.Livestream().GetCurrentUserLivestream(context.TODO(), accessToken)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)

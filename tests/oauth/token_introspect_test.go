@@ -38,14 +38,14 @@ func Test_TokenIntrospectMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
+	validationErr := kickerrors.IsValidationError(err)
 
-	if validationError == nil {
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "accessToken" {
-		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationError.Field)
+	if validationErr.Field != "accessToken" {
+		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -80,9 +80,9 @@ func Test_TokenIntrospectUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected tokenIntrospectData to be nil on error")
 	}
 
-	apiError := kickerrors.IsAPIError(err)
+	apiErr := kickerrors.IsAPIError(err)
 
-	if apiError == nil {
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

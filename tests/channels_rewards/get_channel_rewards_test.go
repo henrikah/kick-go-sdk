@@ -33,13 +33,13 @@ func Test_GetChannelRewardsMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
-	if validationError == nil {
+	validationErr := kickerrors.IsValidationError(err)
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "accessToken" {
-		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationError.Field)
+	if validationErr.Field != "accessToken" {
+		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -72,9 +72,9 @@ func Test_GetChannelRewardsUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected channelsData to be nil on error")
 	}
 
-	apiError := kickerrors.IsAPIError(err)
+	apiErr := kickerrors.IsAPIError(err)
 
-	if apiError == nil {
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

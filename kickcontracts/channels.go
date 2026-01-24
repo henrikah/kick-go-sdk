@@ -24,7 +24,7 @@ type Channel interface {
 	//
 	//	channels, err := client.Channel().GetChannelsByBroadcasterUserID(context.TODO(), accessToken, []int64{123, 456})
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -45,7 +45,7 @@ type Channel interface {
 	//
 	//	channel, err := client.Channel().GetChannelByBroadcasterUserID(context.TODO(), accessToken, 123)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -66,7 +66,7 @@ type Channel interface {
 	//
 	//	channel, err := client.Channel().GetCurrentBroadcasterChannel(context.TODO(), accessToken)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -87,7 +87,7 @@ type Channel interface {
 	//
 	//	channels, err := client.Channel().GetChannelsByBroadcasterSlug(context.TODO(), accessToken, []string{"slug1", "slug2"})
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -108,7 +108,7 @@ type Channel interface {
 	//
 	//	err := client.Channel().UpdateChannel(context.TODO(), accessToken, kickapitypes.UpdateChannelRequest{...})
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)

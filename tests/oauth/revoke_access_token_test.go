@@ -32,14 +32,14 @@ func Test_RevokeAccessAccessTokenMissingToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
+	validationErr := kickerrors.IsValidationError(err)
 
-	if validationError == nil {
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "accessToken" {
-		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationError.Field)
+	if validationErr.Field != "accessToken" {
+		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -70,9 +70,9 @@ func Test_RevokeAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	apiError := kickerrors.IsAPIError(err)
+	apiErr := kickerrors.IsAPIError(err)
 
-	if apiError == nil {
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

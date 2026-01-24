@@ -27,13 +27,13 @@ func Test_NewAPIClientMissingHTTPClient_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
-	if validationError == nil {
+	validationErr := kickerrors.IsValidationError(err)
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "httpClient" {
-		t.Fatalf("Expected error on field 'httpClient', got '%s'", validationError.Field)
+	if validationErr.Field != "httpClient" {
+		t.Fatalf("Expected error on field 'httpClient', got '%s'", validationErr.Field)
 	}
 }
 

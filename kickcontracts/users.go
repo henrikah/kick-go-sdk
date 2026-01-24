@@ -25,7 +25,7 @@ type User interface {
 	//
 	//	users, err := client.User().GetUsersByID(context.TODO(), accessToken, []int64{123, 456})
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -46,7 +46,7 @@ type User interface {
 	//
 	//	user, err := client.User().GetUserByID(context.TODO(), accessToken, 123)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -67,7 +67,7 @@ type User interface {
 	//
 	//	currentUser, err := client.User().GetCurrentUser(context.TODO(), accessToken)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)

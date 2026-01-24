@@ -42,9 +42,9 @@ func Test_GetAppAccessTokenWrongCredentials_Error(t *testing.T) {
 		t.Fatal("Expected tokenData to be nil on error")
 	}
 
-	apiError := kickerrors.IsAPIError(err)
+	apiErr := kickerrors.IsAPIError(err)
 
-	if apiError == nil {
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

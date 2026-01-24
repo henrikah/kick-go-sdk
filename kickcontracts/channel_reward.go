@@ -25,7 +25,7 @@ type ChannelReward interface {
 	//
 	//	channelRewards, err := client.ChannelReward().GetChannelRewards(context.TODO(), accessToken)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -51,7 +51,7 @@ type ChannelReward interface {
 	//
 	//	createChannelRewardResult, err := client.ChannelReward().CreateChannelReward(context.TODO(), accessToken, channelRewardData)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -74,7 +74,7 @@ type ChannelReward interface {
 	//
 	//	err := client.ChannelReward().DeleteChannelReward(context.TODO(), accessToken, channelRewardID)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -103,7 +103,7 @@ type ChannelReward interface {
 	//
 	//	updateChannelRewardData, err := client.ChannelReward().UpdateChannelReward(context.TODO(), accessToken, channelRewardID, channelRewardData)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -127,7 +127,7 @@ type ChannelReward interface {
 	//
 	//	getChannelRewardRedemptionsData, err := client.ChannelReward().GetChannelRewardRedemptions(context.TODO(), accessToken, filters)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -150,7 +150,7 @@ type ChannelReward interface {
 	//
 	//	acceptChannelRewardRedemptionsData, err := client.ChannelReward().AcceptRewardRedemption(context.TODO(), accessToken, redemptionIDs)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -173,7 +173,7 @@ type ChannelReward interface {
 	//
 	//	acceptChannelRewardRedemptionsData, err := client.ChannelReward().RejectRewardRedemption(context.TODO(), accessToken, redemptionIDs)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
