@@ -24,7 +24,7 @@ type PublicKey interface {
 	//
 	//	publicKeyResp, err := client.PublicKey().GetWebhookPublicKey(context.TODO())
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)

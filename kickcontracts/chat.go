@@ -26,7 +26,7 @@ type Chat interface {
 	//
 	//	sendChatResponse, err := client.Chat().SendChatMessageAsUser(context.TODO(), accessToken, 123, nil, "Hello chat!")
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -49,7 +49,7 @@ type Chat interface {
 	//
 	//	sendChatResponse, err := client.Chat().SendChatMessageAsBot(context.TODO(), accessToken, nil, "Hello from bot!")
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)
@@ -71,7 +71,7 @@ type Chat interface {
 
 	//	err := client.Chat().DeleteChatMessage(context.TODO(), accessToken, "message-id")
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)

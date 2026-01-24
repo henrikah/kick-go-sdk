@@ -43,14 +43,14 @@ func Test_ExchangeAuthorizationCodeMissingRedirectURI_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
+	validationErr := kickerrors.IsValidationError(err)
 
-	if validationError == nil {
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "redirectURI" {
-		t.Fatalf("Expected error on field 'redirectURI', got '%s'", validationError.Field)
+	if validationErr.Field != "redirectURI" {
+		t.Fatalf("Expected error on field 'redirectURI', got '%s'", validationErr.Field)
 	}
 }
 func Test_ExchangeAuthorizationCodeMissingAuthorizationCode_Error(t *testing.T) {
@@ -81,14 +81,14 @@ func Test_ExchangeAuthorizationCodeMissingAuthorizationCode_Error(t *testing.T) 
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
+	validationErr := kickerrors.IsValidationError(err)
 
-	if validationError == nil {
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "authorizationCode" {
-		t.Fatalf("Expected error on field 'authorizationCode', got '%s'", validationError.Field)
+	if validationErr.Field != "authorizationCode" {
+		t.Fatalf("Expected error on field 'authorizationCode', got '%s'", validationErr.Field)
 	}
 }
 func Test_ExchangeAuthorizationCodeMissingCodeVerifier_Error(t *testing.T) {
@@ -119,14 +119,14 @@ func Test_ExchangeAuthorizationCodeMissingCodeVerifier_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
+	validationErr := kickerrors.IsValidationError(err)
 
-	if validationError == nil {
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "codeVerifier" {
-		t.Fatalf("Expected error on field 'codeVerifier', got '%s'", validationError.Field)
+	if validationErr.Field != "codeVerifier" {
+		t.Fatalf("Expected error on field 'codeVerifier', got '%s'", validationErr.Field)
 	}
 }
 
@@ -163,9 +163,9 @@ func Test_ExchangeAuthorizationCodeWrongCredentials_Error(t *testing.T) {
 		t.Fatal("Expected tokenData to be nil on error")
 	}
 
-	apiError := kickerrors.IsAPIError(err)
+	apiErr := kickerrors.IsAPIError(err)
 
-	if apiError == nil {
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

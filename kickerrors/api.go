@@ -24,9 +24,9 @@ func SetAPIError(statusCode int, message string, url string) *APIError {
 }
 
 func IsAPIError(err error) *APIError {
-	var apiError *APIError
-	if errors.As(err, &apiError) {
-		return apiError
+	var apiErr *APIError
+	if errors.As(err, &apiErr) {
+		return apiErr
 	}
 	return nil
 }

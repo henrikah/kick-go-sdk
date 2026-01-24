@@ -32,37 +32,39 @@ go get github.com/henrikah/kick-go-sdk/v2
 ## Quickstart: API Client
 
 ```go
-oAuthClient, err := kick.NewOAuthClient(kickapitypes.APIClientConfig{
-    ClientID:     "your-client-id",
-    ClientSecret: "your-client-secret",
-    HTTPClient:   http.DefaultClient,
+oAuthClient, err := kick.NewOAuthClient(kickoauthtypes.OAuthClientConfig{
+	ClientID:     "your-client-id",
+	ClientSecret: "your-client-secret",
+	HTTPClient:   http.DefaultClient,
 })
 if err != nil {
-    log.Fatalf("could not create OAuthClient: %v", err)
+	log.Fatalf("could not create OAuthClient: %v", err)
 }
 
 apiClient, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
-    HTTPClient:   http.DefaultClient,
+	HTTPClient: http.DefaultClient,
 })
 if err != nil {
-    log.Fatalf("could not create APIClient: %v", err)
+	log.Fatalf("could not create APIClient: %v", err)
 }
 
 accessToken, err := oAuthClient.GetAppAccessToken(context.TODO())
 if err != nil {
-	var apiErr *kickerrors.APIError
-	if errors.As(err, &apiErr) {
-		log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
+		log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	} else {
 		log.Fatalf("internal error: %v", err)
 	}
 }
 
-categorySearchData, err := apiClient.Category().SearchCategories(context.TODO(), accessToken, kickfilters.NewCategoriesFilter().WithNames([]string{"Software Development"}))
+categorySearchData, err := apiClient.Category().SearchCategories(
+	context.TODO(),
+	accessToken,
+	kickfilters.NewCategoriesFilter().WithNames([]string{"Software Development"}),
+)
 if err != nil {
-	var apiErr *kickerrors.APIError
-	if errors.As(err, &apiErr) {
-		log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
+		log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	} else {
 		log.Fatalf("internal error: %v", err)
 	}
@@ -77,19 +79,19 @@ log.Println("Found category:", categorySearchData.Data[0].Name)
 ```go
 webhookClient, err := kick.NewWebhookClient("your-public-key")
 if err != nil {
-    log.Fatalf("could not create WebhookClient: %v", err)
+	log.Fatalf("could not create WebhookClient: %v", err)
 }
 
 err = webhookClient.RegisterChatMessageSentHandler(func(
-    writer http.ResponseWriter,
-    request *http.Request,
-    headers kickwebhooktypes.KickWebhookHeaders,
-    data kickwebhooktypes.ChatMessageSent,
+	writer http.ResponseWriter,
+	request *http.Request,
+	headers kickwebhooktypes.KickWebhookHeaders,
+	data kickwebhooktypes.ChatMessageSent,
 ) {
-    writer.WriteHeader(http.StatusOK)
+	writer.WriteHeader(http.StatusOK)
 })
 if err != nil {
-    log.Printf("error registering chat message sent handler: %v", err)
+	log.Printf("error registering chat message sent handler: %v", err)
 }
 
 http.HandleFunc("/webhook", webhookClient.WebhookHandler)
@@ -103,18 +105,17 @@ You can automatically retrieve the public key from the API and use it to set up 
 
 ```go
 apiClient, err := kick.NewAPIClient(kickapitypes.APIClientConfig{
-    HTTPClient:   http.DefaultClient,
+	HTTPClient: http.DefaultClient,
 })
 if err != nil {
-    log.Fatalf("could not create APIClient: %v", err)
+	log.Fatalf("could not create APIClient: %v", err)
 }
 
 // Fetch the webhook public key directly from the API
 publicKeyResp, err := apiClient.PublicKey().GetWebhookPublicKey(context.TODO())
 if err != nil {
-	var apiErr *kickerrors.APIError
-	if errors.As(err, &apiErr) {
-		log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+	if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
+		log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	} else {
 		log.Fatalf("internal error: %v", err)
 	}
@@ -122,15 +123,21 @@ if err != nil {
 
 webhookClient, err := kick.NewWebhookClient(publicKeyResp.Data.PublicKey)
 if err != nil {
-    log.Fatalf("could not create WebhookClient: %v", err)
+	log.Fatalf("could not create WebhookClient: %v", err)
 }
 
 // Register handlers
-err = webhookClient.RegisterChatMessageSentHandler(func(writer http.ResponseWriter, request *http.Request, headers kickwebhooktypes.KickWebhookHeaders, data kickwebhooktypes.ChatMessageSent) {
-    writer.WriteHeader(http.StatusOK)
-})
+err = webhookClient.RegisterChatMessageSentHandler(
+	func(
+		writer http.ResponseWriter,
+		request *http.Request,
+		headers kickwebhooktypes.KickWebhookHeaders,
+		data kickwebhooktypes.ChatMessageSent,
+	) {
+		writer.WriteHeader(http.StatusOK)
+	})
 if err != nil {
-    log.Printf("error registering chat message sent handler: %v", err)
+	log.Printf("error registering chat message sent handler: %v", err)
 }
 
 http.HandleFunc("/webhook", webhookClient.WebhookHandler)

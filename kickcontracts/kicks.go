@@ -24,7 +24,7 @@ type Kicks interface {
 	//
 	//	kicksLeaderboardResponse, err := client.Kicks().GetKicksLeaderboard(context.TODO(), accessToken, nil)
 	//	if err != nil {
-	//		if apiError := kickerrors.IsAPIError(err); apiError != nil {
+	//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
 	//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 	//		} else {
 	//			log.Printf("internal error: %v", err)

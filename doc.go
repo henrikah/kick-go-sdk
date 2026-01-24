@@ -22,9 +22,8 @@ package kick
 //
 //	accessToken, err := oAuthClient.GetAppAccessToken(context.TODO())
 //	if err != nil {
-//		var apiErr *kickerrors.APIError
-//		if errors.As(err, &apiErr) {
-//			log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
+//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 //		} else {
 //			log.Fatalf("internal error: %v", err)
 //		}
@@ -33,9 +32,8 @@ package kick
 //	categorySearchData, err := apiClient.Category().SearchCategories(context.TODO(), accessToken, kickfilters.NewCategoriesFilter().WithNames([]string{"Software Development"}))
 //
 //	if err != nil {
-//		var apiErr *kickerrors.APIError
-//		if errors.As(err, &apiErr) {
-//			log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
+//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 //		} else {
 //			log.Fatalf("internal error: %v", err)
 //		}
@@ -75,9 +73,8 @@ package kick
 //
 //	publicKey, err := apiClient.PublicKey().GetWebhookPublicKey(context.TODO())
 //	if err != nil {
-//		var apiErr *kickerrors.APIError
-//		if errors.As(err, &apiErr) {
-//			log.Fatalf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
+//		if apiErr := kickerrors.IsAPIError(err); apiErr != nil {
+//			log.Printf("API error: %d %s", apiErr.StatusCode, apiErr.Message)
 //		} else {
 //			log.Fatalf("internal error: %v", err)
 //		}

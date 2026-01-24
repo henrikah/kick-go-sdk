@@ -32,14 +32,14 @@ func Test_RevokeRefreshTokenMissingToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	validationError := kickerrors.IsValidationError(err)
+	validationErr := kickerrors.IsValidationError(err)
 
-	if validationError == nil {
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "refreshToken" {
-		t.Fatalf("Expected error on field 'refreshToken', got '%s'", validationError.Field)
+	if validationErr.Field != "refreshToken" {
+		t.Fatalf("Expected error on field 'refreshToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -70,9 +70,9 @@ func Test_RevokeRefreshToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	apiError := kickerrors.IsAPIError(err)
+	apiErr := kickerrors.IsAPIError(err)
 
-	if apiError == nil {
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }
