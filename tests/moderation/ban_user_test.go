@@ -2,7 +2,6 @@ package kick_test
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"testing"
 
@@ -26,8 +25,6 @@ func Test_BanUserMissingAccessToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	banUserData, err := client.Moderation().BanUser(t.Context(), accessToken, broadcasterUserID, userID, &reason)
 
@@ -40,12 +37,14 @@ func Test_BanUserMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "accessToken" {
-		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationError.Field)
+	if validationErr.Field != "accessToken" {
+		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -63,8 +62,6 @@ func Test_BanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	banUserData, err := client.Moderation().BanUser(t.Context(), accessToken, broadcasterUserID, userID, &reason)
 
@@ -77,12 +74,14 @@ func Test_BanUserInvalidBroadcasterUserID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "broadcasterUserID" {
-		t.Fatalf("Expected error on field 'broadcasterUserID', got '%s'", validationError.Field)
+	if validationErr.Field != "broadcasterUserID" {
+		t.Fatalf("Expected error on field 'broadcasterUserID', got '%s'", validationErr.Field)
 	}
 }
 
@@ -100,8 +99,6 @@ func Test_BanUserInvalidUserID_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	banUserData, err := client.Moderation().BanUser(t.Context(), accessToken, broadcasterUserID, userID, &reason)
 
@@ -114,12 +111,14 @@ func Test_BanUserInvalidUserID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "userID" {
-		t.Fatalf("Expected error on field 'userID', got '%s'", validationError.Field)
+	if validationErr.Field != "userID" {
+		t.Fatalf("Expected error on field 'userID', got '%s'", validationErr.Field)
 	}
 }
 
@@ -143,7 +142,6 @@ func Test_BanUserUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	banUserData, err := client.Moderation().BanUser(t.Context(), accessToken, broadcasterUserID, userID, &reason)
 
@@ -156,7 +154,9 @@ func Test_BanUserUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected banUserData to be nil on error")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiErr := kickerrors.IsAPIError(err)
+
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

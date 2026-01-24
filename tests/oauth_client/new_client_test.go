@@ -1,7 +1,6 @@
 package kick_test
 
 import (
-	"errors"
 	"net/http"
 	"testing"
 
@@ -20,7 +19,6 @@ func Test_NewOAuthClientMissingClientID_Error(t *testing.T) {
 		HTTPClient:   httpClient,
 	}
 
-	var validationError *kickerrors.ValidationError
 	// Act
 	client, err := kick.NewOAuthClient(config)
 
@@ -33,12 +31,14 @@ func Test_NewOAuthClientMissingClientID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "ClientID" {
-		t.Fatalf("Expected error on field 'ClientID', got '%s'", validationError.Field)
+	if validationErr.Field != "ClientID" {
+		t.Fatalf("Expected error on field 'ClientID', got '%s'", validationErr.Field)
 	}
 }
 
@@ -52,7 +52,6 @@ func Test_NewOAuthClientMissingClientSecret_Error(t *testing.T) {
 		HTTPClient:   httpClient,
 	}
 
-	var validationError *kickerrors.ValidationError
 	// Act
 	client, err := kick.NewOAuthClient(config)
 
@@ -65,12 +64,14 @@ func Test_NewOAuthClientMissingClientSecret_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "ClientSecret" {
-		t.Fatalf("Expected error on field 'ClientSecret', got '%s'", validationError.Field)
+	if validationErr.Field != "ClientSecret" {
+		t.Fatalf("Expected error on field 'ClientSecret', got '%s'", validationErr.Field)
 	}
 }
 
@@ -82,7 +83,6 @@ func Test_NewOAuthClientMissingHTTPClient_Error(t *testing.T) {
 		HTTPClient:   nil,
 	}
 
-	var validationError *kickerrors.ValidationError
 	// Act
 	client, err := kick.NewOAuthClient(config)
 
@@ -95,12 +95,14 @@ func Test_NewOAuthClientMissingHTTPClient_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "httpClient" {
-		t.Fatalf("Expected error on field 'httpClient', got '%s'", validationError.Field)
+	if validationErr.Field != "httpClient" {
+		t.Fatalf("Expected error on field 'httpClient', got '%s'", validationErr.Field)
 	}
 }
 

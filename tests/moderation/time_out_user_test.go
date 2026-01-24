@@ -2,7 +2,6 @@ package kick_test
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"testing"
 
@@ -27,8 +26,6 @@ func Test_TimeOutUserMissingAccessToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
@@ -41,12 +38,14 @@ func Test_TimeOutUserMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "accessToken" {
-		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationError.Field)
+	if validationErr.Field != "accessToken" {
+		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -65,8 +64,6 @@ func Test_TimeOutUserInvalidBroadcasterUserID_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
@@ -79,12 +76,14 @@ func Test_TimeOutUserInvalidBroadcasterUserID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "broadcasterUserID" {
-		t.Fatalf("Expected error on field 'broadcasterUserID', got '%s'", validationError.Field)
+	if validationErr.Field != "broadcasterUserID" {
+		t.Fatalf("Expected error on field 'broadcasterUserID', got '%s'", validationErr.Field)
 	}
 }
 
@@ -103,8 +102,6 @@ func Test_TimeOutUserDurationTooLow_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
@@ -117,12 +114,14 @@ func Test_TimeOutUserDurationTooLow_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "duration" {
-		t.Fatalf("Expected error on field 'duration', got '%s'", validationError.Field)
+	if validationErr.Field != "duration" {
+		t.Fatalf("Expected error on field 'duration', got '%s'", validationErr.Field)
 	}
 }
 
@@ -141,8 +140,6 @@ func Test_TimeOutUserDurationTooHigh_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
@@ -155,12 +152,14 @@ func Test_TimeOutUserDurationTooHigh_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "duration" {
-		t.Fatalf("Expected error on field 'duration', got '%s'", validationError.Field)
+	if validationErr.Field != "duration" {
+		t.Fatalf("Expected error on field 'duration', got '%s'", validationErr.Field)
 	}
 }
 
@@ -179,8 +178,6 @@ func Test_TimeOutUserInvalidUserID_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
@@ -193,12 +190,14 @@ func Test_TimeOutUserInvalidUserID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "userID" {
-		t.Fatalf("Expected error on field 'userID', got '%s'", validationError.Field)
+	if validationErr.Field != "userID" {
+		t.Fatalf("Expected error on field 'userID', got '%s'", validationErr.Field)
 	}
 }
 
@@ -223,7 +222,6 @@ func Test_TimeOutUserUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	timeOutUserData, err := client.Moderation().TimeOutUser(t.Context(), accessToken, broadcasterUserID, userID, duration, &reason)
 
@@ -236,7 +234,9 @@ func Test_TimeOutUserUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected timeOutUserData to be nil on error")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiErr := kickerrors.IsAPIError(err)
+
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

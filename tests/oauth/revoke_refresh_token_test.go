@@ -1,7 +1,6 @@
 package kick_test
 
 import (
-	"errors"
 	"io"
 	"net/http"
 	"net/url"
@@ -25,7 +24,6 @@ func Test_RevokeRefreshTokenMissingToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewOAuthClient(config)
 
-	var validationError *kickerrors.ValidationError
 	// Act
 	err := client.RevokeRefreshToken(t.Context(), refreshToken)
 
@@ -34,12 +32,14 @@ func Test_RevokeRefreshTokenMissingToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "refreshToken" {
-		t.Fatalf("Expected error on field 'refreshToken', got '%s'", validationError.Field)
+	if validationErr.Field != "refreshToken" {
+		t.Fatalf("Expected error on field 'refreshToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -62,7 +62,6 @@ func Test_RevokeRefreshToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewOAuthClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	err := client.RevokeRefreshToken(t.Context(), refreshToken)
 
@@ -71,7 +70,9 @@ func Test_RevokeRefreshToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiErr := kickerrors.IsAPIError(err)
+
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

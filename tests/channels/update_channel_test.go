@@ -2,7 +2,6 @@ package kick_test
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"testing"
 
@@ -30,8 +29,6 @@ func Test_UpdateChannelMissingAccessToken_Error(t *testing.T) {
 
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	err := client.Channel().UpdateChannel(t.Context(), accessToken, channelData)
 
@@ -40,12 +37,14 @@ func Test_UpdateChannelMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "accessToken" {
-		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationError.Field)
+	if validationErr.Field != "accessToken" {
+		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -68,8 +67,6 @@ func Test_UpdateChannelNegativeCategoryID_Error(t *testing.T) {
 
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	err := client.Channel().UpdateChannel(ctx, accessToken, channelData)
 
@@ -78,12 +75,14 @@ func Test_UpdateChannelNegativeCategoryID_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "categoryID" {
-		t.Fatalf("Expected error on field 'categoryID', got '%s'", validationError.Field)
+	if validationErr.Field != "categoryID" {
+		t.Fatalf("Expected error on field 'categoryID', got '%s'", validationErr.Field)
 	}
 }
 
@@ -110,7 +109,6 @@ func Test_UpdateChannelUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	err := client.Channel().UpdateChannel(t.Context(), accessToken, channelData)
 
@@ -119,7 +117,8 @@ func Test_UpdateChannelUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiErr := kickerrors.IsAPIError(err)
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }

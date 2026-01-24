@@ -1,6 +1,9 @@
 package kickerrors
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type InternalWebhookError struct {
 	MessageID string
@@ -16,4 +19,12 @@ func SetInternalWebhookError(messageID string, err error) *InternalWebhookError 
 		MessageID: messageID,
 		Err:       err,
 	}
+}
+
+func IsInternalWebookError(err error) *InternalWebhookError {
+	var internalWebookError *InternalWebhookError
+	if errors.As(err, &internalWebookError) {
+		return internalWebookError
+	}
+	return nil
 }

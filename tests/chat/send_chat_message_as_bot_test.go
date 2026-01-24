@@ -2,7 +2,6 @@ package kick_test
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"testing"
 
@@ -25,8 +24,6 @@ func Test_SendChatMessageAsBotMissingAccessToken_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(t.Context(), accessToken, &replyToMessageID, message)
 
@@ -39,12 +36,14 @@ func Test_SendChatMessageAsBotMissingAccessToken_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "accessToken" {
-		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationError.Field)
+	if validationErr.Field != "accessToken" {
+		t.Fatalf("Expected error on field 'accessToken', got '%s'", validationErr.Field)
 	}
 }
 
@@ -61,8 +60,6 @@ func Test_SendChatMessageAsBotEmptyMessage_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var validationError *kickerrors.ValidationError
-
 	// Act
 	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(t.Context(), accessToken, &replyToMessageID, message)
 
@@ -75,12 +72,14 @@ func Test_SendChatMessageAsBotEmptyMessage_Error(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 
-	if !errors.As(err, &validationError) {
+	validationErr := kickerrors.IsValidationError(err)
+
+	if validationErr == nil {
 		t.Fatalf("Expected validation error, got %T", err)
 	}
 
-	if validationError.Field != "message" {
-		t.Fatalf("Expected error on field 'message', got '%s'", validationError.Field)
+	if validationErr.Field != "message" {
+		t.Fatalf("Expected error on field 'message', got '%s'", validationErr.Field)
 	}
 }
 
@@ -103,7 +102,6 @@ func Test_SendChatMessageAsBotUnAuthorized_Error(t *testing.T) {
 	}
 	client, _ := kick.NewAPIClient(config)
 
-	var apiError *kickerrors.APIError
 	// Act
 	sendChatMessageData, err := client.Chat().SendChatMessageAsBot(t.Context(), accessToken, &replyToMessageID, message)
 
@@ -116,7 +114,9 @@ func Test_SendChatMessageAsBotUnAuthorized_Error(t *testing.T) {
 		t.Fatal("Expected sendChatMessageData to be nil on error")
 	}
 
-	if !errors.As(err, &apiError) {
+	apiErr := kickerrors.IsAPIError(err)
+
+	if apiErr == nil {
 		t.Fatalf("Expected API error, got %T", err)
 	}
 }
