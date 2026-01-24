@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.1] - 2026-01-24
+
+### Changed
+
+* Rename OAuth contract to OAuthClient to match the other clients.
+
 ## \[2.0.0] - 2026-01-18
 
 ### Added
